@@ -31,10 +31,11 @@
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="aboutme.html">About me</a></li>
+						<li><a href="../aboutme.html">About me</a></li>
 						<li class="active"><a href="../aevilia.html">Aevilia</a></li>
 						<li>8F Helper</li>
-						<li>GBZ80 to Items</li>
+						<li><a href="http://prama-initiative.com/8F/beta/">GBZ80 to Items</a></li>
+						<li><a href="../pokexploits/">Pok&eacute;sploitz</a></li>
 						<li>The rest</li>
 					</ul>
 			</div>
@@ -42,31 +43,31 @@
 		
 		
 		<div class="container">
-			<h2>Aevilia</h2>
+			<h2>Aevilia's controls</h2>
 			<p class="lead">
-				Aevilia is a RPG I'm writing in C. All code was written by me, except the SDL, the graphics library I'm using to, well, draw things on your screen !
+				Aevilia is a keyboard-controlled game. Two more features are planned : custom key binding and game controller support.
 				<br/>
-				The plot isn't quite defined at the moment, I have some ideas but I am bad at creating scenarios, so that's something I would like to do with someone else.
-				<br/>
-				Below you can find some info about the game, the release history... well, whatever I believe you could be looking for !
+				Aevilia, as of version 0.4.0, has light mouse support, but more is being added.
 			</p>
 			
 			<hr>
 			
-			<h3>Game info</h3>
-			<p>
-				This game's events will happen in a futuristical background. I'm saying this, but right now the plot, scenario and graphics are quasi-void. So, yeah.
-				<br/>
-				I'm developing this alone as of right now, and I am looking for help with the scenario and graphics, first. 'Cause I'm bad at 'em.
-			</p>
+			<h3>Key bindings</h3>
+			<table class="table table-striped">
+				<tr><th>Key</th><th>Action</th></tr>
+				<tr><td>Z</td><td>Interact, select option, advance text.</td></tr>
+				<tr><td>W</td><td>Cancel, display all text at once.</td></tr>
+				<tr><td>E</td><td>Open, close inventory</td></tr>
+				<tr><td>Left Shift</td><td>(Keep pressed) Sprint : double walking speed.</td></tr>
+			</table>
 			
-			<h3>Release history</h3>
-			<p>You might want to see the <a href="Aevilia/releases/">Release History index</a>.
-			<ul>
-				<li><a href="Aevilia/releases/0.4.0.html">Release 0.4.0</a> (in development)</li>
-				<li><a href="Aevilia/releases/0.3.0.html">Release 0.3.0</a> (latest stable)</li>
-				<li><a href="Aevilia/releases/eld.html">Older releases</a></li>
-			</ul>
+			<h3>Debug keys</h3>
+			<table class="table table-striped">
+				<tr><th>Key</th><th>Action</th></tr>
+				<tr><td>P</td><td>(Keep pressed) Hide debug information (if enabled with "-d" command-line option)</td></tr>
+				<tr><td>O</td><td>Freeze game.</td></tr>
+				<tr><td>Q</td><td>Resume game frozen by O. If O is still pressed, advances only one frame.</td></tr>
+			</table>
 			
 			<hr>
 

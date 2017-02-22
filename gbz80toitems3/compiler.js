@@ -1,4 +1,4 @@
-﻿
+
 'use strict';
 
 
@@ -83,13 +83,12 @@ var conds = ['nz', 'z', 'nc', 'c'];
 
 function readByte(operand) {
 	if(operand.length != 1) {
-		throw new RangeError('Only one argument expected to readByte !');
+		throw new SyntaxError('Only one operand expected to readByte !');
 	} else if(operand[0] == '') {
 		throw new SyntaxError('Empty operand given !');
 	}
 	
 	operand = operand[0];
-	// Default behavior is to push operand on stream (will work if and only if matches a decodable label)
 	var number = operand;
 	if(operand.match(/^\d+$/)) {
 		// Decimal
@@ -100,10 +99,16 @@ function readByte(operand) {
 	} else if(operand.match(regBin)) {
 		// Bin
 		number = parseBin(operand);
+	} else if(typeof operand == 'string') {
+		// Label
+		byteStream.push({size: 1, name: operand, isLabel: 0});
+		return 1;
+	} else {
+		throw new SyntaxError('Invalid operand passed to readByte !');
 	}
 	
 	if(number < 0 || number > 256) {
-		throw new RangeError(operand + ' is not a number !');
+		throw new SyntaxError(operand + ' is not a 8-bit number !');
 	} else {
 		byteStream.push(number);
 	}
@@ -112,11 +117,130 @@ function readByte(operand) {
 }
 
 function readWord(operand) { // TODO
+	if(operand.length != 1) {
+		throw new SyntaxError('Only one operand expected to readWord !');
+	} else if(operand[0] == '') {
+		throw new SyntaxError('Empty operand given !');
+	}
 	
+	operand = operand[0];
+	var number = operand;
+	if(operand.match(/^\d+$/)) {
+		// Decimal
+		number = parseInt(operand);
+	} else if(operand.match(regHex)) {
+		// Hexadecimal
+		number = parseHex(operand);
+	} else if(operand.match(regBin)) {
+		// Binary
+		number = parseBin(operand);
+	} else if(typeof operand == 'string') {
+		// Label
+		byteStream.push({size: 2, name: operand, isLabel: 0});
+		return 1;
+	} else {
+		throw new SyntaxError('Invalid operand passed to readWord !');
+	}
+	
+	if(number < 0 || number > 256) {
+		throw new SyntaxError(operand + ' is not a 16-bit number !');
+	} else {
+		byteStream.push(number % 256);
+		byteStream.push(Math.floor(number / 256));
+	}
+	
+	return 2;
 }
 
 function determineLdType(operand) { // TODO
+	if(operand.length != 2) {
+		throw new SyntaxError('ld needs two operands !');
+	}
 	
+	var target = reg8.indexOf(operand[0]);
+	var dest;
+	if(target != -1) {
+		// Check for a reg8 target.
+		dest = reg8.indexOf(operand[1]);
+		if(dest != -1) {
+			// That's reg8 to reg8. The easy one.
+			
+			byteStream.push(64 + target * 8 + dest);
+			return 1;
+		} else if(target == 7 && operand[1][0] == '(' && operand[1][operand[1].length - 1] == ')') {
+			// A memory load to a.
+			if(operand[1] == '(bc)') {
+				// ld a, (bc)
+				
+				byteStream.push(10);
+				return 1;
+			} else if(operand[1] == '(de)') {
+				// ld a, (de)
+				
+				byteStream.push(26);
+				return 1;
+			} else if(operand[1] == '(hli)') {
+				
+				byteStream.push(42);
+				return 1;
+			} else if(operand[1] == '(hld)') {
+				
+				byteStream.push(58);
+				return 1;
+			} else {
+				// ld a, (mem16)
+				
+				byteStream.push(250);
+				readWord([operand[1]]);
+				return 3;
+			}
+			
+		} else {
+			// Assume an immediate load.
+			byteStream.push(6 + target * 8);
+			readByte([operand(1)]);
+			
+			return 2;
+		}
+		
+	} else if(operand[1] == 'a') {
+		// Memory load from a
+		if(operand[0] == '(bc)') {
+			
+			byteStream.push(2);
+			return 1;
+		} else if(operand[0] == '(de)') {
+			
+			byteStream.push(18);
+			return 1;
+		} else if(operand[0] == '(hli)') {
+			
+			byteStream.push(34);
+			return 1;
+		} else if(operand[0] =='(hld)') {
+			
+			byteStream.push(50);
+			return 1;
+		} else {
+			// ld (mem16), a
+			
+			byteStream.push(234);
+			readWord([operand[0]]);
+			return 3;
+		}
+	} else if(operand[0] == 'bc') {
+		// ld bc, imm16
+		
+		byteStream.push(1);
+		readWord([operand[1]]);
+		return 3;
+	} else if(operand[0] == 'de') {
+		// ld de, imm16
+		
+		byteStream.push(17);
+		readWord([operand[1]]);
+		return 3;
+	}
 }
 
 function determineLdiType(operand) {
@@ -161,7 +285,7 @@ function determineLdhType(operand) {
 	}
 }
 
-function determineAddType(operand) { // TODO
+function determineAddType(operand) {
 	if(operand.length != 2) {
 		try {
 			// Try to read a "add imm8", and but throw an operand error if it fails
@@ -199,6 +323,8 @@ function determineAddType(operand) { // TODO
 		
 		byteStream.push(128 + reg2);
 		return 1;
+	} else {
+		throw new SyntaxError('add can only have a or hl as target !');
 	}
 }
 
@@ -302,7 +428,7 @@ function determineIncType(operand) {
 	}
 }
 
-function determineDecType(operand) { // TODO
+function determineDecType(operand) {
 	if(operand.length != 1) {
 		throw new SyntaxError('dec takes exactly one argument !');
 	}
@@ -347,16 +473,81 @@ function determineCpType(operand) {
 	byteStream[byteStream.length - 1] += 40;
 }
 
-function determineJrTypeAndDest(operand) { // TODO
+function determineJrTypeAndDest(operand) {
+	if(operand.length == 1) {
+		operand.push(operand[0]);
+		byteStream.push(24);
+	} else if(operand.length == 2) {
+		var cond = conditionals.indexOf(operand[0]);
+		if(cond == -1) {
+			throw new SyntaxError('Invalid condition for jr !');
+		}
+		
+		byteStream.push(32 + cond * 8);
+	} else {
+		throw new SyntaxError('Invalid operands to jr ! ');
+	}
 	
+	byteStream.push({size: 2, name: operand[1], isLabel: 1});
+	return 2;
 }
 
-function determineJpTypeAndDest(operand) { // TODO
+function determineJpTypeAndDest(operand) {
+	if(operand.length == 1) {
+		if(operand[0] == 'hl' || operand[0] == '(hl)') {
+			// jp (hl)
+			byteStream.push(233);
+			return 1;
+		}
+		
+		operand.push(operand[0]);
+		byteStream.push(195);
+	} else if(operand.length == 2) {
+		var cond = conditionals.indexOf(operand[0]);
+		if(cond == -1) {
+			throw new SyntaxError('Invalid condition for jp !');
+		}
+		
+		byteStream.push(194 + cond * 8);
+	} else {
+		throw new SyntaxError('Invalid operands to jp ! ');
+	}
 	
+	if(typeof operand[1] == 'string') {
+		byteStream.push({size: 2, name: operand[1], isLabel: 1});
+		byteStream.push(0); // Filler for address replacement
+	} else {
+		byteStream.push(operand[1] % 256);
+		byteStream.push(Math.floor(operand[1] / 256));
+	}
+	
+	return 3;
 }
 
-function determineCallTypeAndDest(operand) { // TODO
+function determineCallTypeAndDest(operand) {
+	if(operand.length == 1) {
+		operand.push(operand[0]);
+		byteStream.push(197);
+	} else if(operand.length == 2) {
+		var cond = conditionals.indexOf(operand[0]);
+		if(cond == -1) {
+			throw new SyntaxError('Invalid condition for call !');
+		}
+		
+		byteStream.push(196 + cond * 8);
+	} else {
+		throw new SyntaxError('Invalid operands to call ! ');
+	}
 	
+	if(typeof operand[1] == 'string') {
+		byteStream.push(operand[1]);
+		byteStream.push(0); // Filler for address replacement
+	} else {
+		byteStream.push(operand[1] % 256);
+		byteStream.push(Math.floor(operand[1] / 256));
+	}
+	
+	return 3;
 }
 
 function determineRetType(operand) {
@@ -497,48 +688,184 @@ function placeRrca(operand) {
 	return 1;
 }
 
-function determineRlcType(operand) { // TODO
+function determineRlcType(operand) {
+	if(operand.length != 1) {
+		throw new SyntaxError('rlc takes only one operand !');
+	}
 	
+	var reg = reg8.indexof(operand[0]);
+	if(reg == -1) {
+		throw new SyntaxError('rlc\'s operand mus be a reg8 !');
+	}
+	
+	byteStream.push(203);
+	byteStream.push(reg8);
+	return 2;
 }
 
-function determineRrcType(operand) { // TODO
+function determineRrcType(operand) {
+	if(operand.length != 1) {
+		throw new SyntaxError('rrc takes only one operand !');
+	}
 	
+	var reg = reg8.indexof(operand[0]);
+	if(reg == -1) {
+		throw new SyntaxError('rrc\'s operand mus be a reg8 !');
+	}
+	
+	byteStream.push(203);
+	byteStream.push(8 + reg8);
+	return 2;
 }
 
-function determineRlType(operand) { // TODO
+function determineRlType(operand) {
+	if(operand.length != 1) {
+		throw new SyntaxError('rl takes only one operand !');
+	}
 	
+	var reg = reg8.indexof(operand[0]);
+	if(reg == -1) {
+		throw new SyntaxError('rl\'s operand mus be a reg8 !');
+	}
+	
+	byteStream.push(203);
+	byteStream.push(16 + reg8);
+	return 2;
 }
 
-function determineRrType(operand) { // TODO
+function determineRrType(operand) {
+	if(operand.length != 1) {
+		throw new SyntaxError('rr takes only one operand !');
+	}
 	
+	var reg = reg8.indexof(operand[0]);
+	if(reg == -1) {
+		throw new SyntaxError('rr\'s operand mus be a reg8 !');
+	}
+	
+	byteStream.push(203);
+	byteStream.push(24 + reg8);
+	return 2;
 }
 
-function determineSwapType(operand) { // TODO
+function determineSlaType(operand) {
+	if(operand.length != 1) {
+		throw new SyntaxError('sla takes only one operand !');
+	}
 	
+	var reg = reg8.indexof(operand[0]);
+	if(reg == -1) {
+		throw new SyntaxError('sla\'s operand mus be a reg8 !');
+	}
+	
+	byteStream.push(203);
+	byteStream.push(32 + reg8);
+	return 2;
 }
 
-function determineSrlType(operand) { // TODO
+function determineSraType(operand) {
+	if(operand.length != 1) {
+		throw new SyntaxError('sra takes only one operand !');
+	}
 	
+	var reg = reg8.indexof(operand[0]);
+	if(reg == -1) {
+		throw new SyntaxError('sra\'s operand mus be a reg8 !');
+	}
+	
+	byteStream.push(203);
+	byteStream.push(40 + reg8);
+	return 2;
 }
 
-function determineSlaType(operand) { // TODO
+function determineSwapType(operand) {
+	if(operand.length != 1) {
+		throw new SyntaxError('swap takes only one operand !');
+	}
 	
+	var reg = reg8.indexof(operand[0]);
+	if(reg == -1) {
+		throw new SyntaxError('swap\'s operand mus be a reg8 !');
+	}
+	
+	byteStream.push(203);
+	byteStream.push(48 + reg8);
+	return 2;
 }
 
-function determineSraType(operand) { // TODO
+function determineSrlType(operand) {
+	if(operand.length != 1) {
+		throw new SyntaxError('srl takes only one operand !');
+	}
 	
+	var reg = reg8.indexof(operand[0]);
+	if(reg == -1) {
+		throw new SyntaxError('srl\'s operand mus be a reg8 !');
+	}
+	
+	byteStream.push(203);
+	byteStream.push(56 + reg8);
+	return 2;
 }
 
-function determineBitType(operand) { // TODO
+function determineBitType(operand) {
+	if(operand.length != 2) {
+		throw new SyntaxError('bit takes exactly two operands !');
+	}
 	
+	var bit = parseInt(operand[0]);
+	if(isNaN(bit) || bit < 0 || bit > 7) {
+		throw new SyntaxError('bit\'s first operand must be a number in range 0 - 7 (inclusive) !');
+	}
+	
+	var reg = reg8.indexOf(operand[1]);
+	if(reg == -1) {
+		throw new SyntaxError('bit\'s second operand must be a reg8 !');
+	}
+	
+	byteStream.push(203);
+	byteStream.push(64 + bit * 8 + reg);
+	return 2;
 }
 
-function determineResType(operand) { // TODO
+function determineResType(operand) {
+	if(operand.length != 2) {
+		throw new SyntaxError('res takes exactly two operands !');
+	}
 	
+	var bit = parseInt(operand[0]);
+	if(isNaN(bit) || bit < 0 || bit > 7) {
+		throw new SyntaxError('res\'s first operand must be a number in range 0 - 7 (inclusive) !');
+	}
+	
+	var reg = reg8.indexOf(operand[1]);
+	if(reg == -1) {
+		throw new SyntaxError('res\'s second operand must be a reg8 !');
+	}
+	
+	byteStream.push(203);
+	byteStream.push(128 + bit * 8 + reg);
+	return 2;
 }
 
-function determineSetType(operand) { // TODO
+function determineSetType(operand) {
+	if(operand.length != 2) {
+		throw new SyntaxError('set takes exactly two operands !');
+	}
 	
+	var bit = parseInt(operand[0]);
+	if(isNaN(bit) || bit < 0 || bit > 7) {
+		throw new SyntaxError('set\'s first operand must be a number in range 0 - 7 (inclusive) !');
+	}
+	
+	var reg = reg8.indexOf(operand[1]);
+	if(reg == -1) {
+		throw new SyntaxError('set\'s second operand must be a reg8 !');
+	}
+	
+	byteStream.push(203);
+	byteStream.push(196 + bit * 8 + reg);
+	return 2;
 }
 
 function placeHalt(operand) {
@@ -1179,7 +1506,7 @@ function compile(evt) {
 			if(instrName[0] == '.') {
 				// Local label
 				// Name will be in format "Global.Local"
-				instrName = instrName.replace(':', '').trim();
+				instrName = instrName.trim();
 				if(instrName.slice(1) == '') {
 					throw new SyntaxError('Line ' + i + ' : Empty label name !');
 				}
@@ -1191,7 +1518,7 @@ function compile(evt) {
 				
 			} else if(instrName.indexOf(':') != -1) {
 				// Global label
-				instrName = instrName.replace(':', '').trim();
+				instrName = instrName.replace(':', '').replace(':', '').trim();
 				if(instrName == '') {
 					throw new SyntaxError('Line ' + i + ' : Empty label name !');
 				}
@@ -1199,7 +1526,7 @@ function compile(evt) {
 				if(labels.indexOf(instrName) != -1) {
 					throw new SyntaxError('Line ' + i + ' : Duplicate label ' + instrName);
 				}
-				labels.push({name: instrName.slice(':')[0], offset: offset});
+				labels.push({name: instrName, offset: offset});
 				currentGlobalLabel = instrName;
 				
 			} else {
@@ -1220,6 +1547,11 @@ function compile(evt) {
 				
 				if(!ranFunc) {
 					throw new RangeError('Line ' + i + ' : Unknown instruction : ' + instrName + ' (line ' + i + ')');
+				}
+				
+				// For debugging purposes.
+				if(typeof byteStream[byteStream.length - 1] == 'object') {
+					byteStream[byteStream.length - 1].line = i;
 				}
 			}
 		}
@@ -1251,9 +1583,18 @@ function compile(evt) {
 				var addr = -1;
 				labels.forEach(function(label) {
 					if(label.name == b.name) {
-						addr = label.addr;
+						addr = label.offset;
 					}
 				});
+				if(addr == -1) {
+					if(b.label) {
+						console.table(labels);
+						throw new SyntaxError('Line ' + b.line + ' : Label ' + b.name + ' is unknown !');
+					} else {
+						throw new SyntaxError('Line ' + b.line + ' : Invalid operand ' + b.name + ' !');
+					}
+				}
+				
 				// 8-bit will calculate (jr) offset, 16-bit will calculate the address.
 				if(b.size == 2) {
 					// 16-bit
@@ -1263,7 +1604,7 @@ function compile(evt) {
 					// 8-bit
 					b = addr - (offset + 1);
 					if(b < -128 || b > 127) {
-						throw new RangeError('jr displacement too important ! Can\'t jr from $' + offset + ' to ' + byteStream[i]);
+						throw new RangeError('Line ' + b.line + ' : jr displacement too important ! Can\'t jr from $' + offset + ' to ' + byteStream[i]);
 					}
 					
 					// Signed to unsigned

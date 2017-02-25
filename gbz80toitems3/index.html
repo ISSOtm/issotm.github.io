@@ -4,7 +4,7 @@
 		<meta charset="utf-8"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<link rel="stylesheet" href="bootstrap.min.css"/> <!-- https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/ -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 		
 		<title>gbz80 to items &bull; Online gbz80 to items converter</title>
 		<meta name="description" content="An easy online convertor for Pokemon Red/Blue/Yellow arbitrary code execution !"/>
@@ -13,7 +13,7 @@
 	</head>
 	
 	<body>
-		<nav class="nav navbar-inverse navbar-fixed-top" role="banner">
+		<header class="nav navbar-inverse navbar-fixed-top" role="banner">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-content" aria-expanded="false">
@@ -29,12 +29,12 @@
 					<p class="navbar-text navbar-right">&copy;2017 ISSOtm</p>
 				</div>
 			</div>
-		</nav>
+		</header>
 		
 		<div class="container-fluid" role="main">
 			<section role="document" aria-label="How-to">
-				<h1 role="heading">Welcome to <strong>GBz80 to Items</strong> !</h1>
-				<p id="howto">
+				<h1>Welcome to <strong>GBz80 to Items</strong> !</h1>
+				<div id="howto">
 					How-to :
 					<ol>
 						<li><b>Optional :</b> Enter the location where the code is intended to be</li>
@@ -42,14 +42,14 @@
 						<li>Hit the sweet compile button</li>
 						<li>Enjoy !</li>
 					</ol>
-				</p>
+				</div>
 			</section>
-			<hr role="separator">
+			<hr>
 			<section id="app" role="application" aria-label="GBz80 to Items" aria-describedby="howto">
 				<h2 id="optLabel">Options</h2>
 				<form class="form-inline" action="#" method="post" role="toolbar" aria-labelledby="optLabel" aria-controls="code">
 					<div class="form-group">
-						<button type="submit" id="compile" class="btn btn-success form-control" role="button" tabindex="2">Compile</button>
+						<button type="submit" id="compile" class="btn btn-success form-control" tabindex="2">Compile</button>
 					</div>
 					&nbsp;
 					<div class="form-group">
@@ -60,7 +60,7 @@
 						</div>
 					</div>
 				</form>
-				<hr role="presentation">
+				<hr>
 				<div class="row">
 					<div class="col-sm-7">
 						<div id="errorPanel" class="hidden" aria-hidden="true" role="alert">
@@ -87,8 +87,8 @@
 			</section>
 		</div>
 		
-		<script type="text/javascript" src="jquery.min.js"></script> <!-- https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/ -->
-		<script type="text/javascript" src="bootstrap.min.js"></script> <!-- https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/ -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="compiler.js"></script>
 	</body>
 </html>

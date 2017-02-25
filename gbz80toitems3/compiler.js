@@ -1,4 +1,4 @@
-
+﻿
 'use strict';
 
 
@@ -10,7 +10,7 @@ function hexToDec(hex) {
 	for(var i = 0; i < n; i++) {
 		var hexitDec = hexits.indexOf(hex[i]);
 		if(hexitDec == -1) {
-			throw new SyntaxError('Invalid hexadecimal ' + hex);
+			throw new AsmError('Invalid hexadecimal ' + hex);
 		}
 		
 		dec = dec * 16 + hexitDec;
@@ -40,7 +40,7 @@ function binToDec(bin) {
 		if(bin[i] == '1') {
 			dec++;
 		} else if(bin[i] != '0') {
-			throw new SyntaxError('Invalid binary ' + bin);
+			throw new AsmError('Invalid binary ' + bin);
 		}
 	}
 	
@@ -76,6 +76,26 @@ function parseBin(str) {
 }
 
 
+
+function AsmError(message) {
+	this.message = message || '';
+	
+	// Remove the call to this constructor from the stack.
+	var stack = (new Error()).stack.split('\n');
+	this.stack = this.stack || stack.slice(1).join(' ');
+	
+	// Add info on the caller - this is where the exception is being thrown, after all.
+	var callerInfo = stack[1].slice(stack[1].indexOf('@') + 1).split(':');
+	this.fileName = this.fileName || callerInfo.slice(0, -2).join(':');
+	this.lineNumber = this.lineNumber || parseInt(callerInfo.slice(-2, -1)) || '';
+	this.columnNumber = this.columnNumber || parseInt(callerInfo.slice(-1)) || '';
+}
+AsmError.prototype = Object.create(Error.prototype);
+AsmError.prototype.constructor = AsmError;
+AsmError.prototype.name = 'AsmError';
+
+
+
 var byteStream = [], currentGlobalLabel = '';
 var reg8  = ['b', 'c', 'd', 'e', 'h', 'l', '(hl)', 'a'];
 var reg16 = ['bc', 'de', 'hl', 'af'];
@@ -83,9 +103,9 @@ var conds = ['nz', 'z', 'nc', 'c'];
 
 function readByte(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('Only one operand expected to readByte !');
+		throw new AsmError('Only one operand expected to readByte !');
 	} else if(operand[0] == '') {
-		throw new SyntaxError('Empty operand given !');
+		throw new AsmError('Empty operand given !');
 	}
 	
 	operand = operand[0];
@@ -104,11 +124,11 @@ function readByte(operand) {
 		byteStream.push({size: 1, name: operand, isLabel: 0});
 		return 1;
 	} else {
-		throw new SyntaxError('Invalid operand passed to readByte !');
+		throw new AsmError('Invalid operand passed to readByte !');
 	}
 	
 	if(number < 0 || number > 256) {
-		throw new SyntaxError(operand + ' is not a 8-bit number !');
+		throw new AsmError(operand + ' is not a 8-bit number !');
 	} else {
 		byteStream.push(number);
 	}
@@ -116,11 +136,11 @@ function readByte(operand) {
 	return 1;
 }
 
-function readWord(operand) { // TODO
+function readWord(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('Only one operand expected to readWord !');
+		throw new AsmError('Only one operand expected to readWord !');
 	} else if(operand[0] == '') {
-		throw new SyntaxError('Empty operand given !');
+		throw new AsmError('Empty operand given !');
 	}
 	
 	operand = operand[0];
@@ -139,11 +159,11 @@ function readWord(operand) { // TODO
 		byteStream.push({size: 2, name: operand, isLabel: 0});
 		return 1;
 	} else {
-		throw new SyntaxError('Invalid operand passed to readWord !');
+		throw new AsmError('Invalid operand passed to readWord !');
 	}
 	
 	if(number < 0 || number > 256) {
-		throw new SyntaxError(operand + ' is not a 16-bit number !');
+		throw new AsmError(operand + ' is not a 16-bit number !');
 	} else {
 		byteStream.push(number % 256);
 		byteStream.push(Math.floor(number / 256));
@@ -154,7 +174,7 @@ function readWord(operand) { // TODO
 
 function determineLdType(operand) { // TODO
 	if(operand.length != 2) {
-		throw new SyntaxError('ld needs two operands !');
+		throw new AsmError('ld needs two operands !');
 	}
 	
 	var target = reg8.indexOf(operand[0]);
@@ -198,7 +218,7 @@ function determineLdType(operand) { // TODO
 		} else {
 			// Assume an immediate load.
 			byteStream.push(6 + target * 8);
-			readByte([operand(1)]);
+			readByte([operand[1]]);
 			
 			return 2;
 		}
@@ -240,6 +260,27 @@ function determineLdType(operand) { // TODO
 		byteStream.push(17);
 		readWord([operand[1]]);
 		return 3;
+	} else if(operand[0] == 'hl') {
+		if(operand[1].match(/^\(\s*sp\s*\+(-?\s*(?:\d+)|((?:\$|hex::?|0x)?(?:[0-9A-Fa-f]+)(?:h|H)?)|((?:%|bin::?|0b)?(?:[01]+)(?:b|B)?))\s*\)$/)) {
+			// ld hl, [sp+imm8]
+			
+			byteStream.push(248);
+			readByte(RegExp.$1);
+			return 2;
+		} else {
+			// ld hl, imm16
+			byteStream.push(33);
+			return 1;
+		}
+	} else if(operand[0] == 'sp') {
+		if(operand[1] == 'hl') {
+			byteStream.push(249);
+			return 1;
+		} else {
+			byteStream.push(49);
+			readWord(operand[1]);
+			return 3;
+		}
 	}
 }
 
@@ -249,7 +290,7 @@ function determineLdiType(operand) {
 	} else if(operand[0] == '(hl)' && operand[1] == 'a') {
 		byteStream.push(34);
 	} else {
-		throw new SyntaxError('Invalid use of ldi ! Either "ldi (hl), a" or "ldi a, (hl)" are valid.');
+		throw new AsmError('Invalid use of ldi ! Either "ldi (hl), a" or "ldi a, (hl)" are valid.');
 	}
 	
 	return 1;
@@ -261,7 +302,7 @@ function determineLddType(operand) {
 	} else if(operand[0] == '(hl)' && operand[1] == 'a') {
 		byteStream.push(50);
 	} else {
-		throw new SyntaxError('Invalid use of ldd ! Either "ldd (hl), a" or "ldd a, (hl)" are valid.');
+		throw new AsmError('Invalid use of ldd ! Either "ldd (hl), a" or "ldd a, (hl)" are valid.');
 	}
 	
 	return 1;
@@ -272,7 +313,7 @@ function determineLdhType(operand) {
 	var memAccess = operand[isLoadFromMem];
 	if(memAccess.match(/^\(((\$|hex::?|0x)?[fF][fF]00(h|H)?\s+\+\s+)?c\)$/) || memAccess == '(c)') {
 		if(isLoadFromMem) {
-			throw new SyntaxError('Invalid operand to ldh !');
+			throw new AsmError('Invalid operand to ldh !');
 		}
 		
 		// ldh ($FF00 + c), a
@@ -290,7 +331,7 @@ function determineAddType(operand) {
 		try {
 			// Try to read a "add imm8", and but throw an operand error if it fails
 			if(operand.length != 1) {
-				throw new SyntaxError('Welp, at least I tried being lenient.');
+				throw new AsmError('Welp, at least I tried being lenient.');
 			}
 			
 			byteStream.push(198);
@@ -298,7 +339,7 @@ function determineAddType(operand) {
 			return 2;
 			
 		} catch(err) {
-			throw new SyntaxError('add takes exactly 2 operands !');
+			throw new AsmError('add takes exactly 2 operands !');
 		}
 	}
 	
@@ -306,7 +347,7 @@ function determineAddType(operand) {
 	if(operand[0] == 'hl') {
 		reg2 = reg16.indexOf(operand[1]);
 		if(reg2 == -1) {
-			throw new SyntaxError('add hl, reg16 expects a 16-bit register as second argument, but ' + operand[1] + ' obtained.');
+			throw new AsmError('add hl, reg16 expects a 16-bit register as second argument, but ' + operand[1] + ' obtained.');
 		}
 		
 		byteStream.push(reg2 * 16 + 9);
@@ -324,7 +365,7 @@ function determineAddType(operand) {
 		byteStream.push(128 + reg2);
 		return 1;
 	} else {
-		throw new SyntaxError('add can only have a or hl as target !');
+		throw new AsmError('add can only have a or hl as target !');
 	}
 }
 
@@ -333,9 +374,9 @@ function determineAdcType(operand) {
 	
 	if(operand.length != 1) {
 		if(operand.length != 2) {
-			throw new SyntaxError('adc takes exactly 2 operands !');
+			throw new AsmError('adc takes exactly 2 operands !');
 		} else if(operand[0] != 'a') {
-			throw new SyntaxError('Only possible target for adc is a !');
+			throw new AsmError('Only possible target for adc is a !');
 		}
 		source = operand[1];
 	} else {
@@ -358,9 +399,9 @@ function determineSubType(operand) {
 	
 	if(operand.length != 1) {
 		if(operand.length != 2) {
-			throw new SyntaxError('sub takes exactly 2 operands !');
+			throw new AsmError('sub takes exactly 2 operands !');
 		} else if(operand[0] != 'a') {
-			throw new SyntaxError('Only possible target for sub is a !');
+			throw new AsmError('Only possible target for sub is a !');
 		}
 		source = operand[1];
 	} else {
@@ -383,9 +424,9 @@ function determineSbcType(operand) {
 	
 	if(operand.length != 1) {
 		if(operand.length != 2) {
-			throw new SyntaxError('sbc takes exactly 2 operands !');
+			throw new AsmError('sbc takes exactly 2 operands !');
 		} else if(operand[0] != 'a') {
-			throw new SyntaxError('Only possible target for sbc is a !');
+			throw new AsmError('Only possible target for sbc is a !');
 		}
 		source = operand[1];
 	} else {
@@ -405,7 +446,7 @@ function determineSbcType(operand) {
 
 function determineIncType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('inc takes exactly one argument !');
+		throw new AsmError('inc takes exactly one argument !');
 	}
 	
 	var reg = reg8.indexOf(operand[0]);
@@ -424,13 +465,13 @@ function determineIncType(operand) {
 		byteStream.push(51);
 		return 1;
 	} else {
-		throw new SyntaxError('Expected a reg8, reg16 or sp as operand for inc, but got \'' + operand + '\'')
+		throw new AsmError('Expected a reg8, reg16 or sp as operand for inc, but got \'' + operand + '\'')
 	}
 }
 
 function determineDecType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('dec takes exactly one argument !');
+		throw new AsmError('dec takes exactly one argument !');
 	}
 	
 	var reg = reg8.indexOf(operand[0]);
@@ -449,7 +490,7 @@ function determineDecType(operand) {
 		byteStream.push(59);
 		return 1;
 	} else {
-		throw new SyntaxError('Expected a reg8, reg16 or sp as operand for dec, but got \'' + operand + '\'')
+		throw new AsmError('Expected a reg8, reg16 or sp as operand for dec, but got \'' + operand + '\'')
 	}
 }
 
@@ -480,12 +521,12 @@ function determineJrTypeAndDest(operand) {
 	} else if(operand.length == 2) {
 		var cond = conditionals.indexOf(operand[0]);
 		if(cond == -1) {
-			throw new SyntaxError('Invalid condition for jr !');
+			throw new AsmError('Invalid condition for jr !');
 		}
 		
 		byteStream.push(32 + cond * 8);
 	} else {
-		throw new SyntaxError('Invalid operands to jr ! ');
+		throw new AsmError('Invalid operands to jr ! ');
 	}
 	
 	byteStream.push({size: 2, name: operand[1], isLabel: 1});
@@ -505,12 +546,12 @@ function determineJpTypeAndDest(operand) {
 	} else if(operand.length == 2) {
 		var cond = conditionals.indexOf(operand[0]);
 		if(cond == -1) {
-			throw new SyntaxError('Invalid condition for jp !');
+			throw new AsmError('Invalid condition for jp !');
 		}
 		
 		byteStream.push(194 + cond * 8);
 	} else {
-		throw new SyntaxError('Invalid operands to jp ! ');
+		throw new AsmError('Invalid operands to jp ! ');
 	}
 	
 	if(typeof operand[1] == 'string') {
@@ -531,12 +572,12 @@ function determineCallTypeAndDest(operand) {
 	} else if(operand.length == 2) {
 		var cond = conditionals.indexOf(operand[0]);
 		if(cond == -1) {
-			throw new SyntaxError('Invalid condition for call !');
+			throw new AsmError('Invalid condition for call !');
 		}
 		
 		byteStream.push(196 + cond * 8);
 	} else {
-		throw new SyntaxError('Invalid operands to call ! ');
+		throw new AsmError('Invalid operands to call ! ');
 	}
 	
 	if(typeof operand[1] == 'string') {
@@ -552,7 +593,7 @@ function determineCallTypeAndDest(operand) {
 
 function determineRetType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('ret takes only one operand !');
+		throw new AsmError('ret takes only one operand !');
 	}
 	
 	if(operand[0] == '') {
@@ -560,7 +601,7 @@ function determineRetType(operand) {
 	} else {
 		var condOfs = conds.indexOf(operand[0]);
 		if(condOfs == -1) {
-			throw new SyntaxError('ret takes one of the following conditionals : nz, z, nc, or c');
+			throw new AsmError('ret takes one of the following conditionals : nz, z, nc, or c');
 		}
 		
 		byteStream.push(192 + condOfs * 8);
@@ -570,9 +611,9 @@ function determineRetType(operand) {
 
 function determineRstDestination(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('rst takes exactly one operand !');
+		throw new AsmError('rst takes exactly one operand !');
 	} else if(!operand[0].match(/^[0-3][08]h$/)) {
-		throw new SyntaxError('rst vector must be of 00h, 08h, 10h, 18h, 20h, 28h, 30h, or 38h !');
+		throw new AsmError('rst vector must be of 00h, 08h, 10h, 18h, 20h, 28h, 30h, or 38h !');
 	}
 	
 	byteStream.push(199 + parseHex(operand[0]));
@@ -581,12 +622,12 @@ function determineRstDestination(operand) {
 
 function determinePushType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('push takes exactly one operand !');
+		throw new AsmError('push takes exactly one operand !');
 	}
 	
 	var reg = reg16.indexOf(operand[0]);
 	if(reg == -1) {
-		throw new SyntaxError('push : unknown operand ' + operand[0] + ' (expected bc, de, hl or af)');
+		throw new AsmError('push : unknown operand ' + operand[0] + ' (expected bc, de, hl or af)');
 	}
 	
 	byteStream.push(197 + reg * 16);
@@ -595,12 +636,12 @@ function determinePushType(operand) {
 
 function determinePopType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('pop takes exactly one operand !');
+		throw new AsmError('pop takes exactly one operand !');
 	}
 	
 	var reg = reg16.indexOf(operand[0]);
 	if(reg == -1) {
-		throw new SyntaxError('pop : unknown operand ' + operand[0] + ' (expected bc, de, hl or af)');
+		throw new AsmError('pop : unknown operand ' + operand[0] + ' (expected bc, de, hl or af)');
 	}
 	
 	byteStream.push(193 + reg * 16);
@@ -609,7 +650,7 @@ function determinePopType(operand) {
 
 function placeNop(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('nop takes no operands !');
+		throw new AsmError('nop takes no operands !');
 	}
 	
 	byteStream.push(0);
@@ -618,7 +659,7 @@ function placeNop(operand) {
 
 function placeScf(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('scf takes no operands !');
+		throw new AsmError('scf takes no operands !');
 	}
 	
 	byteStream.push(55);
@@ -627,7 +668,7 @@ function placeScf(operand) {
 
 function placeCcf(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('ccf takes no operands !');
+		throw new AsmError('ccf takes no operands !');
 	}
 	
 	byteStream.push(63);
@@ -636,7 +677,7 @@ function placeCcf(operand) {
 
 function placeCpl(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('cpl takes no operands !');
+		throw new AsmError('cpl takes no operands !');
 	}
 	
 	byteStream.push(47);
@@ -645,7 +686,7 @@ function placeCpl(operand) {
 
 function placeDaa(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('daa takes no operands !');
+		throw new AsmError('daa takes no operands !');
 	}
 	
 	byteStream.push(39);
@@ -654,7 +695,7 @@ function placeDaa(operand) {
 
 function placeRla(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('rla takes no operands !');
+		throw new AsmError('rla takes no operands !');
 	}
 	
 	byteStream.push(23);
@@ -663,7 +704,7 @@ function placeRla(operand) {
 
 function placeRra(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('rra takes no operands !');
+		throw new AsmError('rra takes no operands !');
 	}
 	
 	byteStream.push(31);
@@ -672,7 +713,7 @@ function placeRra(operand) {
 
 function placeRlca(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('rlca takes no operands !');
+		throw new AsmError('rlca takes no operands !');
 	}
 	
 	byteStream.push(7);
@@ -681,7 +722,7 @@ function placeRlca(operand) {
 
 function placeRrca(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('rrca takes no operands !');
+		throw new AsmError('rrca takes no operands !');
 	}
 	
 	byteStream.push(15);
@@ -690,12 +731,12 @@ function placeRrca(operand) {
 
 function determineRlcType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('rlc takes only one operand !');
+		throw new AsmError('rlc takes only one operand !');
 	}
 	
 	var reg = reg8.indexof(operand[0]);
 	if(reg == -1) {
-		throw new SyntaxError('rlc\'s operand mus be a reg8 !');
+		throw new AsmError('rlc\'s operand mus be a reg8 !');
 	}
 	
 	byteStream.push(203);
@@ -705,12 +746,12 @@ function determineRlcType(operand) {
 
 function determineRrcType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('rrc takes only one operand !');
+		throw new AsmError('rrc takes only one operand !');
 	}
 	
 	var reg = reg8.indexof(operand[0]);
 	if(reg == -1) {
-		throw new SyntaxError('rrc\'s operand mus be a reg8 !');
+		throw new AsmError('rrc\'s operand mus be a reg8 !');
 	}
 	
 	byteStream.push(203);
@@ -720,12 +761,12 @@ function determineRrcType(operand) {
 
 function determineRlType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('rl takes only one operand !');
+		throw new AsmError('rl takes only one operand !');
 	}
 	
 	var reg = reg8.indexof(operand[0]);
 	if(reg == -1) {
-		throw new SyntaxError('rl\'s operand mus be a reg8 !');
+		throw new AsmError('rl\'s operand mus be a reg8 !');
 	}
 	
 	byteStream.push(203);
@@ -735,12 +776,12 @@ function determineRlType(operand) {
 
 function determineRrType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('rr takes only one operand !');
+		throw new AsmError('rr takes only one operand !');
 	}
 	
 	var reg = reg8.indexof(operand[0]);
 	if(reg == -1) {
-		throw new SyntaxError('rr\'s operand mus be a reg8 !');
+		throw new AsmError('rr\'s operand mus be a reg8 !');
 	}
 	
 	byteStream.push(203);
@@ -750,12 +791,12 @@ function determineRrType(operand) {
 
 function determineSlaType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('sla takes only one operand !');
+		throw new AsmError('sla takes only one operand !');
 	}
 	
 	var reg = reg8.indexof(operand[0]);
 	if(reg == -1) {
-		throw new SyntaxError('sla\'s operand mus be a reg8 !');
+		throw new AsmError('sla\'s operand mus be a reg8 !');
 	}
 	
 	byteStream.push(203);
@@ -765,12 +806,12 @@ function determineSlaType(operand) {
 
 function determineSraType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('sra takes only one operand !');
+		throw new AsmError('sra takes only one operand !');
 	}
 	
 	var reg = reg8.indexof(operand[0]);
 	if(reg == -1) {
-		throw new SyntaxError('sra\'s operand mus be a reg8 !');
+		throw new AsmError('sra\'s operand mus be a reg8 !');
 	}
 	
 	byteStream.push(203);
@@ -780,12 +821,12 @@ function determineSraType(operand) {
 
 function determineSwapType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('swap takes only one operand !');
+		throw new AsmError('swap takes only one operand !');
 	}
 	
 	var reg = reg8.indexof(operand[0]);
 	if(reg == -1) {
-		throw new SyntaxError('swap\'s operand mus be a reg8 !');
+		throw new AsmError('swap\'s operand mus be a reg8 !');
 	}
 	
 	byteStream.push(203);
@@ -795,12 +836,12 @@ function determineSwapType(operand) {
 
 function determineSrlType(operand) {
 	if(operand.length != 1) {
-		throw new SyntaxError('srl takes only one operand !');
+		throw new AsmError('srl takes only one operand !');
 	}
 	
 	var reg = reg8.indexof(operand[0]);
 	if(reg == -1) {
-		throw new SyntaxError('srl\'s operand mus be a reg8 !');
+		throw new AsmError('srl\'s operand mus be a reg8 !');
 	}
 	
 	byteStream.push(203);
@@ -810,17 +851,17 @@ function determineSrlType(operand) {
 
 function determineBitType(operand) {
 	if(operand.length != 2) {
-		throw new SyntaxError('bit takes exactly two operands !');
+		throw new AsmError('bit takes exactly two operands !');
 	}
 	
 	var bit = parseInt(operand[0]);
 	if(isNaN(bit) || bit < 0 || bit > 7) {
-		throw new SyntaxError('bit\'s first operand must be a number in range 0 - 7 (inclusive) !');
+		throw new AsmError('bit\'s first operand must be a number in range 0 - 7 (inclusive) !');
 	}
 	
 	var reg = reg8.indexOf(operand[1]);
 	if(reg == -1) {
-		throw new SyntaxError('bit\'s second operand must be a reg8 !');
+		throw new AsmError('bit\'s second operand must be a reg8 !');
 	}
 	
 	byteStream.push(203);
@@ -830,17 +871,17 @@ function determineBitType(operand) {
 
 function determineResType(operand) {
 	if(operand.length != 2) {
-		throw new SyntaxError('res takes exactly two operands !');
+		throw new AsmError('res takes exactly two operands !');
 	}
 	
 	var bit = parseInt(operand[0]);
 	if(isNaN(bit) || bit < 0 || bit > 7) {
-		throw new SyntaxError('res\'s first operand must be a number in range 0 - 7 (inclusive) !');
+		throw new AsmError('res\'s first operand must be a number in range 0 - 7 (inclusive) !');
 	}
 	
 	var reg = reg8.indexOf(operand[1]);
 	if(reg == -1) {
-		throw new SyntaxError('res\'s second operand must be a reg8 !');
+		throw new AsmError('res\'s second operand must be a reg8 !');
 	}
 	
 	byteStream.push(203);
@@ -850,17 +891,17 @@ function determineResType(operand) {
 
 function determineSetType(operand) {
 	if(operand.length != 2) {
-		throw new SyntaxError('set takes exactly two operands !');
+		throw new AsmError('set takes exactly two operands !');
 	}
 	
 	var bit = parseInt(operand[0]);
 	if(isNaN(bit) || bit < 0 || bit > 7) {
-		throw new SyntaxError('set\'s first operand must be a number in range 0 - 7 (inclusive) !');
+		throw new AsmError('set\'s first operand must be a number in range 0 - 7 (inclusive) !');
 	}
 	
 	var reg = reg8.indexOf(operand[1]);
 	if(reg == -1) {
-		throw new SyntaxError('set\'s second operand must be a reg8 !');
+		throw new AsmError('set\'s second operand must be a reg8 !');
 	}
 	
 	byteStream.push(203);
@@ -870,7 +911,7 @@ function determineSetType(operand) {
 
 function placeHalt(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('nop takes no operands !');
+		throw new AsmError('nop takes no operands !');
 	}
 	
 	byteStream.push(118);
@@ -879,7 +920,7 @@ function placeHalt(operand) {
 
 function placeStop(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('nop takes no operands !');
+		throw new AsmError('nop takes no operands !');
 	}
 	
 	byteStream.push(16);
@@ -889,7 +930,7 @@ function placeStop(operand) {
 
 function placeEi(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('nop takes no operands !');
+		throw new AsmError('nop takes no operands !');
 	}
 	
 	byteStream.push(251);
@@ -898,7 +939,7 @@ function placeEi(operand) {
 
 function placeDi(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('nop takes no operands !');
+		throw new AsmError('nop takes no operands !');
 	}
 	
 	byteStream.push(243);
@@ -907,7 +948,7 @@ function placeDi(operand) {
 
 function placeReti(operand) {
 	if(operand.length != 1 || operand[0] != '') {
-		throw new SyntaxError('nop takes no operands !');
+		throw new AsmError('nop takes no operands !');
 	}
 	
 	byteStream.push(217);
@@ -1458,7 +1499,7 @@ function compile(evt) {
 	for(i = 1; i < n; i++) {
 		lineNums.push('' + i);
 	}
-	$('#lineNumbers').html(lineNums.join('<br/>')).removeClass('hidden');
+	$('#lineNumbers').html(lineNums.join('<br/>')).removeClass('hidden').attr('aria-hidden', 'false');
 	
 	var labels = [];
 	currentGlobalLabel = '';
@@ -1471,7 +1512,7 @@ function compile(evt) {
 		});
 		
 		if(labelOffset == -1) {
-			throw new ReferenceError('Line ' + i + ' : Unknown label \'' + b + '\'');
+			throw new AsmError('Line ' + i + ' : Unknown label \'' + b + '\'');
 		}
 		return labelOffset;
 	}
@@ -1479,7 +1520,7 @@ function compile(evt) {
 	try {
 		var offset = hexToDec($('#baseOffset').val().toLowerCase());
 	} catch(err) {
-		throw new TypeError('Failed to parse Base offset : ' + err.message);
+		throw new AsmError('Failed to parse Base offset : ' + err.message);
 	}
 	var baseOffset = offset;
 	
@@ -1508,11 +1549,11 @@ function compile(evt) {
 				// Name will be in format "Global.Local"
 				instrName = instrName.trim();
 				if(instrName.slice(1) == '') {
-					throw new SyntaxError('Line ' + i + ' : Empty label name !');
+					throw new AsmError('Line ' + i + ' : Empty label name !');
 				}
 				
 				if(labels.indexOf(currentGlobalLabel + instrName) != -1) {
-					throw new SyntaxError('Line ' + i + ' : Duplicate label ' + currentGlobalLabel + instrName);
+					throw new AsmError('Line ' + i + ' : Duplicate label ' + currentGlobalLabel + instrName);
 				}
 				labels.push({name: currentGlobalLabel + instrName, offset: offset});
 				
@@ -1520,11 +1561,11 @@ function compile(evt) {
 				// Global label
 				instrName = instrName.replace(':', '').replace(':', '').trim();
 				if(instrName == '') {
-					throw new SyntaxError('Line ' + i + ' : Empty label name !');
+					throw new AsmError('Line ' + i + ' : Empty label name !');
 				}
 				
 				if(labels.indexOf(instrName) != -1) {
-					throw new SyntaxError('Line ' + i + ' : Duplicate label ' + instrName);
+					throw new AsmError('Line ' + i + ' : Duplicate label ' + instrName);
 				}
 				labels.push({name: instrName, offset: offset});
 				currentGlobalLabel = instrName;
@@ -1536,7 +1577,15 @@ function compile(evt) {
 					if(instruction.name == instrName) {
 						// The function return how many bytes were written.
 						try {
-							offset += instruction.func(operands);
+							var len = instruction.func(operands);
+							offset += len;
+							
+							// Add the current line number to all added objects
+							for(var index = 0; index < len; index++) {
+								if(typeof byteStream[index] == 'object') {
+									byteStream[index].line = i;
+								}
+							}
 						} catch(err) {
 							err.message = 'Line ' + i + ' : ' + err.message;
 							throw err;
@@ -1546,18 +1595,13 @@ function compile(evt) {
 				});
 				
 				if(!ranFunc) {
-					throw new RangeError('Line ' + i + ' : Unknown instruction : ' + instrName + ' (line ' + i + ')');
-				}
-				
-				// For debugging purposes.
-				if(typeof byteStream[byteStream.length - 1] == 'object') {
-					byteStream[byteStream.length - 1].line = i;
+					throw new AsmError('Line ' + i + ' : Unknown instruction : ' + instrName + ' (line ' + i + ')');
 				}
 			}
 		}
 		
 		if(offset >= 65536) {
-			throw new RangeError('Line ' + i + ' : You went beyond $FFFF in memory !');
+			throw new AsmError('Line ' + i + ' : You went beyond $FFFF in memory !');
 		}
 	}
 	
@@ -1570,7 +1614,7 @@ function compile(evt) {
 	var itemList = [];
 	var warnings = {duplicate: false, quantity: false, invalid: false};
 	
-	for(i = 0; i < n; i++) {
+	function processByteStreamElem(i) {
 		var b = byteStream[i];
 		
 		switch(typeof b) {
@@ -1589,9 +1633,9 @@ function compile(evt) {
 				if(addr == -1) {
 					if(b.label) {
 						console.table(labels);
-						throw new SyntaxError('Line ' + b.line + ' : Label ' + b.name + ' is unknown !');
+						throw new AsmError('Line ' + b.line + ' : Label ' + b.name + ' is unknown !');
 					} else {
-						throw new SyntaxError('Line ' + b.line + ' : Invalid operand ' + b.name + ' !');
+						throw new AsmError('Line ' + b.line + ' : Invalid operand ' + b.name + ' !');
 					}
 				}
 				
@@ -1604,7 +1648,7 @@ function compile(evt) {
 					// 8-bit
 					b = addr - (offset + 1);
 					if(b < -128 || b > 127) {
-						throw new RangeError('Line ' + b.line + ' : jr displacement too important ! Can\'t jr from $' + offset + ' to ' + byteStream[i]);
+						throw new AsmError('Line ' + b.line + ' : jr displacement too important ! Can\'t jr from $' + offset + ' to ' + byteStream[i]);
 					}
 					
 					// Signed to unsigned
@@ -1612,12 +1656,19 @@ function compile(evt) {
 						b += 256;
 					}
 				}
+				
+				byteStream[i] = b;
 			break;
 			
 			default:
 				console.table(byteStream);
-				throw new TypeError('Encountered invalid byte stream value at index ' + i);
+				throw new AsmError('Encountered invalid byte stream value at index ' + i);
 		}
+	}
+	
+	for(i = 0; i < n; i++) {
+		processByteStreamElem(i);
+		var b = byteStream[i];
 		
 		// We now process the thing.
 		if(attribs[b].used) {
@@ -1642,6 +1693,7 @@ function compile(evt) {
 		if(i == byteStream.length) {
 			line += 'x[Any qty]';
 		} else {
+			processByteStreamElem(i);
 			line += 'x' + byteStream[i] + ' (hex:' + decToHex(byteStream[i]).toUpperCase() + ')';
 		}
 		
@@ -1661,20 +1713,25 @@ $(function() {
 	$('#code').attr('contentEditable', 'true');
 	
 	$('#dismissError').click(function() {
-		$('#errorPanel, #lineNumbers').addClass('hidden');
+		$('#errorPanel, #lineNumbers').addClass('hidden').attr('aria-hidden', 'true');
 	});
 	
 	$('#code').focus(function() {
-		$('#lineNumbers').addClass('hidden');
+		$('#lineNumbers').addClass('hidden').attr('aria-hidden', 'true');
 	});
 	
 	$('.form-inline').on('submit', function(evt) {
+		$('#app').attr('aria-busy', 'true');
+		
 		try {
 			compile(evt);
 		} catch(err) {
+			$('#errorTitle').text((err.name == 'AsmError') ? 'Error !' : 'Internal error !');
 			$('#errorText').text(err.message);
 			$('#errorPanel').removeClass('hidden').attr('aria-hidden', 'false');
 			throw err;
+		} finally {
+			$('#app').attr('aria-busy', 'false');
 		}
 	});
 });

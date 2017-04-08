@@ -1,14 +1,20 @@
 
+// Because it IS better !
 'use strict';
 
 
+// Hexadecimal digits.
 var hexits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+// Converts hex (a hex number as a string) into its decimal counterpart.
+// hex's letters must be caps. (use String.toUpperCase())
 function hexToDec(hex) {
 	var dec = 0;
+	// Avoid recalculating hex.length...
 	var n = hex.length;
 	
 	for(var i = 0; i < n; i++) {
-		var hexitDec = hexits.indexOf(hex[i]);
+		var hexitDec = hexits.indexOf(hex[i].toLowerCase());
+		// Check if it's a valid hex during translation
 		if(hexitDec == -1) {
 			throw new AsmError('Invalid hexadecimal ' + hex);
 		}
@@ -19,6 +25,7 @@ function hexToDec(hex) {
 	return dec;
 }
 
+// Performs the opposite as hexToDec.
 function decToHex(dec) {
 	var hex = '';
 	
@@ -30,6 +37,7 @@ function decToHex(dec) {
 	return hex;
 }
 
+// Needs no explanation.
 function binToDec(bin) {
 	var dec = 0;
 	var n = bin.length;
@@ -47,6 +55,8 @@ function binToDec(bin) {
 	return dec;
 }
 
+// Give a hex number in the usual format, attempt to extract the hex part.
+// If success return the decimal, otherwise return NaN.
 var regHex = /^(\$|hex::?|0x)?([0-9A-Fa-f]+)(h|H)?$/;
 function parseHex(str) {
 	if(typeof str != 'string') {
@@ -57,10 +67,11 @@ function parseHex(str) {
 	if(str.match(regHex) && (RegExp.$1 != '') != (RegExp.$3 != '')) {
 		return hexToDec(RegExp.$2);
 	} else {
-		return NaN;
+		throw new AsmError(str + ' is badly formatted hexadecimal !');
 	}
 }
 
+// Same.
 var regBin = /^(%|bin::?|0b)?([01]+)(b|B)?$/;
 function parseBin(str) {
 	if(typeof str != 'string') {
@@ -71,24 +82,27 @@ function parseBin(str) {
 	if(str.match(regBin) && (RegExp.$1 != '') != (RegExp.$3 != '')) {
 		return binToDec(RegExp.$2);
 	} else {
-		return NaN;
+		throw new AsmError(str + ' is badly formatted binary !');
 	}
 }
 
 
 
+// Custom error type. HEEEELL YEAAAA.
 function AsmError(message) {
 	this.message = message || '';
 	
 	// Remove the call to this constructor from the stack.
 	var stack = (new Error()).stack.split('\n');
-	this.stack = this.stack || stack.slice(1).join(' ');
+	this.stack = this.stack || stack.slice(1).join('\n');
 	
 	// Add info on the caller - this is where the exception is being thrown, after all.
 	var callerInfo = stack[1].slice(stack[1].indexOf('@') + 1).split(':');
 	this.fileName = this.fileName || callerInfo.slice(0, -2).join(':');
 	this.lineNumber = this.lineNumber || parseInt(callerInfo.slice(-2, -1)) || '';
 	this.columnNumber = this.columnNumber || parseInt(callerInfo.slice(-1)) || '';
+	
+	console.error(message);
 }
 AsmError.prototype = Object.create(Error.prototype);
 AsmError.prototype.constructor = AsmError;
@@ -96,10 +110,12 @@ AsmError.prototype.name = 'AsmError';
 
 
 
-var byteStream = [], currentGlobalLabel = '';
-var reg8  = ['b', 'c', 'd', 'e', 'h', 'l', '(hl)', 'a'];
-var reg16 = ['bc', 'de', 'hl', 'af'];
-var conds = ['nz', 'z', 'nc', 'c'];
+// Global vars. Flushed before use anyways.
+var byteStream = [], currentGlobalLabel = '', labels = [];
+// Used for syntax checking.
+var reg8  = ['b', 'c', 'd', 'e', 'h', 'l', '(hl)', 'a'],
+	reg16 = ['bc', 'de', 'hl', 'af'],
+	conds = ['nz', 'z', 'nc', 'c'];
 
 function readByte(operand) {
 	if(operand.length != 1) {
@@ -121,7 +137,7 @@ function readByte(operand) {
 		number = parseBin(operand);
 	} else if(typeof operand == 'string') {
 		// Label
-		byteStream.push({size: 1, name: operand, isLabel: 0});
+		byteStream.push({size: 1, name: operand, isLabel: false});
 		return 1;
 	} else {
 		throw new AsmError('Invalid operand passed to readByte !');
@@ -156,8 +172,9 @@ function readWord(operand) {
 		number = parseBin(operand);
 	} else if(typeof operand == 'string') {
 		// Label
-		byteStream.push({size: 2, name: operand, isLabel: 0});
-		return 1;
+		byteStream.push({size: 2, name: operand, isLabel: false});
+		byteStream.push(0);
+		return 2;
 	} else {
 		throw new AsmError('Invalid operand passed to readWord !');
 	}
@@ -172,7 +189,7 @@ function readWord(operand) {
 	return 2;
 }
 
-function determineLdType(operand) { // TODO
+function determineLdType(operand) {
 	if(operand.length != 2) {
 		throw new AsmError('ld needs two operands !');
 	}
@@ -265,12 +282,13 @@ function determineLdType(operand) { // TODO
 			// ld hl, [sp+imm8]
 			
 			byteStream.push(248);
-			readByte(RegExp.$1);
+			readByte([RegExp.$1]);
 			return 2;
 		} else {
 			// ld hl, imm16
 			byteStream.push(33);
-			return 1;
+			readWord([operand[1]]);
+			return 3;
 		}
 	} else if(operand[0] == 'sp') {
 		if(operand[1] == 'hl') {
@@ -351,6 +369,7 @@ function determineAddType(operand) {
 		try {
 			// Try to read a "add imm8", and but throw an operand error if it fails
 			if(operand.length != 1) {
+				// Error message doesn't matter : it will be caught.
 				throw new AsmError('Welp, at least I tried being lenient.');
 			}
 			
@@ -539,7 +558,7 @@ function determineJrTypeAndDest(operand) {
 		operand.push(operand[0]);
 		byteStream.push(24);
 	} else if(operand.length == 2) {
-		var cond = conditionals.indexOf(operand[0]);
+		var cond = conds.indexOf(operand[0]);
 		if(cond == -1) {
 			throw new AsmError('Invalid condition for jr !');
 		}
@@ -549,7 +568,24 @@ function determineJrTypeAndDest(operand) {
 		throw new AsmError('Invalid operands to jr ! ');
 	}
 	
-	byteStream.push({size: 2, name: operand[1], isLabel: 1});
+	readWord([operand[1]]);
+	var high = byteStream.pop(), low = byteStream.pop();
+	if(typeof low == 'object') {
+		low.size = 1;
+		low.isLabel = true;
+		byteStream.push(low);
+	} else {
+		
+		var addr = high * 256 + low;
+		var i = 0, uniqueName = 'jr:0';
+		while(labels.indexOf(uniqueName) != -1) {
+			i++;
+			uniqueName = 'jr:' + i;
+		}
+		labels.push({name: uniqueName, offset: addr});
+		byteStream.push({size: 1, name: uniqueName, isLabel: true});
+	}
+
 	return 2;
 }
 
@@ -564,7 +600,7 @@ function determineJpTypeAndDest(operand) {
 		operand.push(operand[0]);
 		byteStream.push(195);
 	} else if(operand.length == 2) {
-		var cond = conditionals.indexOf(operand[0]);
+		var cond = conds.indexOf(operand[0]);
 		if(cond == -1) {
 			throw new AsmError('Invalid condition for jp !');
 		}
@@ -574,14 +610,10 @@ function determineJpTypeAndDest(operand) {
 		throw new AsmError('Invalid operands to jp ! ');
 	}
 	
-	if(typeof operand[1] == 'string') {
-		byteStream.push({size: 2, name: operand[1], isLabel: 1});
-		byteStream.push(0); // Filler for address replacement
-	} else {
-		byteStream.push(operand[1] % 256);
-		byteStream.push(Math.floor(operand[1] / 256));
+	readWord([operand[1]]);
+	if(typeof byteStream[byteStream.length - 2] == 'object') {
+		byteStream[byteStream.length - 2].isLabel = true;
 	}
-	
 	return 3;
 }
 
@@ -1033,7 +1065,7 @@ var items = [
 		"Protein",
 		"Iron",
 		"Carbos",
-		"Calcuim",
+		"Calcium",
 		"Rare Candy",
 		"Dome Fossil",
 		"Helix Fossil",
@@ -1508,20 +1540,33 @@ var attribs = [
         {used: false, valid: false, qty: true},
         {used: false, valid: false, qty: false}];
 function compile(evt) {
+	// Prevent submitting the form (would trigger a page reload or scroll)
 	evt.preventDefault();
 	
+	// Removes the line labels
 	$('#dismissError').trigger('click');
 	
+	// Get all code lines
+	var codeElem = document.getElementById('code'),
+		lines = codeElem.innerText.split('\n'),
+		lastElem = lines.pop();
 	
-	var lines = document.getElementById('code').innerText.split('\n');
+	// Sometimes there is a trailing <br /> that doesn't generate any newline on-screen.
+	// If causes a problem with line numbering, though.
+	if(lastElem != '') {
+		lines.push(lastElem);
+	}
+	
+	codeElem.innerHTML = lines.join('<br />');
+	// Declare variables
 	var n = lines.length, i, lineNums = [];
 	
-	for(i = 1; i < n; i++) {
+	for(i = 1; i <= n; i++) {
 		lineNums.push('' + i);
 	}
 	$('#lineNumbers').html(lineNums.join('<br/>')).removeClass('hidden').attr('aria-hidden', 'false');
 	
-	var labels = [];
+	labels = [];
 	currentGlobalLabel = '';
 	function getLabelOffset(labelName) {
 		var labelOffset = -1;
@@ -1601,9 +1646,9 @@ function compile(evt) {
 							offset += len;
 							
 							// Add the current line number to all added objects
-							for(var index = 0; index < len; index++) {
-								if(typeof byteStream[index] == 'object') {
-									byteStream[index].line = i;
+							for(var index = 1; index <= len; index++) {
+								if(typeof byteStream[byteStream.length - index] == 'object') {
+									byteStream[byteStream.length - index].line = i;
 								}
 							}
 						} catch(err) {
@@ -1666,7 +1711,7 @@ function compile(evt) {
 					byteStream[i+1] = Math.floor(addr / 256);
 				} else {
 					// 8-bit
-					b = addr - (offset + 1);
+					b = addr - (offset + 2);
 					if(b < -128 || b > 127) {
 						throw new AsmError('Line ' + b.line + ' : jr displacement too important ! Can\'t jr from $' + offset + ' to ' + byteStream[i]);
 					}
@@ -1725,12 +1770,14 @@ function compile(evt) {
 	/** END COMPILER **/
 	
 	var output = itemList.join('</div><div class="col-sm-7">');
-	$('#output').html((output == '') ? 'Please type in something on the left.' : '<div class="col-sm-7">' + output + '</div>');
+	$('#output').html('<div class="col-sm-7">' + (output == '' ? 'Please type in something on the left.' : output) + '</div>');
 }
 
 
+// Is ran once the DOM has loaded
 $(function() {
-	$('#code').attr('contentEditable', 'true');
+	// Set the code area to be editable
+	$('#code').attr('contentEditable', 'true'); // .html('&nbsp;');
 	
 	$('#dismissError').click(function() {
 		$('#errorPanel, #lineNumbers').addClass('hidden').attr('aria-hidden', 'true');
@@ -1746,8 +1793,15 @@ $(function() {
 		try {
 			compile(evt);
 		} catch(err) {
-			$('#errorTitle').text((err.name == 'AsmError') ? 'Error !' : 'Internal error !');
-			$('#errorText').text(err.message);
+			if(err.name == 'AsmError') { // Compilation error, nothing too bad
+				$('#errorTitle').html('Error !');
+				$('#errorText').html(err.message);
+			} else { // Bad internal error
+				$('#errorTitle').html('Internal ' + err.name + ' !');
+				$('#errorText').html(err.message + ' (line ' + err.lineNumber + ')'
+										+ '<br />Stack trace :<br/>' + err.stack.split('\n').join('<br />')
+										+ '<br /><br />Please copy this plus the code you\'re trying to compile and report to the developer. Thanksies !');
+			}
 			$('#errorPanel').removeClass('hidden').attr('aria-hidden', 'false');
 			throw err;
 		} finally {

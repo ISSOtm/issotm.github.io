@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/" />
+		
+		<title>gbz80 to items &bull; Online gbz80 to items converter</title>
+		<meta name="description" content="An easy online convertor for Pokemon Red/Blue/Yellow arbitrary code execution !"/>
+		
+		<link rel="stylesheet" href="gbz80toitems.css"/>
+	</head>
+	
+	<body>
+		<header class="nav navbar-inverse navbar-fixed-top" role="banner">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-content" aria-expanded="false">
+						<span class="sr-only">Enlever la barre</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand">GBz80 to Items</a>
+				</div>
+				<div class="collapse navbar-collapse" id="navbar-content">
+					<p class="navbar-text">Version 3.0.2 "1/2" FR</p>
+					<p class="navbar-text navbar-right">&copy;2017 ISSOtm</p>
+				</div>
+			</div>
+		</header>
+		
+		<div class="container-fluid" role="main">
+			<section role="document" aria-label="How-to">
+				<h1>Bienvenue sur <strong>GBz80 to Items</strong> !</h1>
+				<div id="howto">
+					Mode d'emploi :
+					<ol>
+						<li><b>Optionnel :</b> Entrez l'adresse o&ugrave; sera stock&eacute; votre code</li>
+						<li>Tapez votre code dans la bo&icirc;te en-dessous</li>
+						<li>TAPEZ LE GROS BOUTON VERT</li>
+						<li>Enjoy !</li>
+					</ol>
+				</div>
+			</section>
+			<hr>
+			<section id="app" role="application" aria-label="GBz80 to Items" aria-describedby="howto">
+				<h2 id="optLabel">Options</h2>
+				<form class="form-inline" action="#" method="post" role="toolbar" aria-labelledby="optLabel" aria-controls="code">
+					<div class="form-group">
+						<button type="submit" id="compile" class="btn btn-success form-control" tabindex="2">Compiler</button>
+					</div>
+					&nbsp;
+					<div class="form-group">
+						<label for="baseOffset">Adresse de d&eacute;part</label>
+						<div class="input-group">
+							<span class="input-group-addon" id="offsetPrefix">$</span>
+							<input type="text" id="baseOffset" class="form-control" value="D327" tabindex="3"/>
+						</div>
+					</div>
+				</form>
+				<hr>
+				<div class="row">
+					<div class="col-sm-7">
+						<div id="errorPanel" class="hidden" aria-hidden="true" role="alert">
+							<h2 id="errorTitle">Erreur !</h2>
+							<div class="alert alert-danger"><button type="button" id="dismissError" class="close" aria-label="Dismiss">&times;</button><span id="errorText"></span></div>
+						</div>
+						<h2>Mettez votre code ici</h2>
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<span class="hidden" id="lineNumbers"></span>
+								<p id="code" tabindex="1" role="textbox" aria-multiline="true" aria-required="true"></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<h2>Items correspondants</h2>
+						<div class="well">
+							<div class="row" id="output">
+								<div class="col-sm-7">Merci d'&eacute;crire quelque chose &agrave; gauche.</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/"></script>
+		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/"></script>
+		<script type="text/javascript" src="compiler.js"></script>
+	</body>
+</html>

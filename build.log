@@ -32,3 +32,37 @@ To disable debug mode, edit the Makefile.
 
 rgblink  -o bin/aevilia_glitchmaps.gbc obj/main_glitchmaps.o obj/battle_glitchmaps.o obj/engine_glitchmaps.o obj/home_glitchmaps.o obj/gfx_glitchmaps.o obj/maps_glitchmaps.o obj/save_glitchmaps.o obj/sound_glitchmaps.o obj/text_glitchmaps.o obj/tileset_glitchmaps.o
 rgbfix -Cjv -i ISSO -k 42 -l 0x33 -m 0x1B -n 0 -p 0xFF -r 0x04 -t AEVILIA bin/aevilia_glitchmaps.gbc
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/main.o main.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/battle.o battle.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/engine.o engine.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/home.o home.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/gfx.o gfx.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/maps.o maps.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/save.o save.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/sound.o sound.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/text.o text.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/tileset.o tileset.asm
+
+*** WARNING! COMPILING IN DEBUG MODE!
+*** DO NOT REDISTRIBUTE THIS ROM!
+To disable debug mode, edit the Makefile.
+
+rgblink  -n bin/aevilia.sym -m bin/aevilia.map -o bin/aevilia.gbc obj/main.o obj/battle.o obj/engine.o obj/home.o obj/gfx.o obj/maps.o obj/save.o obj/sound.o obj/text.o obj/tileset.o
+rgbfix -Cjv -i ISSO -k 42 -l 0x33 -m 0x1B -n 0 -p 0xFF -r 0x04 -t AEVILIA bin/aevilia.gbc
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -D GlitchMaps -o obj/main_glitchmaps.o main.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -D GlitchMaps -o obj/battle_glitchmaps.o battle.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -D GlitchMaps -o obj/engine_glitchmaps.o engine.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -D GlitchMaps -o obj/home_glitchmaps.o home.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -D GlitchMaps -o obj/gfx_glitchmaps.o gfx.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -D GlitchMaps -o obj/maps_glitchmaps.o maps.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -D GlitchMaps -o obj/save_glitchmaps.o save.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -D GlitchMaps -o obj/sound_glitchmaps.o sound.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -D GlitchMaps -o obj/text_glitchmaps.o text.asm
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -D GlitchMaps -o obj/tileset_glitchmaps.o tileset.asm
+
+*** WARNING! COMPILING IN DEBUG MODE!
+*** DO NOT REDISTRIBUTE THIS ROM!
+To disable debug mode, edit the Makefile.
+
+rgblink  -o bin/aevilia_glitchmaps.gbc obj/main_glitchmaps.o obj/battle_glitchmaps.o obj/engine_glitchmaps.o obj/home_glitchmaps.o obj/gfx_glitchmaps.o obj/maps_glitchmaps.o obj/save_glitchmaps.o obj/sound_glitchmaps.o obj/text_glitchmaps.o obj/tileset_glitchmaps.o
+rgbfix -Cjv -i ISSO -k 42 -l 0x33 -m 0x1B -n 0 -p 0xFF -r 0x04 -t AEVILIA bin/aevilia_glitchmaps.gbc

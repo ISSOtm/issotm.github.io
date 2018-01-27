@@ -21,3 +21,10 @@ $.get({
 }).fail(function() {
 	$('#build-log').text('Failed to retrieve build log.');
 });
+
+$('#nightly-link').click(function() {
+	var today = new Date(),
+		today_ISO = [today.getFullYear(), today.getMonth() + 1 /* Months start at 0 */, today.getDate()].map(x => (x + '').padStart(2, "0"));
+	this.download = 'aevilia_nightly_' + today_ISO.join('-') + '.gbc';
+});
+

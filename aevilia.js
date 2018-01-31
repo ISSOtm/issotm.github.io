@@ -1,18 +1,18 @@
 'use strict';
 
 $.get({
-	url: '/build.status',
-	dataType: 'text'
+	url: 'build.json',
+	dataType: 'json'
 	
 }).done(function(data) {
-	$('#build-status').text(data);
+	$('#build-status').text("Build status: " + data.status);
 
 }).fail(function() {
 	$('#build-status').text('Failed to retrieve build status.');
 });
 
 $.get({
-	url: '/build.log',
+	url: 'build.log',
 	dataType: 'text'
 	
 }).done(function(data) {

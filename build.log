@@ -14,4 +14,4 @@ rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/tileset.o tileset.asm
 To disable debug mode, edit the Makefile.
 
 rgblink  -n bin/aevilia.sym -m bin/aevilia.map -o bin/aevilia.gbc obj/main.o obj/battle.o obj/engine.o obj/home.o obj/gfx.o obj/maps.o obj/save.o obj/sound.o obj/text.o obj/tileset.o
-rgbfix -Cjv -i ISSO -k 42 -l 0x33 -m 0x1B -n 0 -p 0xFF -r 0x04 -t AEVILIA bin/aevilia.gbc
+Makefile:59: recipe for target 'bin/aevilia.gbc' failed

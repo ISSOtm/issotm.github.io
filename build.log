@@ -6,12 +6,4 @@ rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/gfx.o gfx.asm
 rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/maps.o maps.asm
 rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/save.o save.asm
 rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/sound.o sound.asm
-rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/text.o text.asm
-rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/tileset.o tileset.asm
-
-*** WARNING! COMPILING IN DEBUG MODE!
-*** DO NOT REDISTRIBUTE THIS ROM!
-To disable debug mode, edit the Makefile.
-
-rgblink  -n bin/aevilia.sym -m bin/aevilia.map -o bin/aevilia.gbc obj/main.o obj/battle.o obj/engine.o obj/home.o obj/gfx.o obj/maps.o obj/save.o obj/sound.o obj/text.o obj/tileset.o
-Makefile:59: recipe for target 'bin/aevilia.gbc' failed
+Makefile:84: recipe for target 'obj/sound.o' failed

@@ -6,4 +6,8 @@ rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/gfx.o gfx.asm
 rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/maps.o maps.asm
 rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/save.o save.asm
 rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/sound.o sound.asm
+ERROR: sound.asm(19) -> sound/DevSound/DevSound.asm(3558):
+	'waveBuffer' not defined
+error: Assembly aborted in pass 1 (1 errors)!
 Makefile:84: recipe for target 'obj/sound.o' failed
+make: *** [obj/sound.o] Error 1

@@ -4,7 +4,7 @@ permalink: /aevilia
 layout: single
 ---
 
-Aevilia is a homebrew RPG for the Game Boy Color. Well, a dmeo, at least.
+Aevilia is a homebrew RPG for the Game Boy Color. Well, a demo, at least.
 
 
 ## Download

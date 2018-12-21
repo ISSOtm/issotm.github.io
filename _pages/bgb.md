@@ -7,6 +7,8 @@ toc: true
 
 [BGB](http://bgb.bircd.org) is a great Game Boy / Game Boy Color emulator by beware. It's very useful, but sometimes, it's a bit obtuse; and there are some functionalities which are undocumented. Here's a collection of protips you should definitely know about when using BGB. And use BGB you must!
 
+(If any of these tricks doesn't work, or you've found your own, you can [open an issue](https://github.com/ISSOtm/issotm.github.io/issues), [send a PR](https://github.com/ISSOtm/issotm.github.io) or just [reach out to me](mailto:eldredhabert0@gmail.com).)
+
 
 ## First thing to do
 
@@ -29,6 +31,23 @@ This happens because BGB tries to initialize graphics, which succeeds, but as so
 You may or may not know about symbol files. Basically, they list labels for ASM code. But did you know that BGB's debugger can load them? They need to be in the same directory as the ROM it is attached to, and have the same file name. For example, if you are loading a ROM at `D:\\Games\\game_boy\\dinosaurs_and_nukes_[C]_[!].gbc`, BGB will look for `D:\\Games\\game_boy\\dinosaurs_and_nukes_[C]_[!].sym`.
 
 Also, once you got a SYM file loaded, BGB stops displaying some information. But did you know that you can toggle this? Simply press Tab while in the debugger!
+
+
+## Input polling
+
+There's a fairly obscure thing BGB does to improve your life. When a ROM reads the joypad in a "consistent" manner (ie. roughly on the same scanline each time), then BGB is able to provide the input directly to the ROM, which removes one frame of input lag. (If you don't know what input lag is, trust me, you don't want it.)
+
+How do you check if you're hitting that special mode? There's a simple solution: press Ctrl+Shift+9, and you'll see a bar near the top of the screen. If the left part of the bar is black, you're good to go. If it's purple, then you've hit the mode with the extra frame of lag.
+
+Be careful that beware has stated that this is an internal debug feature that may change or go away on a whim.
+
+
+## Quick navigation
+
+Here are fairly obscure yet practical shortcuts that I couldn't find documented:
+
+- When the current instruction, in the code viewer, accesses memory, pressing right on it will have the data viewer jump to that location. It even works with register-indexed instructions (`ld a, [hl]`), and `jp`/`call`!
+- The Ctrl+G "Goto" box doesn't just accept memory addresses, it also works with labels (`OverworldLoop`) and registers (`de`, `pc`). Also, it works with labels in `Global.local` format (`OverworldLoop.notPressed`), or just `.local` in the current scope (`OverworldLoop` then `.notPressed`).
 
 
 ## Reaching out to beware

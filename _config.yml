@@ -11,7 +11,7 @@
 # Build settings
 markdown: "kramdown"
 repository: "ISSOtm/issotm.github.io"
-remote_theme: "mmistakes/minimal-mistakes@4.14.1"
+remote_theme: "mmistakes/minimal-mistakes@4.15.2"
 minimal_mistakes_skin: "air"
 plugins:
   - jekyll-feed

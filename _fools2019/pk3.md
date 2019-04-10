@@ -122,4 +122,4 @@ The final code can be found [here](bruter.c). You'll note it's still very unopti
 
 ## Luckytyphlosion's solution
 
-[His solution](https://pastebin.com/CkeAfB4E) used the intended flaw, which is exploited by "dry running" the outer LCG the first 2^30 - N times, then running the actual code N times. (N being 2^32 - 0x7ffffb0a) This takes only a handful of seconds, versus my own code running for around 20 minutes.
+[His solution](https://pastebin.com/CkeAfB4E) used the intended flaw, which is exploited by "dry running" the outer LCG the first 2^30 - N times, then running the actual code N times, N being 2^32 - 0x7ffffb0a. This takes only a handful of seconds, versus my own code running for around 20 minutes.

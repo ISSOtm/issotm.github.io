@@ -138,6 +138,7 @@ Cue appropriate reactions, in the following order
 - Pasting bytes: [https://www.youtube.com/watch?v=EbwhPFDrHUQ](https://www.youtube.com/watch?v=EbwhPFDrHUQ) (VOLUME WARNING) / [https://www.youtube.com/watch?v=UvfDISoyvWk](https://www.youtube.com/watch?v=UvfDISoyvWk)
 - Bliss from victory message: [https://www.youtube.com/watch?v=-YCN-a0NsNk](https://www.youtube.com/watch?v=-YCN-a0NsNk)
 - Lying down on the floor from exhaustion: [https://www.youtube.com/watch?v=QUAItQmq-LU](https://www.youtube.com/watch?v=QUAItQmq-LU)
+{: .text-left}
 
 ## Resources
 

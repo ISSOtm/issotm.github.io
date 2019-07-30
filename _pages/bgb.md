@@ -22,9 +22,11 @@ And, finally, you should read [BGB's manual](http://bgb.bircd.org/manual.html). 
 
 ## Getting started on Wine
 
-Wine is a complex thing trying to replicate a complex thing, so it doesn't always work very well. Case in point, BGB seems to fail to start with its default settings on some Wine instances. Often, it's because of a rendering error (DirectX or OpenGL failures, or similar.)
+Wine is a complex thing trying to replicate a complex thing, so it doesn't always work very well. Case in point, BGB seems to fail to start with its default settings on some Wine instances. Often, it's because of a rendering error (DirectX or OpenGL failures, or similar.) The problem should be fixed on BGB versions starting with 1.5.8, the Direct3D error should be caught and OpenGL be the new default renderer.
 
 This happens because BGB tries to initialize graphics, which succeeds, but as soon as it starts to render things, Wine throws a trantrum and crashes - which BGB has no way to detect! When this happens, edit your `bgb.ini` file (same folder as `bgb.exe`, only appears after launching BGB once), look for a line beginning with `GfxOut=`, and replace the line with `GfxOut=GDI`. This should (hopefully) fix your problem.
+
+A simpler solution seems to be installing the packet `libxcomposite` (the 32-bit version, normally), which should make Direct3D work.
 
 
 ## Symbol files

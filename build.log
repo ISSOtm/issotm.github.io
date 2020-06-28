@@ -1,0 +1,3 @@
+rgbasm -E -p 0xFF -i sound/DevSound/ -D DebugMode -o obj/main.o main.asm
+make: rgbasm: Command not found
+make: *** [Makefile:85: obj/main.o] Error 127

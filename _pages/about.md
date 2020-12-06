@@ -1,14 +1,18 @@
 ---
 title: About me
-permalink: /about/
+permalink: /about
 layout: single
 author_profile: true
 ---
 
-*Bonsoir.* I am a french male student, age 20, currently studying computing science.
+*Bonsoir.* I'm Eldred, 🇫🇷, 👨‍🎓, 21 years old, and currently on my last year of studying computer science.
 
-I'm very much into programming, spending a lot of time on my computer developing all sorts of tools. When it comes to computers, I'm hardworking! Especially programming. I've gained quite a lot of knowledge in , though I know that I have much to discover.
+I am very much into programming, spending a lot of time developing all sorts of tools. My favorite programming languages are C, C++, and Rust—so, mostly systems programming, though as you are seeing, I have proficiencies in other domains, such as the Web.
 
-I would like to work in computer security, mostly. I have some informal experience, and am directing my studies towards infosec. I have yet to work in an enterprise context, but I am really looking forward to that, maybe an internship?
+You can find my résumé in English [here 🇬🇧](/cv/en) ([PDF](/cv/en.pdf)), and *en français* [ici 🇫🇷](/cv/fr) ([PDF](/cv/fr.pdf)).
 
-I'm fluent in French, since that's my mother tongue, but I'm also good at English, as you can hopefully witness. I also learned German, though I'm not that good at it, and am currently studying Japanese.
+I would like to work in computer security, directing my studies towards infosec; but I would also be interested in programming, especially at a low level. **I am currently looking for an end-of-studies internship (6 months, starting around April 1st)**.
+
+If you're curious about some of the work I've made, the effort I am currently spending the most time into is [RGBDS](https://rgbds.gbdev.io). You can also check out my [GitHub profile](https://github.com/ISSOtm) for more of my work!
+
+My mother tongue may be French, but I practice English on a daily basis, chatting with active English-speaking communities (mainly [GBDev](https://gbdev.io)). The quality of the English in this web site should be representative of my written and oral skills. I have also studied German until high school, but haven't had a chance to practice it since then. Finally, I am currently learning the basics of Japanese.

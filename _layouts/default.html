@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="{{ site.locale }}">
+<head>
+	<meta charset="utf-8">
+	<title>{{ page.title }} &mdash; {{ site.title }}</title>
+	<meta http-equiv="x-ua-compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{%- if layout.stylesheets %}
+		{%- for stylesheet in layout.stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{{ stylesheet }}">
+		{%- endfor %}
+	{%- endif %}
+	<link rel="stylesheet" type="text/css" href="https://rsms.me/inter/inter.css">
+	<link rel="stylesheet" type="text/css" href="/css/default.css">
+	<link rel="icon" type="image/png" href="/assets/favicon/32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="/assets/favicon/16x16.png" sizes="16x16">
+	<link rel="apple-touch-icon-precomposed" type="image/png" href="/assets/favicon/32x32.png" sizes="32x32">
+	<link rel="apple-touch-icon-precomposed" type="image/png" href="/assets/favicon/16x16.png" sizes="16x16">
+	{% seo title=false %}
+	{%- if page.keywords %}
+		{%- assign keywords = page.keywords | concat: site.keywords %}
+	{%- else %}
+		{%- assign keywords = site.keywords %}
+	{%- endif %}
+	<meta name="keywords" content="{{ keywords | default: empty | join: ", " }}">
+	{% feed_meta %}
+</head>
+<body>
+	<aside id="navbar">
+		<a id="logo" href="/">{{ site.title }}</a>
+		<input type="checkbox" name="navbar-toggle-control" id="navbar-toggle-control" aria-controls="navbar-nav">
+		<label for="navbar-toggle-control" id="navbar-toggle">
+			<img src="/assets/nav-burger.png" alt="Show nav">
+			<img src="/assets/nav-close.png" alt="Hide nav">
+		</label>
+		<nav id="navbar-nav">
+			{%- for elem in site.data.navbar %}
+				<a href="{{ elem.url }}" class="text">{{ elem.title }}</a>
+			{%- endfor %}
+			<a href="https://github.com/ISSOtm"><img src="/assets/github-icon.svg" alt="My GitHub"></a>
+			<a rel="alternate" type="application/rss+xml" href="/feed.xml"><img src="/assets/rss.svg" alt="RSS Feed"></a>
+		</nav>
+	</aside>
+	<div id="main-scroller">
+		<div id="top">
+			{%- assign path = "" | split: "" %}
+			{%- assign url = page.url %}
+			{%- for i in (1..256) %}
+				{%- assign path = url | downcase | split: "A" | concat: path %}
+				{%- assign node = site.data.breadcrumbs[url] %}
+				{%- unless node %}{% break %}{% endunless %}
+				{%- assign url = node.parent %}
+			{%- endfor %}
+			{%- assign depth = path | size %}
+			{%- unless depth == 1 %}
+			<div id="breadcrumbs" role="navigation" aria-label="Navigation up to this page">
+				<ol class="centered" itemscope itemtype="https://schema.org/BreadcrumbList" role="tree" aria-orientation="horizontal">
+					{%- for node in path %}
+					<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+						{%- if forloop.index != depth %}
+						<a itemprop="item" href="{{ node }}">
+						{%- endif %}
+						<span itemprop="name">{{ site.data.breadcrumbs[node].name }}</span>
+						{%- if forloop.index != depth %}
+						</a>
+						{%- endif %}
+						<meta itemprop="position" content="{{ forloop.index }}">
+					</li>
+					{%- endfor %}
+				</ol>
+			</div>
+			{%- endunless %}
+			{{ content }}
+		</div>
+		<div id="footer-separator"></div>
+		<footer>
+			<p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text">© 2020 <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://eldred.fr/about">Eldred Habert</a>. This website's contents are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0<img alt="" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img alt="" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /><img alt="" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" /></a></p>
+		</footer>
+	</div>
+</body>
+</html>

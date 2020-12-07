@@ -1,0 +1,45 @@
+{
+	"/#projects": {
+		"name": "Projects",
+	},
+
+	"/fools2019": {
+		"name": "Fools2019",
+		"parent": "/#projects",
+	},
+	"/fools2019/pk3": {
+		"name": "PK 3",
+		"parent": "/fools2019",
+	},
+	"/fools2019/pk4": {
+		"name": "PK 4",
+		"parent": "/fools2019",
+	},
+
+	"/projects/gb-asm-tutorial": {
+		"name": "GB ASM tutorial",
+		"parent": "/#projects",
+	},
+
+	"/pokexploits": {
+		"name": "Pokémon exploits",
+		"parent": "/#projects",
+	},
+	"/pokexploits/cartswap": {
+		"name": "Cartswap",
+		"parent": "/pokexploits",
+	},
+	"/pokexploits/fools2017": {
+		"name": "Fools2017",
+		"parent": "/pokexploits",
+	},
+	"/pokexploits/pokestryder": {
+		"name": "PokéStryder",
+		"parent": "/pokexploits",
+	},
+
+	"/projects/smooth-player": {
+		"name": "Smooth-Player",
+		"parent": "/#projects",
+	},
+}

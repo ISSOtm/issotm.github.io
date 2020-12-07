@@ -2,8 +2,7 @@
 title: "Smooth-Player"
 permalink: /projects/smooth-player
 layout: single
-toc: true
-toc_sticky: true
+excerpt_separator: <!--more-->
 ---
 
 [Smooth-Player](//github.com/ISSOtm/smooth-player) is a system that allows stereo 4-bit sample playback at variable rates up to \~16 kiHz on Game Boy, Game Boy Color, and Game Boy Advance consoles.
@@ -17,6 +16,7 @@ toc_sticky: true
 </figure>
 
 This post will detail how the system works; if you only seek to use or get a demo of the system, please follow the link above.
+<!--more-->
 
 ## Credit where credit is due
 

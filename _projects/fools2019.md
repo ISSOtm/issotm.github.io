@@ -1,7 +1,9 @@
 ---
 title: "TheZZAZZGlitch April Fools 2019"
-permalink: /projects/fools2019
+permalink: /fools2019
 layout: single
+redirect_from:
+  - /projects/fools2019
 ---
 
 Is it a CTF? Is it a ROM hack? No, it's both! It's Fools2019!
@@ -10,4 +12,10 @@ YouTuber and fellow glitch researcher [TheZZAZZGlitch](https://youtube.com/user/
 
 *Background: last year had a large amount of requests putting ZZAZZ's server on its knees due to the frequent data downloads (<q>I already have some crazy ideas / the real problem is, my fanbase is growing / a $5 VPS for an online event does not suffice anymore / so whatever I make next will probably be offline</q>). This is also why rate limiting was much more ominous.*
 
-Each year, achievements are included as small extra challenges, but also some achievements are especially tuned towards hackers and expert glitchers. It's also a tradition that some people who completed these challenges write up on how they did it. I like writing up, so [check them out!](/fools2019)
+Each year, achievements are included as small extra challenges, but also some achievements are especially tuned towards hackers and expert glitchers. It's also a tradition that some people who completed these challenges write up on how they did it.
+
+Before the list of what I have to say, here is a list of credits where credit is due, in no particular order: TheZZAZZGlitch, [pfero](https://github.com/mid-kid), [Darkshadows](https://twitter.com/darkshadows9776), Runea, [Stranck](https://twitter.com/LStranck), [Ganix](https://github.com/KernelEquinox), [Riley/RoL](https://twitter.com/TheWack0lian).
+
+Also check out the writeups from <del><a href="https://pastebin.com/rLQuSrWd">jfb1337</a></del> (the pastebin expired 😪), [Stranck](https://pastebin.com/KNBLRwGD), and [pfero](https://mid-kid.root.sx/git/mid-kid/fools2019) (not really a writeup, but still).
+
+{% include excerpt-list.html collection=site.fools2019 %}

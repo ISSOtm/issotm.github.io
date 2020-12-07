@@ -1,9 +1,7 @@
 ---
-title: "ZZAZZ's Fools2019 -- Pwnage 4"
-permalink: /fools2019/pk4/
+title: "ZZAZZ's Fools2019—Pwnage 4"
+permalink: /fools2019/pk4
 layout: single
-toc: true
-toc_sticky: true
 ---
 
 Pwnage Kingdom 4 was easily the hardest out of all Pwnage challenges. This contrasts with last year, where (I think) difficulty peaked at the 3rd challenge. Nonetheless, it's an interesting tale to tell, so strap in! I'm going to expect *some* familiarity with the Game Boy hardware, but don't worry, you should be able to process this even without knowing all the technical terms I'm going to use.
@@ -59,7 +57,7 @@ Let's skip the boring stuff, because debugging ROP is as much fun as counting so
 
 Okay. After calming down, this is what the function amounts to (content warning: ASM code)
 
-```
+{% highlight nasm %}
 ld a, [de]
 inc de
 add a, a
@@ -71,7 +69,7 @@ ld a, [hli]
 ld h, [hl]
 ld l, a
 ld sp, hl
-```
+{% endhighlight %}
 
 \*sigh\* We're dispatching "calls" depending on what's at DE. Looks like DE must be pointing at a stream of instructions, and the functions are in a table located at 2:AE2C. Looking at them, we find they also read at DE&mdash;that's right, we have a bytecode interpreter written in ROP!
 
@@ -142,7 +140,7 @@ Cue appropriate reactions, in the following order
 
 ## Resources
 
-A backup of all resources we were working with was made just before the finishing touches were done, which I've copied [here](resources/zzazz4_2019.7z) if you're interested. No context will be given, though. If you can't open [7z files](https://7-zip.org), [I've unpacked some files for this page](resources/).
+A backup of all resources we were working with was made just before the finishing touches were done, which I've copied [here](resources/zzazz4_2019.7z) if you're interested. No context will be given, though. If you can't open [7z files](https://7-zip.org), [I've unpacked some files for this page](https://github.com/ISSOtm/issotm.github.io/tree/master/_fools2019/pk4/resources).
 
 
 ## Post-mortem

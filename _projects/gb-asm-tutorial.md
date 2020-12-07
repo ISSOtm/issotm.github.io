@@ -2,11 +2,13 @@
 layout: single
 title: Game Boy ASM tutorial
 permalink: /projects/gb-asm-tutorial
+excerpt_separator: <!--more-->
 ---
 
 This is a tutorial aiming at teaching Game Boy programming in assembly, even to beginners.
 
-You can check it out [here](/gb-asm-tutorial), or peek at the source [there](https://github.com/ISSOtm/gb-asm-tutorial).
+You can [check it out here](/gb-asm-tutorial), or [peek at the source there](https://github.com/ISSOtm/gb-asm-tutorial).
+<!--more-->
 
 
 ## Motivation
@@ -37,4 +39,4 @@ I also found that the site I made looked very basic, yet gulped down a few megs 
 
 And, finally, I heard complaints from people scared of JavaScript, so I challenged myself to make the tutorial JS-free.
 
-In the end, the source is as basic as it gets, and the result loads instantly on any browser. I'm pretty happy with how clean the source ended up being, and I've been complimented about the resulting website. I've done research towards optimizing the site some more, and added support for navigation (so the borwser can pre-load the next page while you're reading), open graph / preview metadata, and generally was a refresher on modern HTML.
+In the end, the source is as basic as it gets, and the result loads instantly on any browser. I'm pretty happy with how clean the source ended up being, and I've been complimented about the resulting website. I've done research towards optimizing the site some more, and added support for navigation (so the browser can pre-load the next page while you're reading), open graph / preview metadata, and generally was a refresher on modern HTML.

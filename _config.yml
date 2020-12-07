@@ -11,11 +11,10 @@
 # Build settings
 markdown: "kramdown"
 repository: "ISSOtm/issotm.github.io"
-remote_theme: "mmistakes/minimal-mistakes@4.15.2"
-minimal_mistakes_skin: "air"
 plugins:
   - jekyll-feed
   - jekyll-include-cache
+  - jekyll-redirect-from
 include: ["_pages"]
 
 collections:
@@ -34,35 +33,10 @@ collections:
 baseurl: "/" # the subpath of your site, e.g. /blog
 url: "https://eldred.fr"
 locale: "en-US"
-search: true
 google_site_verification: "ljmYhpaVJNaCEk64aV0NyYzauKGSEUtOS2nsYEx7JD0"
-title: "ISSOtm's code warehouse"
+title: "ISSOtm's warehouse"
 description: "Eldred's personal website, potentially including lots of programming and nerdery. Especially geared towards Game Boy stuff."
 
-
-author:
-  name: "Eldred Habert"
-  bio: "I'm a student in CS, passioned about programming, security and retro consoles. Online, I usually go by the nickname ISSOtm."
-  location: "Near my computer, Clermont, France"
-  links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/ecpensiveLife"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/ISSOtm"
-email: "contact@eldred.fr"
-twitter:
-  username: "ecpensiveLife"
-
-footer:
-  links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/ecpensiveLife"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/ISSOtm"
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

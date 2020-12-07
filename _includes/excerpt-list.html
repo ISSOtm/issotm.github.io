@@ -1,0 +1,15 @@
+<ul>
+	{% for entry in include.collection %}
+	<li><a href="#{{ entry.title | slugify }}">{{ entry.title }}</a></li>
+	{% endfor %}
+</ul>
+
+{% for entry in include.collection %}
+<hr>
+{{ include.before }}
+<article>
+	<h2 id="{{ entry.title | slugify }}">{{ entry.title }}</h2>
+	{{ entry.excerpt }}
+	<p><a href="{{ entry.url }}">[Keep reading?]</a></p>
+</article>
+{% endfor %}

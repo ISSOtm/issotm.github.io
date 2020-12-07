@@ -1,14 +1,12 @@
 ---
-title: "ZZAZZ's Fools2019 -- Pwnage 3"
-permalink: /fools2019/pk3/
+title: "ZZAZZ's Fools2019—Pwnage 3"
+permalink: /fools2019/pk3
 layout: single
-toc: true
-toc_sticky: true
 ---
 
 > &lt;Parzival&gt; according to the achievements PK3 is encryption (again) and 4 is to hack the server (again)
 
-¯\\(ツ)/¯
+¯\\\_(ツ)\_/¯
 
 > &lt;meep&gt; inb4 the crypto challenge is a weak RSA implementation on gameboy and you have to find the weakness and forge a signature
 
@@ -23,7 +21,7 @@ So then what's the task? Well, we simply need to decipher the blob. What's speci
 Absolutely not! It's just that, from a rough measurement, it would take somewhere in the **thousands** of years. Yipes.
 
 > &lt;ISSOtm&gt; By the way, apparently I have found the exploit
->
+> <br>
 > &lt;pfero&gt; It's called a time machine
 
 (This is your friendly reminder that the event lasted 7 days. Also <q>&lt;TheZZAZZGlitch&gt; it has a weakness that reduces the decryption/bruteforce time  to a couple minutes on a good machine</q>, so, yeah.)

@@ -1,9 +1,0 @@
-main:
-  - title: "About me"
-    url: /about
-  - title: "Projects"
-    url: /projects
-  - title: "GB ASM tutorial"
-    url: /gb-asm-tutorial
-  - title: "GBz80 to items v3"
-    url: /gbz80toitems3

@@ -26,6 +26,8 @@ collections:
   fools2019:
     output: true
 
+permalink: /:categories/:year/:month/:day/:title
+
 
 # Site settings
 # You can create any custom variable you would like, and they will be accessible

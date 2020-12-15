@@ -42,4 +42,9 @@
 		"name": "Smooth-Player",
 		"parent": "/#projects",
 	},
+
+	"/fibrs": {
+		"name": "Fibrs",
+		"parent": "/#projects",
+	},
 }

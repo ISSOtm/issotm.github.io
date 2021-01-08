@@ -10,6 +10,8 @@
 <article>
 	<h2 id="{{ entry.title | slugify }}">{% if include.dates %}[{{ entry.date | date_to_string }}] {% endif %}{{ entry.title }}</h2>
 	{{ entry.excerpt }}
+	{%- unless entry.short %}
 	<p><a href="{{ entry.url }}">[Keep reading?]</a></p>
+	{%- endunless %}
 </article>
 {% endfor %}

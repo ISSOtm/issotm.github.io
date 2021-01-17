@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 
 <figure>
     Sample sample:
-    <audio controls>
+    <audio controls preload="metadata">
         <source src="/gb_sample.ogg" type="audio/ogg">
         <a href="/gb_sample.ogg">click here</a>
     </audio>

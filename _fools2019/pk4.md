@@ -1,6 +1,6 @@
 ---
 title: "ZZAZZ's Fools2019—Pwnage 4"
-permalink: /fools2019/pk4
+permalink: /fools2019/pk4/
 layout: single
 ---
 

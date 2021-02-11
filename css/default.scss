@@ -267,6 +267,15 @@ body {
 		border-radius: 0 0 5px 5px;
 		padding-bottom: 0;
 	}
+
+	// Avoid figure contents being larger than the text container
+	figure {
+		max-width: 100%;
+
+		> * {
+			max-width: 100%;
+		}
+	}
 }
 
 #footer-separator {

@@ -43,28 +43,29 @@
 	</aside>
 	<div id="main-scroller">
 		<div id="top">
-			{%- assign url = page.url %}
-			{%- assign matching = site.data.breadcrumbs[url] %}
-			{%- unless matching %}
-				{%- assign slices = url | split: "/" %}
-				{%- assign url = "/" %}
-				{%- assign tmp = "" %}
-				{%- for slice in slices offset: 1 %}
-					{%- assign tmp = tmp | append: "/" | append: slice %}
-					{%- if site.data.breadcrumbs[tmp] %}
-						{%- assign url = tmp %}
-					{%- endif %}
-				{%- endfor %}
-			{%- endunless %}
-			{%- unless url == "/" %}
-				{%- assign path = "" | split: "" %}
-				{%- for i in (1..256) %}
-					{%- assign path = url | downcase | split: "A" | concat: path %}
-					{%- assign node = site.data.breadcrumbs[url] %}
-					{%- unless node %}{% break %}{% endunless %}
-					{%- assign url = node.parent %}
-				{%- endfor %}
-				{%- assign depth = path | size %}
+		{%- assign url = page.url %}
+		{%- assign matching = site.data.breadcrumbs[url] %}
+		{%- unless matching %}
+			{%- assign slices = url | split: "/" %}
+			{%- assign url = "/" %}
+			{%- assign tmp = "" %}
+			{%- for slice in slices offset: 1 %}
+				{%- assign tmp = tmp | append: "/" | append: slice %}
+				{%- if site.data.breadcrumbs[tmp] %}
+					{%- assign url = tmp %}
+				{%- endif %}
+			{%- endfor %}
+		{%- endunless %}
+		{%- unless url == "/" %}
+			{%- assign path = "" | split: "" %}
+			{%- for i in (1..256) %}
+				{%- assign path = url | downcase | split: "A" | concat: path %}
+				{%- assign node = site.data.breadcrumbs[url] %}
+				{%- unless node %}{% break %}{% endunless %}
+				{%- assign url = node.parent %}
+			{%- endfor %}
+			{%- assign depth = path | size %}
+			{%- unless depth == 1 and matching %}
 			<div id="breadcrumbs" role="navigation" aria-label="Navigation up to this page">
 				<ol class="centered" itemscope itemtype="https://schema.org/BreadcrumbList" role="tree" aria-orientation="horizontal">
 					{%- for node in path %}
@@ -82,6 +83,7 @@
 				</ol>
 			</div>
 			{%- endunless %}
+		{%- endunless %}
 			{{ content }}
 		</div>
 		<div id="footer-separator"></div>

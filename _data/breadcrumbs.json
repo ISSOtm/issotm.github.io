@@ -1,4 +1,8 @@
 {
+	"/blog": {
+		"name": "Blog",
+	},
+
 	"/#projects": {
 		"name": "Projects",
 	},

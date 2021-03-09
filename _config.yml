@@ -19,6 +19,8 @@ plugins:
 include: ["_pages"]
 
 collections:
+  blog:
+    output: true
   projects:
     output: true
   pokexploits:

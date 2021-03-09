@@ -5,7 +5,7 @@ layout: single
 ---
 
 <p itemscope itemtype="https://schema.org/Person">
-	<i>Bonsoir.</i> I'm <span itemprop="givenName">Eldred</span> <span itemprop="familyName">Habert</span>, 🇫🇷, <span itemprop="gender" value="male">👨‍🎓</span>, <span itemprop="birthDate" content="1998">21 years old</span>, and currently on my last year of studying computer science. I love programming, security, and retro consoles. Online, I usually go by the nickname "ISSOtm".
+	<i>Bonsoir.</i> I'm <span itemprop="givenName">Eldred</span> <span itemprop="familyName">Habert</span>, 🇫🇷, <span itemprop="gender" value="male">👨‍🎓</span>, <span itemprop="birthDate" content="1998">22 years old</span>, and currently on my last year of studying computer science. I love programming, security, and retro consoles. Online, I usually go by the nickname "ISSOtm".
 </p>
 
 ## Contact

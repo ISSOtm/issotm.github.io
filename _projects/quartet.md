@@ -515,7 +515,7 @@ Fortunately, as I said, the tiles are essentially 1bpp, and we luckily had 3 pal
 
 {% include figure.html url="/assets/quartet/packed_tiles_pal4.png" alt="The packed tiles, as seen with palette 4 in a SNES debugger" caption="... with palette #4 applied..." %}
 
-{% include figure.html url="/assets/quartet/packed_tiles_pal5.png" alt="The packed tiles, as seen with palette 5 in a SNES debugger" caption="... with palette #4 applied..." %}
+{% include figure.html url="/assets/quartet/packed_tiles_pal5.png" alt="The packed tiles, as seen with palette 5 in a SNES debugger" caption="... with palette #5 applied..." %}
 
 {% include figure.html url="/assets/quartet/packed_tiles_pal6.png" alt="The packed tiles, as seen with palette 6 in a SNES debugger" caption="... and with palette #6 applied." %}
 

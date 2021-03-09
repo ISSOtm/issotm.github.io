@@ -20,7 +20,7 @@ I am very much into programming, spending a lot of time developing all sorts of 
 
 You can find my résumé in English [here 🇬🇧](/cv/en) ([PDF](/cv/en.pdf)), and *en français* [ici 🇫🇷](/cv/fr) ([PDF](/cv/fr.pdf)).
 
-I would like to work in computer security, directing my studies towards infosec; but I would also be interested in programming, especially at a low level. **I am currently looking for an end-of-studies internship (6 months, starting around April 1st)**.
+I would like to work in computer security, directing my studies towards infosec; but I would also be interested in programming, especially at a low level.
 
 If you're curious about some of the work I've made, the effort I am currently spending the most time into is [RGBDS](https://rgbds.gbdev.io) (I also made that website!). You can also check out my [GitHub profile](https://github.com/ISSOtm) for more of my work!
 

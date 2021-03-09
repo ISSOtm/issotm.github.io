@@ -276,6 +276,7 @@ body {
 	// Avoid figure contents being larger than the text container
 	figure {
 		max-width: 100%;
+		margin: 2em 1em;
 
 		> * {
 			max-width: 100%;

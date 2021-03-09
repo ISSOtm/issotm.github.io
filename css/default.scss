@@ -44,7 +44,6 @@ $max-width: 45em;
 
 html {
 	// Reduce contrast
-	background-color: $clouds-color;
 	color: #000;
 	box-sizing: content-box;
 }
@@ -218,13 +217,14 @@ body {
 
 // So that anchors are scrolled to, but not behind the navbar
 #main-scroller {
+	position: relative;
 	z-index: 0;
 	overflow: auto;
 	height: calc(100% - #{$navbar-height + $navbar-gradient-height});
+	background-color: $sky-color;
 }
 
 #top {
-	background-color: $sky-color;
 	padding-bottom: 10px;
 }
 
@@ -286,7 +286,7 @@ body {
 
 #footer-separator {
 	height: $footer-separator-height;
-	background: url("/assets/clouds.png"), $sky-color;
+	background: url("/assets/clouds.png");
 }
 
 footer {
@@ -294,7 +294,30 @@ footer {
 
 	> p {
 		margin-top: 0;
+		background-color: #fff;
 	}
+}
+
+/// Floating arrows at the bottom
+
+#back-up {
+	position: fixed;
+	bottom: 10px;
+	right: 20px;
+	z-index: 10;
+}
+
+// Cover the arrow
+
+#footer-separator, footer {
+	position: relative;
+	z-index: 20;
+}
+
+footer {
+	// Ensure that the text does cover that arrow
+	background-color: #fff;
+	padding-bottom: 1em; // Make sure to cover the paragraph's margin
 }
 
 /// Some extra styling

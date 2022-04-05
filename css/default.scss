@@ -161,7 +161,7 @@ body {
 	padding: 0 0 $navbar-gradient-height 0;
 	height: $navbar-height;
 
-	background: linear-gradient(to top, $sky-color, #81baff, #63a8fffa, #4996ffee, #4489ffd9, #4287ffbd, #2d78ff93, #2b82ff6a, #307fff50, #2687ff33, #0000 $navbar-gradient-height), repeat-x url("/assets/stars.png");
+	background: linear-gradient(to top, $sky-color, #2d68cc $navbar-gradient-height * 3 / 8, #0000 $navbar-gradient-height), repeat-x url("/assets/stars.png");
 	a {
 		color: $navbar-text-color;
 	}

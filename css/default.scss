@@ -32,6 +32,8 @@ $clouds-color: #fff;
 $content-overlay-color: #fff6;
 $max-width: 45em;
 
+$table-border: 1px solid #888;
+
 /// Reset layout
 
 // TODO: add this, and set all margins manually
@@ -112,6 +114,36 @@ ul, ol {
 
 hr {
 	margin: .5em 0;
+}
+
+table {
+	// BUG: I can't get tables to scroll when overflowing horizontally. D'oh!
+	border-collapse: collapse;
+
+	tr:nth-child(2n) {
+		background-color: #ffffff10;
+	}
+	tr:nth-child(2n+1) {
+		background-color: #00000010;
+	}
+
+	td, th {
+		padding: .25em .5em;
+	}
+
+	> tbody th {
+		border-left: $table-border;
+		border-right: $table-border;
+	}
+	tr > :first-child {
+		border-left: none;
+	}
+	tr > :last-child {
+		border-right: none;
+	}
+	> thead > tr {
+		border-bottom: $table-border;
+	}
 }
 
 /// Layout
@@ -219,12 +251,13 @@ body {
 #main-scroller {
 	position: relative;
 	z-index: 0;
-	overflow: auto;
+	overflow: hidden auto;
 	height: calc(100% - #{$navbar-height + $navbar-gradient-height});
-	background-color: $sky-color;
+	background-color: #fff;
 }
 
 #top {
+	background-color: $sky-color;
 	padding-bottom: 10px;
 }
 
@@ -252,8 +285,9 @@ body {
 .centered {
 	margin: 0 auto;
 
-	&, & img {
-		max-width: $max-width;
+	max-width: $max-width;
+	* {
+		max-width: 100%;
 	}
 	// Prevent text from bumping sides on smaller windows
 	padding: 20px 20px 10px 10px;
@@ -286,7 +320,7 @@ body {
 
 #footer-separator {
 	height: $footer-separator-height;
-	background: url("/assets/clouds.png");
+	background: $sky-color url("/assets/clouds.png");
 }
 
 footer {

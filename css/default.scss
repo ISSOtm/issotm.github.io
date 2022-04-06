@@ -319,8 +319,12 @@ body {
 }
 
 #footer-separator {
-	height: $footer-separator-height;
-	background: $sky-color url("/assets/clouds.png");
+	background-color: $sky-color;
+	
+	> div {
+		height: $footer-separator-height;
+		background: url("/assets/clouds.png");
+	}
 }
 
 footer {
@@ -343,7 +347,7 @@ footer {
 
 // Cover the arrow
 
-#footer-separator, footer {
+#footer-separator > div, footer {
 	position: relative;
 	z-index: 20;
 }

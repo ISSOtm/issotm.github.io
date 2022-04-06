@@ -19,6 +19,30 @@
 		"name": "PK 4",
 		"parent": "/fools2019",
 	},
+	"/fools2022": {
+		"name": "Fools2022",
+		"parent": "/#projects",
+	},
+	"/fools2022/ccr1/": {
+		"name": "CCR 1",
+		"parent": "/fools2022",
+	},
+	"/fools2022/ccr2/": {
+		"name": "CCR 2",
+		"parent": "/fools2022",
+	},
+	"/fools2022/ccr3/": {
+		"name": "CCR 3",
+		"parent": "/fools2022",
+	},
+	"/fools2022/ccr4/": {
+		"name": "CCR 4",
+		"parent": "/fools2022",
+	},
+	"/fools2022/conclusion/": {
+		"name": "Conclusion",
+		"parent": "/fools2022",
+	},
 
 	"/projects/gb-asm-tutorial": {
 		"name": "GB ASM tutorial",

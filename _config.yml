@@ -27,6 +27,8 @@ collections:
     output: true
   fools2019:
     output: true
+  fools2022:
+    output: true
 
 permalink: /:categories/:year/:month/:day/:title
 

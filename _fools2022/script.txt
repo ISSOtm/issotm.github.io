@@ -1,0 +1,315 @@
+    setvar 32769, 6969
+    loadbytefromptr 0, 0x02021dc4 ; 1st char in string
+    setptrbyte 0, 0x02018372
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x02018399 ; ------+
+    loadbytefromptr 0, &scrVar[32769] + 1 ;  |
+    setptrbyte 0, 0x0201839a ; ------+
+    setvar 32769, 0 ;                |
+    setvar 32770, 73 ;               |
+loc_02018396: ;                      |
+    addvar 32769, 0 ; <--------------+
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_02018396
+    addvar 32769, 6367
+    loadbytefromptr 0, 0x02021dc5
+    setptrbyte 0, 0x020183bf
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x020183e6
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x020183e7
+    setvar 32769, 0
+    setvar 32770, 97
+loc_020183e3:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_020183e3
+    addvar 32769, 5099
+    loadbytefromptr 0, 0x02021dc6
+    setptrbyte 0, 0x0201840c
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x02018433
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x02018434
+    setvar 32769, 0
+    setvar 32770, 13
+loc_02018430:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_02018430
+    addvar 32769, 4591
+    loadbytefromptr 0, 0x02021dc7
+    setptrbyte 0, 0x02018459
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x02018480
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x02018481
+    setvar 32769, 0
+    setvar 32770, 41
+loc_0201847d:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_0201847d
+    addvar 32769, 4421
+    loadbytefromptr 0, 0x02021dc8
+    setptrbyte 0, 0x020184a6
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x020184cd
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x020184ce
+    setvar 32769, 0
+    setvar 32770, 67
+loc_020184ca:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_020184ca
+    addvar 32769, 4831
+    loadbytefromptr 0, 0x02021dc9
+    setptrbyte 0, 0x020184f3
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x0201851a
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x0201851b
+    setvar 32769, 0
+    setvar 32770, 101
+loc_02018517:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_02018517
+    addvar 32769, 3581
+    loadbytefromptr 0, 0x02021dca
+    setptrbyte 0, 0x02018540
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x02018567
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x02018568
+    setvar 32769, 0
+    setvar 32770, 89
+loc_0201856:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_02018564
+    addvar 32769, 5039
+    loadbytefromptr 0, 0x02021dcb
+    setptrbyte 0, 0x0201858d
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x020185b4
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x020185b5
+    setvar 32769, 0
+    setvar 32770, 139
+loc_020185b1:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_020185b1
+    addvar 32769, 5279
+    loadbytefromptr 0, 0x02021dcc
+    setptrbyte 0, 0x020185da
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x02018601
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x02018602
+    setvar 32769, 0
+    setvar 32770, 71
+loc_020185fe:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_020185fe
+    addvar 32769, 4079
+    loadbytefromptr 0, 0x02021dcd
+    setptrbyte 0, 0x02018627
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x0201864e
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x0201864f
+    setvar 32769, 0
+    setvar 32770, 83
+loc_0201864b:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_0201864b
+    addvar 32769, 4021
+    copyvar 32771, 32769
+
+    setvar 32769, 1337
+    loadbytefromptr 0, 0x02021dc4
+    setptrbyte 0, 0x0201867e
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x020186a5
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x020186a6
+    setvar 32769, 0
+    setvar 32770, 59
+loc_020186a2:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_020186a2
+    addvar 32769, 3701
+    loadbytefromptr 0, 0x02021dc5
+    setptrbyte 0, 0x020186cb
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x020186f2
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x020186f3
+    setvar 32769, 0
+    setvar 32770, 181
+loc_020186ef:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_020186ef
+    addvar 32769, 4603
+    loadbytefromptr 0, 0x02021dc6
+    setptrbyte 0, 0x02018718
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x0201873f
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x02018740
+    setvar 32769, 0
+    setvar 32770, 127
+loc_0201873c:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_0201873c
+    addvar 32769, 4663
+    loadbytefromptr 0, 0x02021dc7
+    setptrbyte 0, 0x02018765
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x0201878c
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x0201878d
+    setvar 32769, 0
+    setvar 32770, 163
+loc_02018789:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_02018789
+    addvar 32769, 4703
+    loadbytefromptr 0, 0x02021dc8
+    setptrbyte 0, 0x020187b2
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x020187d9
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x020187da
+    setvar 32769, 0
+    setvar 32770, 103
+loc_020187d6:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_020187d6
+    addvar 32769, 4219
+    loadbytefromptr 0, 0x02021dc9
+    setptrbyte 0, 0x020187ff
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x02018826
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x02018827
+    setvar 32769, 0
+    setvar 32770, 163
+loc_02018823:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_02018823
+    addvar 32769, 6481
+    loadbytefromptr 0, 0x02021dca
+    setptrbyte 0, 0x0201884c
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x02018873
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x02018874
+    setvar 32769, 0
+    setvar 32770, 149
+loc_02018870:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_02018870
+    addvar 32769, 6983
+    loadbytefromptr 0, 0x02021dcb
+    setptrbyte 0, 0x02018899
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x020188c0
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x020188c1
+    setvar 32769, 0
+    setvar 32770, 193
+loc_020188bd:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_020188bd
+    addvar 32769, 5407
+    loadbytefromptr 0, 0x02021dcc
+    setptrbyte 0, 0x020188e6
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x0201890d
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x0201890e
+    setvar 32769, 0
+    setvar 32770, 211
+loc_0201890a:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_0201890a
+    addvar 32769, 5297
+    loadbytefromptr 0, 0x02021dcd
+    setptrbyte 0, 0x02018933
+    addvar 32769, 0
+    loadbytefromptr 0, &scrVar[32769]
+    setptrbyte 0, 0x0201895a
+    loadbytefromptr 0, &scrVar[32769] + 1
+    setptrbyte 0, 0x0201895b
+    setvar 32769, 0
+    setvar 32770, 151
+
+loc_02018957:
+    addvar 32769, 0
+    subvar 32770, 1
+    compare_var_to_value 32770, 0
+    goto_if 5, loc_02018957
+    addvar 32769, 5099
+
+    compare_var_to_value 32771, 45295
+    goto_if 5, loc_0201898d
+    compare_var_to_value 32769, 54457
+    goto_if 5, loc_0201898d
+    setvar 32781, 1 ; We want this
+    return
+loc_0201898d:
+    setvar 32781, 0
+    return

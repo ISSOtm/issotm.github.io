@@ -5,14 +5,10 @@
 	},
 	{
 		"title": "Projects",
-		"url": "/projects",
+		"url": "/#projects",
 	},
 	{
 		"title": "GB ASM tutorial",
 		"url": "/gb-asm-tutorial",
-	},
-	{
-		"title": "GBz80 to items v3",
-		"url": "/gbz80toitems3",
 	},
 ]

@@ -204,16 +204,16 @@ What still deserves a hat tip is the use of horizontal lines behind the bushes: 
 
 They are not done via palette trickery, they are baked directly into the background.
 There is nothing technically impressive here.
-However, it goes to show that technical prowess is not enough—it also takes an artist's cleverness to put the extra touches.
+However, it goes to show that technical prowess is not enough—it also takes an artist's cleverness to put the extra touches that make it convincing.
 
 ### Textbox
 
-The big textbox is hard to explain: it moves pretty freely over a scrolling background, but it's too wide to be OBJs, which are restricted to 10 per line, and we already have Same and the palm trees... so what can it be?
+The big textbox is hard to explain: it moves pretty freely over a scrolling background, but it's too wide to be OBJs, which are restricted to 10 per line, and we already have Sam and the palm trees... so what can it be?
 
 {% include figure.html url="/assets/prehistorik/textbox.png" alt="A screenshot of the Window's tilemap in the VRAM viewer." caption="...Oh. It's just the Window." %}
 
 Use of the Window requires that Sam drag the textbox leftwards, and explains why we never get to see its right side: the Window is simply not capable of having background to its right!
-The only trickery here is that the Window is enabled at the beginning of the frame, but disabled after the textbox's 32 scanlines.
+The only trickery here is that the Window is enabled at the beginning of the frame, but disabled after the textbox's 32 scanlines, which allows the background to show up normally on the scanlines below it.
 
 ### OAM "superloading"
 
@@ -247,7 +247,7 @@ The answer lies in the OAM viewer.
 
 {% include figure.html url="/assets/prehistorik/oam2.png" alt="Screenshot of the 'second' OAM." caption="Palm trees lookin' a little transgenic, yo." %}
 
-Interestingly, the palm tree trunks are rendered using two separate objects.
+Interestingly, the palm tree trunks are rendered using two separate OBJs per slice.
 Why?
 
 Well, I mentioned earlier that "the leftmost OBJ wins".
@@ -258,7 +258,7 @@ So what the game is doing here, is ensuring that the two OBJs composing the palm
 The movement is created by displaying one of 8 pre-shifted combinations of the palm tree trunk.
 
 This only applies to the bottom of the palm trees, but that's fine, since Sam only goes behind their trunks.
-The window is also fine: since it's technically part of the background, it appears behind OBJs.
+The window is also fine: since it's technically part of the background, it appears behind OBJs regardless.
 
 ### Intro text
 
@@ -267,7 +267,7 @@ The window is also fine: since it's technically part of the background, it appea
 {% include figure.html url="/assets/prehistorik/proud.png" alt="Still of the 'PROUD' letters in the intro text." caption="Damn, if you can't be proud of this game..." %}
 
 This may be the most puzzling part of the intro.
-Those can't be OBJs, since for example the top row would have 13 of them.
+Those can't be OBJs, since for example the top row in the screenshot would have 13 of them—more than the aforementioned limit of 10.
 It's not software rendering, either, as that would be extremely taxing, and the tilemap stays pristine.
 Many emulators fail to render this text, too, and only display occasional smears where the text would be.
 What's going on?
@@ -298,17 +298,17 @@ This may sound simple in concept (though, again, you have to have the idea first
   Fortunately, we can "simply" use interrupts for that.
 - **How to go fast enough?**
 
-  The PPU outputs pixels 4× as fast as the CPU executes instructions[^dots], so if we want our line "thickness" to be 8 pixels, we need to be able to write to `BGP` every two cycles.
+  The PPU outputs pixels 4× as fast as the CPU executes instructions[^dots], so if we want our line "thickness" to be 8 pixels, we need to be able to write to `BGP` every 2 cycles.
   That's not enough!
   The tightest copy loop ([`ld a, [hli]`](https://rgbds.gbdev.io/docs/v0.5.2/gbz80.7/#LD_A,_HLI_) then [`ldh [c], a`](https://rgbds.gbdev.io/docs/v0.5.2/gbz80.7/#LDH__C_,A)) takes 4 cycles per iteration.
 
   What the game does is pretty smart.
   It generates a chain of `ld [hl], d` and `ld [hl], e` instructions in RAM at the beginning of the frame, and executes that.
-  Each of those instructions takes 2 cycles, and the game simply ensures beforehand that `hl` points to `BGP`, and `d` and `e` contain the appropriate palette values.
+  Each of those instructions takes 2 cycles, which fits exactly in our allotted budget; the game simply ensures beforehand that `hl` points to `BGP`, and `d` and `e` contain the appropriate palette values.
 
 - **How to "scroll" the letters?**
 
-  The letters are scrolled horizontally by 4 pixels each time, which corresponds to 1 CPU cycle.
+  The letters are scrolled horizontally by 4 pixels each time, which corresponds to 1 CPU cycle: the game simply delays execution of the "spamming" code by that.
   As for vertical scrolling, it's as simple as changing at which scanline the effect starts being performed.
 
 [^dots]: Kind of. The PPU outputs pixels at 4 MiHz *unless it's being stalled*, and the CPU really executes instructions are 4 MiHz—but all instructions take multiple of 4 such clock cycles, so the simplification is often made that the CPU cycles are at 1 MiHz. Or 2 MiHz in the Color's double-speed mode.
@@ -325,7 +325,7 @@ The way the flipping effect is achieved is that the game spams the vertical scro
 Its timing is slightly off, so you may notice some artifacts on the top-left corner of the textbox, and also two columns of subtly glitched text—this is a console revision-dependent bug, as was figured out recently, and the game triggers it by its timing falling on the wrong one of two cycles.
 Gah!
 
-Where history meets irony here has to do with the demo *[Demotronic](https://www.pouet.net/prod.php?which=7175)*, which was released in 2002 for the GBC, and claims to be the first ever to perform "vertical rester splits" on Game Boy... which *Prehistorik Man* did first, and on the B&W one no less!
+Where history meets irony here has to do with the demo *[Demotronic](https://www.pouet.net/prod.php?which=7175)*, which was released in 2002 for the GBC, and claims to be the first ever to perform "vertical raster splits" on Game Boy... which, as we just saw, *Prehistorik Man* did first, and on the B&W console no less!
 (Though, *Demotronic* does it better.)
 
 I guess it just goes to show how much this game flew under the radar 😛.
@@ -337,10 +337,10 @@ The music in this game uses what's called *Zombie Mode* to create envelopes in s
 
 Usually, instrument envelopes use [ADSR](https://en.wikipedia.org/wiki/ADSR_envelope): Attack, Decay, Sustain, Release.
 The Game Boy's hardware is not able to do full ADSR envelopes, more like just "DS".
-And, perhaps more annoyingly to many, it is not possible to manipulate the amplitude in software.
+And, perhaps more annoyingly to many, it is not possible to manipulate the amplitude in software to work around this.
 (Why that is it still unclear.)
 
-Well, not by conventional means.
+Well, it's not possible by conventional means, anyway.
 However, by "tickling" the amplitude register in "just the right way", it's possible to trick the envelope into updating nonetheless.
 (The details are unfortunately not documented anywhere I'm aware of, and they are quite complicated. 😢)
 

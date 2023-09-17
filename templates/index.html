@@ -1,0 +1,25 @@
+{% extends "section.html" %}
+{% import "macros.html" as macros %}
+
+{% block preload %}
+  <link rel="preload" href="{{ get_url(path="/assets/banner.jpg") }}" as="image" type="image/jpeg" />
+{% endblock preload %}
+
+{% block h1 %} {% endblock %}
+
+{% block header %}
+  <section class="container">
+    <h1>Welcome to ISSOtm's warehouse!</h1>
+
+    {{ section.content | safe }}
+  </section>
+
+  {# Banner #}
+  <div style="height: 30em; background: radial-gradient(#00000000, #000000cc) center, url('{{ get_url(path="/assets/banner.jpg") }}') fixed 50% 50%/cover;"></div>
+{% endblock header %}
+
+{% block content %}
+  <h2 id="projects">Projects</h2>
+
+  {{ macros::section_list(path="projects", link_text="(Curious to read more?)", link_classes="secondary")}}
+{% endblock content %}

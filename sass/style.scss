@@ -1,0 +1,177 @@
+// Pico, made a bit more lightweight!
+@use "pico/pico" with (
+	$modules: (
+		"forms/basics": false,
+		"forms/checkbox-radio-switch": false,
+		"forms/input-color": false,
+		"forms/input-date": false,
+		"forms/input-file": false,
+		"forms/input-range": false,
+		"forms/input-search": false,
+		"components/accordion": false,
+		"components/dropdown": false,
+		"components/loading": false,
+		"components/modal": false,
+		"components/progress": false
+	)
+);
+
+// TOOD: align colours with Pico stylesheet, or something...
+$sky-color: #9dc9ef;
+$navbar-gradient-height: 2rem;
+$clouds-height: 62px; // Must be consistent with image's height.
+
+/// Navbar.
+
+// Allow splitting the navbar, for small screens.
+body > nav {
+	&:first-child {
+		background: linear-gradient(to top, var(--pico-background-color), #2d68cc $navbar-gradient-height / 4, #0000 $navbar-gradient-height), repeat-x url("/assets/stars.png"), #000;
+		padding-bottom: $navbar-gradient-height / 2;
+	}
+
+	//font-size: 1.2em;
+
+	// Degrade nicely on smaller screens.
+	&, & > ul {
+		flex-wrap: wrap;
+	}
+}
+// Limit the height of the icons so they don't scale up ridiculously.
+nav img {
+	height: 2em;
+}
+
+/// "Brand identity", as they say.
+
+#bottom { // The footer separator, but also used as an anchor.
+	background: repeat-x bottom / contain url("/assets/clouds.png");
+	height: 3rem;
+	image-rendering: crisp-edges;
+}
+body > footer {
+	padding-top: 0; // Already taken care of by the "separator".
+
+	svg {
+		display: block;
+		max-width: 468px;
+		margin: 0 auto;
+	}
+
+	p {
+		text-align: center;
+	}
+
+	background-color: #fff;
+}
+:root {
+	background-color: #fff; // "Continue" the footer's background colour.
+}
+body {
+	background-color: var(--pico-background-color); // This would normally be applied to `:root`, but we need to override it above.
+}
+
+// The breadcrumbs.
+
+#breadcrumbs {
+	background: no-repeat right / contain url("/assets/plane.svg"),
+	            no-repeat right / auto 90% linear-gradient(to left, var(--pico-background-color) 4rem, var(--pico-background-color-transparent) 6rem),
+	            repeat-x center right / auto 90% url("/assets/trail.png");
+
+	> nav {
+		padding-right: 6rem; // Prevent any text from drawing over the area not covered by the "trail".
+	}
+}
+
+// The balloon (to go back to the top).
+
+#balloon {
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
+}
+
+// An override to the highlighting...
+
+pre {
+	mark { // Highlighted lines.
+		display: block; // Make them take the full width.
+	}
+
+	table {
+		td {
+			padding: 0;
+			&:nth-of-type(1) { // The line number cells.
+				text-align: center;
+				user-select: none;
+			}
+		}
+	}
+}
+
+// The section listings.
+
+.section-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
+	grid-template-rows: masonry; // Expeprimental, but rad. Fallback looks good enough.
+	gap: 0 2em;
+	--pico-block-spacing-vertical: var(--pico-spacing); // Reduce the spacing, this is not really stand-alone.
+
+	header {
+		--pico-typography-spacing-vertical: 0; // Don't put additional spacing below the <h*>.
+	}
+
+	nav li {
+		padding-bottom: 0; // Reduce the spacing after the tag list.
+	}
+}
+
+// Stuff that doesn't make sense to print.
+
+@media print {
+	.no-print {
+		display: none;
+	}
+}
+
+// Content styling.
+
+.footnote-definition {
+	margin: 0 1rem var(--pico-typography-spacing-vertical);
+
+	> p {
+		display: inline;
+		font-size: .9em;
+		line-height: 1.45em;
+
+		&::before {
+			content: " ";
+		}
+	}
+
+	// Divider. (Implicit <hr>-like.)
+	&:not(& + &) {
+		border-top: 1px solid var(--pico-muted-border-color);
+		padding-top: var(--pico-typography-spacing-vertical);
+	}
+}
+
+blockquote :last-child {
+	margin-bottom: 0;
+}
+
+main figure {
+	width: 90%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-bottom: var(--pico-typography-spacing-vertical);
+
+	> p:last-of-type {
+		--pico-typography-spacing-vertical: 0;
+	}
+	> p > * {
+		max-height: 80rem; width: 90%;
+		object-fit: contain; object-position: 20%;
+	}
+}

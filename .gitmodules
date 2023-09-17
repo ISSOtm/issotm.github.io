@@ -1,0 +1,3 @@
+[submodule "sublime-rgbds"]
+	path = sublime-rgbds
+	url = git@github.com:ISSOtm/sublime-RGBDS.git

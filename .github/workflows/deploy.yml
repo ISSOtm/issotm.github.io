@@ -1,0 +1,46 @@
+name: Build and deploy
+on:
+  push:
+    branches: master
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+env:
+  ZOLA_VER: "0.17.2"
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Get Zola
+        run: | # This should be fast enough not to require caching.
+          curl -L 'https://github.com/getzola/zola/releases/download/v${{ env.ZOLA_VER }}/zola-v${{ env.ZOLA_VER }}-x86_64-unknown-linux-gnu.tar.gz' | gunzip | tar xv
+          ./zola --version
+      # As of Zola 0.17.2, the version of `grass` used by Zola does not correctly process Sass configuration.
+      # Manually re-processing the Sass nearly halves the size of the CSS!
+      - name: Build site
+        run: |
+          cargo install grass &
+          ./zola build
+          wait %+
+          grass sass/style.scss public/style.css
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: public
+      - name: Deploy site
+        uses: actions/deploy-pages@v1.2.9

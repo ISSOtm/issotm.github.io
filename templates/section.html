@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title -%} {{ section.title }} {%- endblock title %}
+{% block og_title -%} {{ section.title }} {%- endblock og_title %}
+{% block twitter_title -%} {{ section.title }} {%- endblock twitter_title %}
+{% block h1 -%} <h1>{{ section.title }}</h1> {%- endblock h1 %}
+
+{% block content %}
+  <hr>
+  
+  {{ section.content | safe }}
+{% endblock content %}
+
+{% block description -%}
+{{ section.description | striptags }}
+{%- endblock description %}
+{% block og_description -%}
+{{ section.description | striptags }}
+{%- endblock og_description %}

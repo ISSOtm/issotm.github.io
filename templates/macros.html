@@ -1,0 +1,51 @@
+{% macro stats_text(enable, page) %}
+	{% if enable %}
+		<p>
+			{% if page.year %}
+				{% set timestamp = page.year ~ "-" ~ page.month ~ "-" ~ page.day %}
+				Published <time datetime="{{ timestamp | date(format="%F") }}" itemprop="datePublished">{{ timestamp | date(format="%a %b %e") }}</time>.
+			{% endif %}
+			Estimated reading time: {{ page.reading_time }} minute{{ page.reading_time | pluralize }}.
+		</p>
+	{% endif %}
+	<meta itemprop="wordCount" content="{{ page.word_count }}"/>
+{% endmacro %}
+
+{% macro section_list(path, link_text="Keep reading...", link_classes="") %}
+	<div class="section-list">
+	{% set section = get_section(path=path ~ "/_index.md") %}
+	{% set pages = section.pages %}
+	{% if section.extra.reverse_sort %} {% set pages = pages | reverse %} {% endif %}
+	{% for page in pages %}
+		{{ self::page_card(page=page, unique_id=section.title ~ loop.index0, link_classes=link_classes, link_text=link_text) }}
+	{% endfor %}
+	</div>
+{% endmacro section_list %}
+
+{% macro page_card(page, unique_id, link_classes, link_text) %}
+	<article itemscope itemtype="https://schema.org/Article">
+		<header>
+			<hgroup>
+				<h2 id="{{ page.slug }}" itemprop="headline"><a href="{{ page.permalink }}" class="contrast">{{ page.title }}</a></h2>
+				{{ macros::stats_text(enable=section.extra.stats | default(value=false), page=page) }}
+			</hgroup>
+			{% if page.taxonomies.tags %}
+			<nav>
+				{# This is necessary for Pico's styling to function correctly; it feels like a violation of semantic HTML, so I try to expiate my sins with ARIA. u_u #}
+				<ul aria-labelledby="tag-list-label_{{ unique_id }}">
+					<li id="tag-list-label_{{ unique_id }}">Tag{{ page.taxonomies.tags | length | pluralize }}:</li>
+					{% for tag in page.taxonomies.tags %}
+					<li><a rel="tag" href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag }}</a></li>
+					{% endfor %}
+				</ul>
+			</nav>
+			{% endif %}
+		</header>
+
+		{{ page.summary | safe }}
+
+		{% if not page.extra.short %}
+		<a href="{{ page.permalink }}#continue-reading" class="{{ link_classes }}">{{ link_text }}</a>
+		{% endif %}
+	</article>
+{% endmacro page_card %}

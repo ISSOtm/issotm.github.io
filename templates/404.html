@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %} 404: page not found! {% endblock %}
+{% block seo %} {# None for 404s! #} {% endblock %}
+
+{% block h1 %} <h1>This is a wrong way!</h1> {% endblock %}
+
+{% block content %}
+	<img src="{{ get_url(path="/assets/lakitu64_reverse.gif") }}">
+
+	<p>
+		Looks like you were headed towards a page that doesn't exist...
+		<a href="{{ get_url(path="@/_index.md") }}">let me put you back on the track</a>, keep racing!
+	</p>
+{% endblock %}

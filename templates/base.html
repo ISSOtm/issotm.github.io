@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preload" href="{{ get_url(path="assets/stars.png") }}" as="image">
+	{% block preload %}{% endblock preload %}
+	<link rel="preload" href="{{ get_url(path="assets/clouds.png") }}" as="image">
+	<link rel="stylesheet" href="{{ get_url(path="style.css") }}">
+	<link rel="stylesheet" type="text/css" href="{{ get_url(path="syntax-theme-dark.css") }}" media="(prefers-color-scheme: dark)" />
+	<link rel="stylesheet" type="text/css" href="{{ get_url(path="syntax-theme-light.css") }}" media="(prefers-color-scheme: light)" />
+	<meta name="theme-color" content="#9dc9ef">
+	<link rel="icon" type="image/png" href="{{ get_url(path="favicon/32x32.png") }}" sizes="32x32">
+	<link rel="icon" type="image/png" href="{{ get_url(path="favicon/16x16.png") }}" sizes="16x16">
+	<link rel="apple-touch-icon-precomposed" type="image/png" href="{{ get_url(path="favicon/32x32.png") }}" sizes="32x32">
+	<link rel="apple-touch-icon-precomposed" type="image/png" href="{{ get_url(path="favicon/16x16.png") }}" sizes="16x16">
+	<title>{% block title %}{% endblock title %} — {{ config.title }}</title>
+	{% block seo %}
+	<meta property="og:title" content="{% block og_title %}{% endblock og_title %}">
+	<meta property="og:locale" content="{{ lang }}">
+	<meta name="description" content="{% block description %}{% endblock description %}">
+	<meta property="og:description" content="{% block og_description %}{% endblock og_description %}">
+	{% if current_url is defined %}
+	<link rel="canonical" href="{{ current_url }}">
+	<meta property="og:url" content="{{ current_url }}">
+	{% endif %}
+	<meta property="og:site_name" content="{{ config.title }}">
+	<meta property="og:type" content="article">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="{% block twitter_title %}{% endblock %}">
+	{% endblock seo %}
+	<meta name="google-site-verification" content="ljmYhpaVJNaCEk64aV0NyYzauKGSEUtOS2nsYEx7JD0">
+</head>
+
+<body>
+	<nav class="container-fluid">
+		{# TODO: add search #}
+		<ul data-theme="dark"><li><a href="{{ get_url(path="@/_index.md") }}" class="contrast"><strong>{{ config.title }}</strong></a></li></ul>
+		<ul data-theme="dark">
+			<li><a class="contrast" href="{{ get_url(path="@/about.md") }}" rel="author">About</a></li>
+			<li><a class="contrast" href="//gbdev.io/gb-asm-tutorial">GB ASM tutorial</a></li>
+			{# rel="me" required for Mastodon "owner verification" #}
+			<li><a rel="me" href="//social.treehouse.systems/@issotm"><img src="{{ get_url(path="assets/mastodon-icon.svg") }}" alt="My Mastodon" title="My Mastodon"></a></li>
+			<li><a href="//github.com/ISSOtm"><img src="{{ get_url(path="assets/github-icon.svg") }}" alt="My GitHub" title="My GitHub"></a></li>
+			<li><a rel="alternate" type="application/rss+xml" href="{{ get_url(path="rss.xml", trailing_slash=false) }}"><img src="{{ get_url(path="assets/rss.svg" ) }}" alt="RSS Feed" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+
+	{% block header %}{% endblock header %}
+
+	<main class="container" {% block main_attrs %}{% endblock main_attrs %}>
+		{% block h1 %}{% endblock h1 %}
+
+		{% block content %}{% endblock content %}
+	</main>
+
+	{# The clouds separating the footer from the main content #} <div id="bottom"></div>
+	<footer data-theme="light"> {# Forcing light mode because of the white clouds #}
+		<div class="container">
+			<p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text">© 2020–2023 <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="{{ get_url(path="@/about.md") }}">Eldred Habert</a>. This website's contents are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0<img alt="" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img alt="" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /><img alt="" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" /></a></p>
+
+			<svg viewBox="0 0 468 60" class="no-print">
+				<a href="https://www.improbableisland.com">
+					<style>text { text-anchor: middle; font-size: 20px; dominant-baseline: middle; }</style>
+					<text x="234" y="10">This'd be a non-animated 468x60 banner that</text>
+					<text x="234" y="30">doesn't track you. I know I use one myself, but</text>
+					<text x="234" y="50">please consider disabling your ad blocker! ^^'</text>
+					<image x="0" y="0" width="468" height="60" href="{{ get_url(path="assets/improbable_island.jpg") }}">
+				</a>
+			</svg>
+			<p style="margin-bottom: 0;" class="no-print"><small>This ad is for a site that <strong>I</strong>, not some algorithm, think you may enjoy. No tracking, no strings attached, I'm not even paid! <a href="https://mstdn.social/@ifixcoinops/109639352494996644">Here is some context.</a></small></p>
+		</div>
+	</footer>
+
+	<a id="balloon" class="no-print" href="#" data-tooltip="Back to top" data-placement="left"><img src="{{ get_url(path="assets/to_top.png") }}" alt="Go back to the top of the page"></a>
+</body>
+
+</html>

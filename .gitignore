@@ -1,5 +1,2 @@
-_site
-.sass-cache
-.jekyll-metadata
-.bundle/
-vendor/
+/public
+/static/syntax-theme-*.css

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %} Tags {% endblock %}
+{% block h1 %}
+	<h1>Tags</h1>
+{% endblock h1 %}
+
+{% block content %}
+	<ul>
+	{% for term in terms | sort(attribute="name") %}
+		<li>{{ term.page_count }} page{{ term.page_count | pluralize }} tagged <a href="{{ term.permalink }}">{{ term.name }}</a>{% if loop.last %}.{% else %},{% endif %}</li>
+	{% endfor %}
+	</ul>
+{% endblock %}

@@ -2,25 +2,25 @@
 {% import "macros.html" as macros %}
 
 {% block preload %}
-  <link rel="preload" href="{{ get_url(path="/assets/plane.svg") }}" as="image" type="image/svg+xml" />
-  <link rel="preload" href="{{ get_url(path="/assets/trail.png") }}" as="image" type="image/png" />
-  {% if page.higher %}
-    <link rel="next" href="{{ page.higher.permalink }}">
-  {% endif %}
-  {% if page.lower %}
-    <link rel="prev" href="{{ page.lower.permalink }}">
-  {% endif %}
+	<link rel="preload" href="{{ get_url(path="/assets/plane.svg") }}" as="image" type="image/svg+xml" />
+	<link rel="preload" href="{{ get_url(path="/assets/trail.png") }}" as="image" type="image/png" />
+	{% if page.higher %}
+		<link rel="next" href="{{ page.higher.permalink }}">
+	{% endif %}
+	{% if page.lower %}
+		<link rel="prev" href="{{ page.lower.permalink }}">
+	{% endif %}
 {% endblock preload %}
 
 {% block title -%} {{ page.title }} {%- endblock title %}
 {% block og_title -%} {{ page.title }} {%- endblock og_title %}
 {% block twitter_title -%} {{ page.title }} {%- endblock twitter_title %}
 {% block seo %}
-  {{ super() }}
+	{{ super() }}
 
-  {% if page.taxonomies.tags %}
-  <meta name="keywords" content="{{ page.taxonomies.tags | join(sep=" ") }}">
-  {% endif %}
+	{% if page.taxonomies.tags %}
+	<meta name="keywords" content="{{ page.taxonomies.tags | join(sep=" ") }}">
+	{% endif %}
 {% endblock seo %}
 
 {% block description -%}
@@ -41,65 +41,65 @@
 	</hgroup>
 	{{ macros::stats_meta(page=page) }}
 
-  {% if page.taxonomies.tags is defined %}
-  <nav>
-    <ul aria-labelledby="tag-list-label">
-      {# This is necessary for Pico's styling to function correctly; it feels like a violation of semantic HTML, so I try to expiate my sins with ARIA. u_u #}
-      <li id="tag-list-label">Tag{{ page.taxonomies.tags | length | pluralize }}:</li>
-      {% for tag in page.taxonomies.tags %}
-      <li><a rel="tag" href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag | safe }}</a></li>
-      {% endfor %}
-    </ul>
-  </nav>
-  {% endif %}
+	{% if page.taxonomies.tags is defined %}
+	<nav>
+		<ul aria-labelledby="tag-list-label">
+			{# This is necessary for Pico's styling to function correctly; it feels like a violation of semantic HTML, so I try to expiate my sins with ARIA. u_u #}
+			<li id="tag-list-label">Tag{{ page.taxonomies.tags | length | pluralize }}:</li>
+			{% for tag in page.taxonomies.tags %}
+			<li><a rel="tag" href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag | safe }}</a></li>
+			{% endfor %}
+		</ul>
+	</nav>
+	{% endif %}
 {% endblock h1 %}
 
 {% block header %}
 <div id="breadcrumbs"> {# This carries the background; the <nav> gets margins from `.container`'s centering. #}
-  <nav class="container" aria-label="breadcrumb" data-theme="light">
-    <ul itemscope itemtype="https://schema.org/BreadcrumbList" aria-orientation="horizontal">
-      {% set elems = [] %}
-      {% for ancestor in page.ancestors %}
-        {% set_global elems = elems | concat(with=get_section(path=ancestor)) %}
-      {% endfor %}
-      {% for elem in elems | concat(with=page) %}
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          {% if not loop.last %} <a itemprop="item" href="{{ elem.permalink }}"> {% endif %}
-            <span itemprop="name">{{ elem.extra.breadcrumb | default(value=elem.title) | safe }}</span>
-          {% if not loop.last %} </a> {% endif %}
-          <meta itemprop="position" content="{{ loop.index }}"/>
-        </li>
-      {% endfor %}
-    </ul>
-  </nav>
+	<nav class="container" aria-label="breadcrumb" data-theme="light">
+		<ul itemscope itemtype="https://schema.org/BreadcrumbList" aria-orientation="horizontal">
+			{% set elems = [] %}
+			{% for ancestor in page.ancestors %}
+				{% set_global elems = elems | concat(with=get_section(path=ancestor)) %}
+			{% endfor %}
+			{% for elem in elems | concat(with=page) %}
+				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+					{% if not loop.last %} <a itemprop="item" href="{{ elem.permalink }}"> {% endif %}
+						<span itemprop="name">{{ elem.extra.breadcrumb | default(value=elem.title) | safe }}</span>
+					{% if not loop.last %} </a> {% endif %}
+					<meta itemprop="position" content="{{ loop.index }}"/>
+				</li>
+			{% endfor %}
+		</ul>
+	</nav>
 </div>
 {% endblock %}
 
 {% block content %}
-  {% set section = get_section(path=page.ancestors | last) %}
+	{% set section = get_section(path=page.ancestors | last) %}
 
-  <hr>
+	<hr>
 
-  {{ page.content | safe }}
+	{{ page.content | safe }}
 
-  {% if page.extra.section %}
-    {{ macros::section_list(path=page.extra.section) }}
-  {% endif %}
+	{% if page.extra.section %}
+		{{ macros::section_list(path=page.extra.section) }}
+	{% endif %}
 
-  {% if page.lower or page.higher %}
-  <hr>
+	{% if page.lower or page.higher %}
+	<hr>
 
-  <nav>
-    <ul>
-      {% if page.lower %}
-        <li>{{ section.extra | get(key="prev_text", default="Previous") }}: <a href="{{ page.lower.permalink }}">{{ page.lower.title }}</a></li>
-      {% endif %}
-    </ul>
-    <ul>
-      {% if page.higher %}
-        <li>{{ section.extra | get(key="next_text", default="Next") }}: <a href="{{ page.higher.permalink }}">{{ page.higher.title }}</a></li>
-      {% endif %}
-    </ul>
-  </nav>
-  {% endif %}
+	<nav>
+		<ul>
+			{% if page.lower %}
+				<li>{{ section.extra | get(key="prev_text", default="Previous") }}: <a href="{{ page.lower.permalink }}">{{ page.lower.title }}</a></li>
+			{% endif %}
+		</ul>
+		<ul>
+			{% if page.higher %}
+				<li>{{ section.extra | get(key="next_text", default="Next") }}: <a href="{{ page.higher.permalink }}">{{ page.higher.title }}</a></li>
+			{% endif %}
+		</ul>
+	</nav>
+	{% endif %}
 {% endblock content %}

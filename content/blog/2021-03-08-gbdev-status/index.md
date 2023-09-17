@@ -7,9 +7,9 @@ aliases = [ "blog/2021/03/08/gbdev-status" ]
 tags = ["gbdev"]
 +++
 
-This originally started as [a Twitter thread](https://twitter.com/issotm/status/1368885465923870721) that got <s>out of hand</s> 30 tweets long.
+This originally started as [a Twitter thread](//twitter.com/issotm/status/1368885465923870721) that got <s>out of hand</s> 30 tweets long.
 
-[Avivace](https://twitter.com/avivace4) asked me if I could make it into a blog post of some kind, and I figured that it was a good idea, *and* I might as well clean up a few things, *and* possibly add some images.
+[Avivace](//twitter.com/avivace4) asked me if I could make it into a blog post of some kind, and I figured that it was a good idea, *and* I might as well clean up a few things, *and* possibly add some images.
 
 <!-- more -->
 
@@ -23,7 +23,7 @@ Additionally, I had promised I'd publish a new RGBDS pre-release, which I wanted
 This is written from my point of view; it's **definitely** not meant to be an objective summary of where the community is now, I'll leave that to Avivace instead.
 
 I don't touch most of the administrative side of GBDev, and honestly, it's for the better.
-It allows me to focus more on carrying out projects (mainly [RGBDS](https://rgbds.gbdev.io), as many know), and my TODO list keeps being too long anyway.
+It allows me to focus more on carrying out projects (mainly [RGBDS](//rgbds.gbdev.io), as many know), and my TODO list keeps being too long anyway.
 
 Well, let's not digress: here's my state of GBDev, as of March 2021.
 
@@ -32,16 +32,16 @@ Well, let's not digress: here's my state of GBDev, as of March 2021.
 As of right now, the interim changelog for 0.5.0-pre is bigger than any previous one, so I'll try to publish the release soon.
 We're aiming for roughly 1 month of testing before we publish the release proper.
 
-I've had a few occasions to ponder about RGBDS essentially being a [0ver project](https://0ver.org) now.
+I've had a few occasions to ponder about RGBDS essentially being a [0ver project](//0ver.org) now.
 *(Quick summary: software with version "0.x" is supposed to be unstable and not ready for public use. However, many projects being depended upon still use 0.x because they are afraid from the implied stability guarantees expected from 1.x software, despite already implementing them in practice.)*
 
-And, indeed, [many](https://github.com/pret/pokecrystal/) [a](https://github.com/ISSOtm/quartet-intro) [project](https://github.com/daid/LADXR) [depends](https://github.com/pinobatch/libbet) [on](https://github.com/zladx/LADX-Disassembly) RGBDS.
+And, indeed, [many](//github.com/pret/pokecrystal/) [a](//github.com/AYCEdemo/quartet-intro) [project](//github.com/daid/LADXR) [depends](//github.com/pinobatch/libbet) [on](//github.com/zladx/LADX-Disassembly) RGBDS.
 I think, however, that it has *some* merit in staying in 0ver despite the circumstances; lemme explain...
 
-RGBDS is a project that [started in the late 90's](https://rgbds.gbdev.io/docs/v0.4.2/rgbds.7#HISTORY), so it shouldn't come as a surprise that it's full of legacy problems.
+RGBDS is a project that [started in the late 90's](//rgbds.gbdev.io/docs/v0.4.2/rgbds.7#HISTORY), so it shouldn't come as a surprise that it's full of legacy problems.
 Here's a small list off the top of my head:
 
-- RGBGFX is a buggy mess (sorry, stag :/) that needs both a core *and* an [interface](https://github.com/gbdev/rgbds/issues/487) [overhaul](https://github.com/gbdev/rgbds/issues/575)
+- RGBGFX is a buggy mess (sorry, stag :/) that needs both a core *and* an [interface](//github.com/gbdev/rgbds/issues/487) [overhaul](//github.com/gbdev/rgbds/issues/575)
 - Debugging support is limited because we lack a way to produce line mappings
 - Indentation rules are still weird, and keep confusing people
 - The code is generally in a sorry state, though improving
@@ -56,7 +56,7 @@ Besides, we will keep hosting old versions, so that projects that aren't activel
 (If they don't document the RGBDS version they were expecting, it should still be able to be inferred from the release date, and it's not something we have control over either.)
 
 Further, we've fixed bugs that *were* obvious bugs, but that broke backwards compatibility.
-The most telltale example that I keep bringing up is ["labels can be defined with colons in their names"](https://github.com/gbdev/rgbds/issues/362).
+The most telltale example that I keep bringing up is ["labels can be defined with colons in their names"](//github.com/gbdev/rgbds/issues/362).
 And while we could *in theory* e.g. provide a switch for the old and new behavior, the complexity of such a system is too much for a mostly-one-man-team, both in design and implementation.
 
 If we were a larger, paid team, offering a more widely depended upon service, we'd put more effort into backwards compatibility.
@@ -69,19 +69,19 @@ Back to the topic of 0ver: until we, and by that I mean the community at large, 
 
 What's more, it's not just empty words, we're making great progress towards that goal!
 
-Over the last year or so, there have been many significant overhauls ([\[1\]](https://github.com/gbdev/rgbds/commit/f9f27d6f5a00898f7d3faaee921ab8d13e13b85a) [\[2\]](https://github.com/gbdev/rgbds/commit/304bb9f902f2a6a5fb39f19d2be8f4698246c435) [\[3\]](https://github.com/gbdev/rgbds/pull/557) [\[4\]](https://github.com/gbdev/rgbds/commit/bd244e68654533cd817aba5794c5669707cd4578) [\[5\]](https://github.com/gbdev/rgbds/commit/41d544a4ebb7ef7d6343bfb5a96bcbd553d57b4f) [\[6\]](https://github.com/gbdev/rgbds/commit/fa0fa4d5ac9e806f4e1770e1fcab7cf3c5bc5289) [\[7\]](https://github.com/gbdev/rgbds/commit/a679e0224603ca629bff991a470b8ad60ecfd053)) to the codebase, which improved both code quality and performance!
-I kickstarted a lot of the effort, but [Rangi](https://github.com/Rangi42) picked up the pace, and is now doing a lot of the heavy lifting—more on that below.
+Over the last year or so, there have been many significant overhauls ([\[1\]](//github.com/gbdev/rgbds/commit/f9f27d6f5a00898f7d3faaee921ab8d13e13b85a) [\[2\]](//github.com/gbdev/rgbds/commit/304bb9f902f2a6a5fb39f19d2be8f4698246c435) [\[3\]](//github.com/gbdev/rgbds/pull/557) [\[4\]](//github.com/gbdev/rgbds/commit/bd244e68654533cd817aba5794c5669707cd4578) [\[5\]](//github.com/gbdev/rgbds/commit/41d544a4ebb7ef7d6343bfb5a96bcbd553d57b4f) [\[6\]](//github.com/gbdev/rgbds/commit/fa0fa4d5ac9e806f4e1770e1fcab7cf3c5bc5289) [\[7\]](//github.com/gbdev/rgbds/commit/a679e0224603ca629bff991a470b8ad60ecfd053)) to the codebase, which improved both code quality and performance!
+I kickstarted a lot of the effort, but [Rangi](//github.com/Rangi42) picked up the pace, and is now doing a lot of the heavy lifting—more on that below.
 
 nitro2k01 measured a 2× speedup between an old version of RGBDS and a build close to 0.4.2-pre.
 This may not mean much, due to this possibly encompassing a lot of different factors, but is at least reassuring :)
 
-### [You're not alone](https://www.youtube.com/watch?v=99a7dZw0ThE)
+### [You're not alone](//www.youtube.com/watch?v=99a7dZw0ThE)
 
 As I said above, Rangi is helping a lot: she's both active in the design side of issues, and writing a lot of code herself.
 
 This is good news for a lot of reasons:
 
-- The [bus factor](https://en.wikipedia.org/wiki/Bus_factor) is reduced. I hoped that she could become the main maintainer, but she declined. I don't blame her, what she's doing now is already hugely helpful.
+- The [bus factor](//en.wikipedia.org/wiki/Bus_factor) is reduced. I hoped that she could become the main maintainer, but she declined. I don't blame her, what she's doing now is already hugely helpful.
 - It proves that it is possible for outsiders to learn the codebase, though I had to give her some pointers at the beginning. It's not perfect, but we can work on that!
 - We don't always agree, but having input from a different point of view than mine is certainly helpful towards making RGBDS useful for more than just me.
 - Having to mostly review code instead of writing it is allowing me to shift my focus elsewhere...
@@ -100,16 +100,16 @@ Here are the next three in the queue:
 
 ### To C Or Not To C 2
 
-["To C Or Not To C"](https://gbdev.io/to_c_or_not_to_c.html) is an "old" writeup of mine that aimed to provide insight into whether to use ASM or C for Game Boy programming.
+["To C Or Not To C"](//gbdev.io/guides/tools) is an "old" writeup of mine that aimed to provide insight into whether to use ASM or C for Game Boy programming.
 
 This was written a few years ago, and the scene has evolved since.
 It's also an opinionated document, I'll admit, and I grew up since, too.
-[bbbbbr](https://github.com/bbbbbr) already did [the first half of the work](https://github.com/gbdev/gbdev.github.io/pull/27), now it's my turn to do the second half.
+[bbbbbr](//github.com/bbbbbr) already did [the first half of the work](//github.com/gbdev/gbdev.github.io/pull/27), now it's my turn to do the second half.
 I hope to get to it during April, hopefully getting it done in May.
 
 ### `rsgbgfx`
 
-[`rsgbgfx`](https://github.com/ISSOtm/rsgbgfx) is a Rust rewrite 🦀 of one of RGBDS' components, the PNG-to-GB-gfx converter.
+[`rsgbgfx`](//github.com/ISSOtm/rsgbgfx) is a Rust rewrite 🦀 of one of RGBDS' components, the PNG-to-GB-gfx converter.
 The current tool has terribly messy code (sorry again, stag) and needs its interface + processes adapted to the needs that surfaced since then.
 
 I chose Rust because I wanted something that would be like the rest of RGBDS: standalone and lightweight.
@@ -118,7 +118,7 @@ I didn't pick C++ because I'm already fairly comfortable with it, and I want to 
 
 ### gb-asm-tutorial
 
-Ah... [Near had *Bahamut Lagoon*](https://www.vice.com/en/article/bvxezw/a-23-year-perfectionist-journey-to-localize-the-obscure-bahamut-lagoon), I guess this one will be my own white whale.
+Ah... [Near had *Bahamut Lagoon*](//www.vice.com/en/article/bvxezw/a-23-year-perfectionist-journey-to-localize-the-obscure-bahamut-lagoon), I guess this one will be my own white whale.
 
 Here's the context: there exist a bunch of Game Boy programming tutorials, a lot in ASM; but they are almost all severely outdated.
 Those that aren't, are often lackluster, typically stopping right after "Hello World!", and/or contain bad patterns.
@@ -176,7 +176,7 @@ I've come to realize that a lot of the code, scripts, and snippets that I post, 
 It's not just bloat, either—they are complicated, but this is because I've spent a lot of time tweaking them to avoid some non-obvious problems.
 The solution to that is simple: show, step by step, how we arrive at that complexity.
 
-But just putting these bits of code and techniques in front of people, and telling them to do that... that's [cargo cult](https://en.wikipedia.org/wiki/Cargo_cult_programming), and I don't want that.
+But just putting these bits of code and techniques in front of people, and telling them to do that... that's [cargo cult](//en.wikipedia.org/wiki/Cargo_cult_programming), and I don't want that.
 "Do this, because it's better"—but *why* are the other ways bad?
 
 Further, I noticed that people had a tendency not to heed my warnings about X problem until it (and its consequences) hit them straight in the face.
@@ -217,7 +217,7 @@ The site looks kinda like ass, and I want to improve that.
 I will also switch from that custom templating system over to Jekyll, since I'm now much more comfortable with it, and it's directly built into GitHub Pages.
 
 On that note, I'm looking for help on the design side.
-If you'd like to help, first off, *thank you very much*, and second, you can find me [anywhere in GBDev](https://gbdev.io/chat.html).
+If you'd like to help, first off, *thank you very much*, and second, you can find me [anywhere in GBDev](//gbdev.io/chat.html).
 
 ## Ending thoughts
 
@@ -228,6 +228,6 @@ I wish you all a great year 2021, and hopefully we'll see you in GBDev 😉
 
 ## Back-links
 
-Check out [the GBDev community](https://gbdev.io) for more Game Boy development! :)
+Check out [the GBDev community](//gbdev.io) for more Game Boy development! :)
 
-<small>[Thanks, Vegard!](https://twitter.com/vegard_no/status/1368899077908402178)</small>
+<small>[Thanks, Vegard!](//twitter.com/vegard_no/status/1368899077908402178)</small>

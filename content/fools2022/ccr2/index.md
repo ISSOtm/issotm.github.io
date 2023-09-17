@@ -16,9 +16,9 @@ Out of all the ways to go about this, I initially went with the most complicated
 I'll be short: this didn't really turn up anything.
 I was hoping that it might give a head start into disassembling the save file and that might prove useful for later challenges, but progress was kind of slow.
 
-No, instead, [Kirby703](https://twitter.com/Kirby703_) noted that the map IDs were unchanged[^unchanged] from the 2018 edition.
+No, instead, [Kirby703](//twitter.com/Kirby703_) noted that the map IDs were unchanged[^unchanged] from the 2018 edition.
 
-Armed with this knowledge [and the wiki](https://thezzazzglitch.fandom.com/wiki/Category:Glitchland_Locations), it's actually possible to use a cheat search to find the "current map ID" variable's address:
+Armed with this knowledge [and the wiki](//thezzazzglitch.fandom.com/wiki/Category:Glitchland_Locations), it's actually possible to use a cheat search to find the "current map ID" variable's address:
 
 <figure>
 <img alt="Screenshot of a new cheat search" src="new_search.png">
@@ -47,7 +47,7 @@ Armed with this knowledge [and the wiki](https://thezzazzglitch.fandom.com/wiki/
 Success! [^mysterious_cave]
 Resetting the game showed that the rock barrier was now open, granting access to the third floor.
 
-[^unchanged]: Well, *most* map IDs are unchanged. At least Central Square's *was* changed, but you can also notice that the map is very different. pfero [found an unused map](https://cdn.discordapp.com/attachments/959199845191659540/960527271238717491/output.mp4) which looks a lot more like the original.
+[^unchanged]: Well, *most* map IDs are unchanged. At least Central Square's *was* changed, but you can also notice that the map is very different. pfero [found an unused map](//cdn.discordapp.com/attachments/959199845191659540/960527271238717491/output.mp4) which looks a lot more like the original.
 
 [^mysterious_cave]: As it turns out, the "Mysterious" map has terrain at the location you'd spawn at if you went through the bottom-right ladder in CCR2. Ah. Oh well, the check still passes.
 

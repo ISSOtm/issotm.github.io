@@ -127,7 +127,7 @@ Much more readable, isn't it? Now we can start dissecting this.
 
 This code is slow. Too slow, we know that; but how can we optimize it? The outer loop is run a ridiculous amount of times, and the inner loop is *also* run too much to be reasonable. We need to either trivialize the inner loop so we can afford to run the outer loop \~2 billion times, or to reduce the amount of iterations of the outer loop. Thus, we need to reason on how the algorithms works, the gist of which is that the buffer is XOR'd with the output of several LCGs - a few billion times, actually.
 
-You may have noticed this acronym in the code earlier—a [Linear Congruential Generator](https://en.wikipedia.org/wiki/Linear_Congruential_Generator) is one of the simplest (pseudo-) random number generators. They are essentially close to random, but still deterministic so this code doesn't spit out literally random data, which would be pretty useless.
+You may have noticed this acronym in the code earlier—a [Linear Congruential Generator](//en.wikipedia.org/wiki/Linear_Congruential_Generators) is one of the simplest (pseudo-) random number generators. They are essentially close to random, but still deterministic so this code doesn't spit out literally random data, which would be pretty useless.
 
 And it's here that I failed a spot check: the period of the outer LCG is 2<sup>30</sup>. I misread the generator's constants, and incorrectly thought it to be of full period. Amusingly, I did end up exploiting that vulnerability, albeit indirectly, but I guess all roads do lead to Rome.
 
@@ -143,4 +143,4 @@ The final code can be found [here](bruter.c). You'll note it's still very unopti
 
 ## Luckytyphlosion's solution
 
-[His solution](https://pastebin.com/CkeAfB4E) used the intended flaw, which is exploited by "dry running" the outer LCG the first 2<sup>30</sup> - N times, then running the actual code N times, N being 2<sup>32</sup> - 0x7ffffb0a. This takes only a handful of seconds, versus my own code running for around 20 minutes.
+[His solution](//pastebin.com/CkeAfB4E) used the intended flaw, which is exploited by "dry running" the outer LCG the first 2<sup>30</sup> - N times, then running the actual code N times, N being 2<sup>32</sup> - 0x7ffffb0a. This takes only a handful of seconds, versus my own code running for around 20 minutes.

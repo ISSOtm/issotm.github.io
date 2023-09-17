@@ -53,7 +53,7 @@ Thankfully, the good folks at [pret](//github.com/pret) have us covered:
 Since mGBA is an emulator also meant for making your own games (and ROM hacks, I guess), it has conveniences for debugging.
 One of those, obviously, is loading symbol information; this is done by loading [ELF files](//en.wikipedia.org/wiki/Executable_and_Linkable_Format) instead of plain GBA ROMs[^elf].
 
-We can build an ELF file with debug info by building [pokeemerald](//github.com/pret/pokeemerald.git) with `make DINFO=1`.
+We can build an ELF file with debug info by building [pokeemerald](//github.com/pret/pokeemerald) with `make DINFO=1`.
 Loading `pokeemerald.elf` in mGBA works just like loading the ROM, except that we have symbol information now! [^relocs]
 
 Next hurdle is that I can't use my system's GDB.
@@ -83,7 +83,7 @@ The end result is that I don't have type information or source mappings, but I c
 
 [^which_triplet]: How do I know which triplet I want? I Know™ that the compiler that was used to compile pokeemerald targets the `arm-none-eabi` triplet, so I need a GDB configured for the same. (You can actually find "`arm-none-eabi`" mentioned in the "modern" build instructions.) You can make any GCC tell you which triplet it's compiling for with `-v` ("verbose"), and looking at the `Target:` line.
 
-[^arm_gdb]: I could've installed [ARM's `gdb`](//developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads) instead. I tried grabbing the binaries, but they require dependencies older than I have, and compiling from source wouldn't have been worth the effort. So I stared at assembly a whole lot. 🙂
+[^arm_gdb]: I could've installed [ARM's `gdb`](//developer.arm.com/downloads/-/gnu-rm) instead. I tried grabbing the binaries, but they require dependencies older than I have, and compiling from source wouldn't have been worth the effort. So I stared at assembly a whole lot. 🙂
 
 ## Gathering intel
 

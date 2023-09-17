@@ -16,7 +16,7 @@ Buckle up, baby!
 
 This year takes us back to the map of the 2018 event with the same premise (all maps downloaded from the internet)... but this time, with less glitchy blocks everywhere, oh and also we're on the GBA now.
 
-[The event itself](https://zzazzdzz.github.io/fools2022) was a blast, with a bunch of secrets and objectives all over the place.
+[The event itself](//zzazzdzz.github.io/fools2022/) was a blast, with a bunch of secrets and objectives all over the place.
 But, that's all the *normal* stuff.
 Just north-east of the Eastern Camp, stands the Cracker Cavern, which is where people hungry for technical challenges (*<small>*timidly raises hand*</small>*) go to get their fix.
 

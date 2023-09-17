@@ -52,7 +52,7 @@ Somehow.
 Oh yeah.
 What is the Advanced Encryption Standard?
 
-Well, I'll spare you [the obligatory Wikipedia link](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard), as we aren't interested in all of its inner workings here.
+Well, I'll spare you [the obligatory Wikipedia link](//en.wikipedia.org/wiki/Advanced_Encryption_Standard), as we aren't interested in all of its inner workings here.
 
 AES is what's called a *symmetric* encryption protocol: the same key is used for encrypting and decrypting things.
 (Contrast this to RSA, which is *asymmetric*, as it employs a *public* and *private* key.)
@@ -78,9 +78,9 @@ The simplest mode of operation is called *ECB* (*Electronic Code Book*), where e
 
 Then there is *CBC*, or *Cipher Block Chaining*, where the last ciphered block[^iv] is XOR'd to the next block's plaintext, and *that* gets ciphered:
 
-[![CBC encryption diagram](https://upload.wikimedia.org/wikipedia/commons/8/80/CBC_encryption.svg)](https://en.wikipedia.org/wiki/File:CBC_encryption.svg)
+[![CBC encryption diagram](//upload.wikimedia.org/wikipedia/commons/8/80/CBC_encryption.svg)](//en.wikipedia.org/wiki/File:CBC_encryption.svg)
 
-[There are other modes](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation), but these two are the most common used with AES.
+[There are other modes](//en.wikipedia.org/wiki/Block_cipher_mode_of_operation), but these two are the most common used with AES.
 We could easily rule out ECB, as swapping two blocks in the ciphertext does not yield a valid message.
 So it's AES-CBC, which leaves us with very little control.
 
@@ -96,7 +96,7 @@ Until pfero had a breakthrough.
 We had noticed that changing one byte in the ciphertext corrupted not only the corresponding plaintext block, *but also the one after*.
 But how come?
 
-[![CBC decryption diagram](https://upload.wikimedia.org/wikipedia/commons/2/2a/CBC_decryption.svg)](https://en.wikipedia.org/wiki/File:CBC_decryption.svg)
+[![CBC decryption diagram](//upload.wikimedia.org/wikipedia/commons/2/2a/CBC_decryption.svg)](//en.wikipedia.org/wiki/File:CBC_decryption.svg)
 
 Ooh.
 What pfero had realized is that the little arrow going from one ciphertext block to the next plaintext block could be our ticket to victory.
@@ -119,16 +119,16 @@ b'er'
 
 Here, "asdf" and "hhhhhh" are used for aligning the `type=` (point 1), and the `xxxxxxxxxxxxxxxx` is our "sacrificial" block (point 2).
 
-Now, it's actually [as simple as](https://doomwiki.org/wiki/Dead_Simple) modifying the `xxxx`'s ciphertext to transmute the `silv` into `gold`!
+Now, it's actually [as simple as](//doomwiki.org/wiki/Dead_Simple) modifying the `xxxx`'s ciphertext to transmute the `silv` into `gold`!
 
 <figure>
 <script id="asciicast-jTVKHa8zoa7OHQtlLadpLLG1j" src="https://asciinema.celforyon.fr/a/jTVKHa8zoa7OHQtlLadpLLG1j.js" async></script>
 <figcaption>
-<small><a href="https://asciinema.celforyon.fr/a/jTVKHa8zoa7OHQtlLadpLLG1j">Alternate link if the inline player doesn't load</a>, such as if you disabled JavaScript</small>
+<small><a href="//asciinema.celforyon.fr/a/jTVKHa8zoa7OHQtlLadpLLG1j">Alternate link if the inline player doesn't load</a>, such as if you disabled JavaScript</small>
 </figcaption>
 </figure>
 
-You can see from the diff (powered and colorized by [delta](https://github.com/dandavison/delta)) that we removed the last block (thus truncating the trailing `er`), and that the last 4 bytes were changed to... magically give us `gold`.
+You can see from the diff (powered and colorized by [delta](//github.com/dandavison/delta)) that we removed the last block (thus truncating the trailing `er`), and that the last 4 bytes were changed to... magically give us `gold`.
 
 Let's explain that magic a little better.
 We know that the `00000040` block decrypts to *something* which, when XOR'd with the *ciphertext* of the `00000030` block, yields `hhhhhh/type=silv`.

@@ -11,7 +11,7 @@ This year was different from other ones.
 
 The event being all-online again was refreshing—certainly a bit more finicky, what with all the client and mGBA sometimes deciding to pout at each other until a restart (...okay?).
 
-The biggest difference for me this year was the way I dealt with the Cracker's Cavern Reborn challenges: thanks to the April Fools on [pret](https://github.com/pret), I ended up on a voice chat with [pfero](https://github.com/mid-kid), and we ended up doing the third and fourth floors together.
+The biggest difference for me this year was the way I dealt with the Cracker's Cavern Reborn challenges: thanks to the April Fools on [pret](//github.com/pret), I ended up on a voice chat with [pfero](//github.com/mid-kid), and we ended up doing the third and fourth floors together.
 
 A couple of other people popped in and out of the voice chat, and their input was sometimes helpful, but always appreciated! ^^
 In the end, it might not have been in person, but it was really nice to be able to brainstorm ideas in realtime, discuss possible plans, and also just generally chat.
@@ -30,6 +30,6 @@ Anyway, here is a list of people I want to thank:
   Thanks again, dude.
 
 Thank you to you, too, for taking the time to read what I wrote!
-If you want to check out the April Fools I did myself this year, [here it is](https://github.com/gbdev/rgbds/releases/tag/v0.6.0-welease-cnyandidayte). :3
+If you want to check out the April Fools I did myself this year, [here it is](//github.com/gbdev/rgbds/releases/tag/v0.6.0-welease-cnyandidayte). :3
 
 Also, hi mom!

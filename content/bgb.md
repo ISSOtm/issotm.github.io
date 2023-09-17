@@ -2,12 +2,11 @@
 title = "BGB tips and tricks"
 +++
 
-[BGB](https://bgb.bircd.org) is a great Game Boy / Game Boy Color emulator by beware. It's very useful, but sometimes, it's a bit obtuse; and there are some functionalities which are undocumented. Here's a collection of protips you should definitely know about when using BGB. And use BGB you must!
+[BGB](//bgb.bircd.org) is a great Game Boy / Game Boy Color emulator by beware. It's very useful, but sometimes, it's a bit obtuse; and there are some functionalities which are undocumented. Here's a collection of protips you should definitely know about when using BGB. And use BGB you must!
 
 <!-- more -->
 
-(If any of these tricks doesn't work, or you've found your own, you can [open an issue](https://github.com/ISSOtm/issotm.github.io/issues), [send a PR](https://github.com/ISSOtm/issotm.github.io) or just [reach out to me](mailto:eldredhabert0@gmail.com).)
-
+(If any of these tricks doesn't work, or you've found your own, you can [open an issue](//github.com/ISSOtm/issotm.github.io/issues), [send a PR](//github.com/ISSOtm/issotm.github.io) or just [reach out to me](mailto:eldredhabert0@gmail.com).)
 
 ## First thing to do
 
@@ -15,7 +14,7 @@ When you open up BGB for the first time, you'll be met with a blank screen. If y
 
 Best thing to do then is to go to "Other", and open up the debugger.
 
-And, finally, you should read [BGB's manual](https://bgb.bircd.org/manual.html). There is a lot to be found there.
+And, finally, you should read [BGB's manual](//bgb.bircd.org/manual.html). There is a lot to be found there.
 
 
 ## Getting started on Wine

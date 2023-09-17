@@ -15,7 +15,7 @@ This year... yeah, basically the same :D
 The NPC asks you to enter a password, then validates it *in your game*.
 If it's correct, the password gets sent to the server for validation, and that's how you access CCR4!
 
-At this point, I had teamed up with [pfero](https://github.com/mid-kid) (whom I've already mentioned a few times already, lol) in a voice chat.
+At this point, I had teamed up with [pfero](//github.com/mid-kid) (whom I've already mentioned a few times already, lol) in a voice chat.
 Screen sharing and filming whiteboards were involved! 😎
 
 The first step is getting ahold of the validation logic.
@@ -50,7 +50,7 @@ But, it's actually not all that bad!
 A more thorough look reveals that the structure is actually quite simple.
 
 The first thing to know is that (as our comment helpfully points out) `0x02021dc4` is where the first character of the input string lies.
-[The character encoding is documented](https://github.com/pret/pokeemerald/blob/8103caea153f0ab905a00d1f3ee99d088d294659/charmap.txt), so we know those.
+[The character encoding is documented](//github.com/pret/pokeemerald/blob/8103caea153f0ab905a00d1f3ee99d088d294659/charmap.txt), so we know those.
 Okay.
 
 Similarly, the byte read from the string is written by the `setptrbyte` to the operand of the `addvar` just following it.
@@ -88,7 +88,7 @@ And so, this is where I bust out—
 
 Maths.
 
-[!["Stand back, I'm going to try SCIENCE!"](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/9fbc94fa-3770-4723-9f85-ec7a61fb6cbe/d9i34zm-5284e852-53ac-4c16-b1cc-8e363e3bc4e5.png/v1/fill/w_1005,h_795,strp/stand_back_i_m_going_to_try_science_by_motorcycle_hero_d9i34zm-pre.png)](https://xkcd.com/208/)
+[!["Stand back, I'm going to try SCIENCE!"](//images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/9fbc94fa-3770-4723-9f85-ec7a61fb6cbe/d9i34zm-5284e852-53ac-4c16-b1cc-8e363e3bc4e5.png/v1/fill/w_1005,h_795,strp/stand_back_i_m_going_to_try_science_by_motorcycle_hero_d9i34zm-pre.png)](//xkcd.com/208/)
 
 The first realization was that we can simplify those equations.
 We currently have equations like this:
@@ -97,7 +97,7 @@ We currently have equations like this:
 (((6969 + str[0]) * 73 + 6367 + str[1]) * 97 + 5099 + str[2]) * ... == 45295
 ```
 
-... but we can use [distributivity](https://en.wikipedia.org/wiki/Distributive_property) to simplify this to:
+... but we can use [distributivity](//en.wikipedia.org/wiki/Distributive_property) to simplify this to:
 
 ```c
 (73 * 97 * ...) * str[0] + (97 * ...) * str[1] + ... + (6969 * 73 * 97 * ...) == 45295
@@ -119,7 +119,7 @@ This gives us the following two equations to satisfy (I'll start noting `str[n]`
 
 Okay, cool, but we've not really simplified the problem yet.
 I guess we reduced the number of operations—that's a start.
-[*Others have pointed out that this would have been the right moment to use a solver like [Z3](https://github.com/Z3Prover/z3/wiki). Welp, TIL!*]
+[*Others have pointed out that this would have been the right moment to use a solver like [Z3](//github.com/Z3Prover/z3/wiki). Welp, TIL!*]
 But the most important thing is that this allows us to reduce the number of variables; let me explain.
 
 When trying to solve linear equations (which, yes, is what this is), roughly speaking, each equation "pins" one variable down.[^linalg]
@@ -138,4 +138,4 @@ Brace yourselves...
 
 [^linalg]: Actually, equations may turn out to be redundant, or outright unsatisfiable (imagine `x + y = 1` and `x + y = 2`, no `x` and `y` can satisfy both of those at the same time!). We can ignore those cases here, because we know at least one solution exists—otherwise the challenge would just be unsolvable.
 
-[^numpy]: I tried using [numpy](https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html), but that doesn't work with *modulo* arithmetic.
+[^numpy]: I tried using [numpy](//numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html), but that doesn't work with *modulo* arithmetic.

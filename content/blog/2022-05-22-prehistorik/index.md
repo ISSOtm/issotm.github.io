@@ -15,7 +15,7 @@ While this game is not one of the console's best known, being somewhat a average
 
 <!-- more -->
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Playing through some Prehistorik Man on the <a href="https://twitter.com/hashtag/gameboy">#gameboy</a>. Some serious coding wizardry with the pseudo parallax backgrounds. It even shifts perspective as Sam jumps up. Really an incredible feat on the hardware considering the graphics are all tile based! <a href="https://t.co/mRHWM6LOlG">pic.twitter.com/mRHWM6LOlG</a></p>&mdash; GumpyFunction (@GumpyFunction) <a href="https://twitter.com/GumpyFunction/status/1526013758019346432">May 16, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Playing through some Prehistorik Man on the <a href="//twitter.com/hashtag/gameboy">#gameboy</a>. Some serious coding wizardry with the pseudo parallax backgrounds. It even shifts perspective as Sam jumps up. Really an incredible feat on the hardware considering the graphics are all tile based! <a href="//t.co/mRHWM6LOlG">pic.twitter.com/mRHWM6LOlG</a></p>&mdash; GumpyFunction (@GumpyFunction) <a href="//twitter.com/GumpyFunction/status/1526013758019346432">May 16, 2022</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
 And this parallax effect is far from the most impressive punch this game packs despite its unassuming looks.
 Let's explore various tricks, and see how the sausages are made!
@@ -36,13 +36,13 @@ Worth pointing out is its programmer, Elmar Krieger...
 <figcaption>By the way, we'll come back to this title screen.</figcaption>
 </figure>
 
-[A secret message](https://tcrf.net/Prehistorik_Man_(Game_Boy)#Secret_Greetings_Message) reveals that Elmar also has worked in the [demoscene](https://en.wikipedia.org/wiki/Demoscene).
+[A secret message](//tcrf.net/Prehistorik_Man_(Game_Boy)#Secret_Greetings_Message) reveals that Elmar also has worked in the [demoscene](//en.wikipedia.org/wiki/Demoscene).
 This should explain *why* this game is so technically impressive.
 
 ### Technical background
 
 The rest of this article assumes familiarity with the Game Boy's graphics.
-If the terms "tile", "tilemap", "OBJ", and "palette" don't ring any bells to you, I recommend [Pan Docs' excellent primer](https://gbdev.io/pandocs/Rendering).
+If the terms "tile", "tilemap", "OBJ", and "palette" don't ring any bells to you, I recommend [Pan Docs' excellent primer](//gbdev.io/pandocs/Rendering).
 
 ## Parallax
 
@@ -52,7 +52,7 @@ Let's start with the original effect, though it's not the simplest.
 
 This would be simple if the Game Boy had a second background layer (which it doesn't[^window]), so what gives?
 
-Let's bring out trusty [BGB](https://bgb.bircd.org)'s trusty VRAM viewer, and see what's happening in the tilemap.
+Let's bring out trusty [BGB](//bgb.bircd.org)'s trusty VRAM viewer, and see what's happening in the tilemap.
 
 <video controls muted src="parallax_vram.mp4"></video>
 
@@ -72,7 +72,7 @@ Ah well, it's a small price to pay.
 
 [^window]: The Window is not *exactly* a second background layer. Since it fully overrides the background, there's no transparency; so it's simpler to say there is only one layer.
 
-[^1bpp]: Performance is also likely why the background only uses one color: this allows treating those graphics as 1bpp, processing less data and accessing VRAM less. (Accessing VRAM is a slow and annoying bottleneck most of the time.) This also works out as an aesthetic choice, since [scenery further away tends to fade out](https://en.wikipedia.org/wiki/Aerial_perspective).
+[^1bpp]: Performance is also likely why the background only uses one color: this allows treating those graphics as 1bpp, processing less data and accessing VRAM less. (Accessing VRAM is a slow and annoying bottleneck most of the time.) This also works out as an aesthetic choice, since [scenery further away tends to fade out](//en.wikipedia.org/wiki/Aerial_perspective).
 
 ## OBJ overloading
 
@@ -95,7 +95,7 @@ What's going on?
 
 Let's focus on a part of the Game Boy's rendering system: OBJ[^obj] priority.
 
-[OBJ priority](https://gbdev.io/pandocs/OAM#drawing-priority) is simply a set of rules that determine which OBJ comes out "on top" if two of them overlap.
+[OBJ priority](//gbdev.io/pandocs/OAM#drawing-priority) is simply a set of rules that determine which OBJ comes out "on top" if two of them overlap.
 
 This is trivial for Game Boy Color software: the OBJ that comes first in OAM (the table in which OBJ metadata is stored) wins.
 But non-enhanced games abide by a different set of rules[^compat]: the *leftmost* OBJ wins!
@@ -186,7 +186,7 @@ So what gives?
 <figcaption>Also, the logo is fully present in VRAM from the get-go! The way it gets slowly revealed uses the same technique.</figcaption>
 </figure>
 
-This kind of effect is explained in the excellent [DeadCScroll](https://gbdev.io/guides/deadcscroll) tutorial, but here is a brief recap:
+This kind of effect is explained in the excellent [DeadCScroll](//gbdev.io/guides/deadcscroll) tutorial, but here is a brief recap:
 
 - The Game Boy renders the screen line by line (a line of pixels is called a "scanline").
 - Rendering parameters, such as the screen's X position in the tilemap (`SCX`), can be changed for each scanline.
@@ -204,7 +204,7 @@ This kind of effect is explained in the excellent [DeadCScroll](https://gbdev.io
 </figure>
 
 Whoa, 3D in a Game Boy game!?
-Well, while Elmar would later go on and make [a truly 3D tech demo](https://www.youtube.com/watch?v=YgANs-gSWTw), this ain't it.
+Well, while Elmar would later go on and make [a truly 3D tech demo](//www.youtube.com/watch?v=YgANs-gSWTw), this ain't it.
 
 ...No, the answer is "unfortunately" much simpler.
 Let's take a look at the tilemap.
@@ -289,10 +289,10 @@ The OAM view of this screen looks weird.
 <figcaption>Where is Sam? Where are the palm trees?</figcaption>
 </figure>
 
-Despite the game using [8×16 OBJ mode](https://gbdev.io/pandocs/LCDC#lcdc2---obj-size), OAM is pretty saturated from the two big clouds at the top and the bottom half of "MAN".
-So, *[where is everybody?](https://youtu.be/9tQWLg4E90M?t=365)*
+Despite the game using [8×16 OBJ mode](//gbdev.io/pandocs/LCDC#lcdc2--obj-size), OAM is pretty saturated from the two big clouds at the top and the bottom half of "MAN".
+So, *[where is everybody?](//youtu.be/9tQWLg4E90M?t=365)*
 
-As it turns out, right as the "MAN" has been fully rendered, the game performs an [OAM DMA](https://gbdev.io/pandocs/OAM_DMA_Transfer) to load a new set of OBJs.
+As it turns out, right as the "MAN" has been fully rendered, the game performs an [OAM DMA](//gbdev.io/pandocs/OAM_DMA_Transfer) to load a new set of OBJs.
 And it also turns out that doing so mid-frame is okay!
 It only causes OBJs not to be rendered for its duration[^mid_frame_dma] (of roughly two scanlines), which is why there is a slight gap between the "MAN" and the palm trees.
 This also works out aesthetically speaking!
@@ -368,7 +368,7 @@ Yeah.
 
 ![Screenshot of Mesen-S' Event Viewer.](event_viewer.png)
 
-<figcaption>By the way, this is <a href="https://github.com/NovaSquirrel/Mesen-SX">Mesen-SX</a>'s Event Viewer. Pretty useful tool!</figcaption>
+<figcaption>By the way, this is <a href="//github.com/NovaSquirrel/Mesen-SX">Mesen-SX</a>'s Event Viewer. Pretty useful tool!</figcaption>
 </figure>
 
 All of this text is achieved through background palette manipulation.
@@ -393,7 +393,7 @@ This may sound simple in concept (though, again, you have to have the idea first
 
   The PPU outputs pixels 4× as fast as the CPU executes instructions[^dots], so if we want our line "thickness" to be 8 pixels, we need to be able to write to `BGP` every 2 cycles.
   That's not enough!
-  The tightest copy loop ([`ld a, [hli]`](https://rgbds.gbdev.io/docs/v0.5.2/gbz80.7/#LD_A,_HLI_) then [`ldh [c], a`](https://rgbds.gbdev.io/docs/v0.5.2/gbz80.7/#LDH__C_,A)) takes 4 cycles per iteration.
+  The tightest copy loop ([`ld a, [hli]`](//rgbds.gbdev.io/docs/v0.5.2/gbz80.7/#LD_A,_HLI_) then [`ldh [c], a`](//rgbds.gbdev.io/docs/v0.5.2/gbz80.7/#LDH__C_,A)) takes 4 cycles per iteration.
 
   What the game does is pretty smart.
   It generates a chain of `ld [hl], d` and `ld [hl], e` instructions in RAM at the beginning of the frame, and executes that.
@@ -410,7 +410,7 @@ This may sound simple in concept (though, again, you have to have the idea first
 
 This is very similar to the intro text above, but there's also a bit of funny history attached to this.
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/nnkTfiOYEsg?start=767" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="//www.youtube-nocookie.com/embed/nnkTfiOYEsg?start=767" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 (*Please excuse the flicker if watching at 60 fps: the game flickers the background between alternating colors to create more nuances of gray, but emulators have trouble replicating the effect.*)
 
@@ -418,7 +418,7 @@ The way the flipping effect is achieved is that the game spams the vertical scro
 Its timing is slightly off, so you may notice some artifacts on the top-left corner of the textbox, and also two columns of subtly glitched text—this is a console revision-dependent bug, as was figured out recently, and the game triggers it by its timing falling on the wrong one of two cycles.
 Gah!
 
-Where history meets irony here has to do with the demo *[Demotronic](https://www.pouet.net/prod.php?which=7175)*, which was released in 2002 for the GBC, and claims to be the first ever to perform "vertical raster splits" on Game Boy... which, as we just saw, *Prehistorik Man* did first, and on the B&W console no less!
+Where history meets irony here has to do with the demo *[Demotronic](//www.pouet.net/prod.php?which=7175)*, which was released in 2002 for the GBC, and claims to be the first ever to perform "vertical raster splits" on Game Boy... which, as we just saw, *Prehistorik Man* did first, and on the B&W console no less!
 (Though, *Demotronic* does it better.)
 
 I guess it just goes to show how much this game flew under the radar 😛.
@@ -428,7 +428,7 @@ I guess it just goes to show how much this game flew under the radar 😛.
 The music in this game uses what's called *Zombie Mode* to create envelopes in software.
 (Sorry, no pictures for this section!)
 
-Usually, instrument envelopes use [ADSR](https://en.wikipedia.org/wiki/ADSR_envelope): Attack, Decay, Sustain, Release.
+Usually, instrument envelopes use [ADSR](//en.wikipedia.org/wiki/ADSR_envelope): Attack, Decay, Sustain, Release.
 The Game Boy's hardware is not able to do full ADSR envelopes, more like just "DS".
 And, perhaps more annoyingly to many, it is not possible to manipulate the amplitude in software to work around this.
 (Why that is it still unclear.)
@@ -446,16 +446,16 @@ Well, I hope this post was interesting!
 I think this game shows how much more potential the Game Boy has than most assume it does.
 Many of these tricks are actually not hard to perform once you know about them!
 
-Any feedback on this article is welcome, be it [directly on GitHub](https://github.com/ISSOtm/issotm.github.io/blob/master/blog/_posts/2022-05-22-prehistorik.md), or [by contacting me](/about#contact).
+Any feedback on this article is welcome, be it [directly on GitHub](//github.com/ISSOtm/issotm.github.io/blob/master/content/blog/2022-05-22-prehistorik/index.md), or [by contacting me](@/about.md#contact).
 
-If this article inspired you to try your hand at making Game Boy games, [please feel free to join our community](https://gbdev.io)!
-I'm active there, and we'll all be happy to [help you getting started](https://gbdev.io/chat).
+If this article inspired you to try your hand at making Game Boy games, [please feel free to join our community](//gbdev.io)!
+I'm active there, and we'll all be happy to [help you getting started](//gbdev.io/chat).
 
 I also wonder if anyone will disassemble this game... (I'll add a link if one is made.)
 
 ## Special thanks
 
-- [Eievui](https://evie.gbdev.io) for help with the OBJ overlap visualization
-- [SuperDisk](https://nickfa.ro) for proofreading
-- [beware](https://www.bircd.org) for BGB
-- [GBDev community](https://gbdev.io), especially [avivace](https://avivace.com), for support
+- [Eievui](//evie.gbdev.io) for help with the OBJ overlap visualization
+- [SuperDisk](//nickfa.ro) for proofreading
+- [beware](//www.bircd.org) for BGB
+- [GBDev community](//gbdev.io), especially [avivace](//avivace.com), for support

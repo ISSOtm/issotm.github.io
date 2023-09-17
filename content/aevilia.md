@@ -10,7 +10,7 @@ Aevilia is a homebrew RPG for the Game Boy Color. Well, a demo, at least.
 
 [Please click this link, and open the ROM in your favorite emulator, just not VBA.](/aevilia.gbc)
 
-The source is available [here](https://github.com/ISSOtm/Aevilia-GB)
+The source is available [here](//github.com/ISSOtm/Aevilia-GB)
 
 ## State of the game
 

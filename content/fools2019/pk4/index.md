@@ -75,7 +75,7 @@ Nothing here is very interesting, there's some gfx being set up (`Request1bpp` r
 <figcaption>"It's super effective!<br>ISSOtm lost 2 sanity points!"</figcaption>
 </figure>
 
-***THAT'S RIGHT BOYS WE DOIN [ROP](https://en.wikipedia.org/wiki/Return-oriented_programming)*** (If you don't know what that is, you should read this article, as I'll evoke the term "gadget" which has a fairly specific meaning in this context.)
+***THAT'S RIGHT BOYS WE DOIN [ROP](//en.wikipedia.org/wiki/Return-oriented_programming)*** (If you don't know what that is, you should read this article, as I'll evoke the term "gadget" which has a fairly specific meaning in this context.)
 
 And don't worry, things only go downhill from here.
 
@@ -166,14 +166,14 @@ a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0
 
 Cue appropriate reactions, in the following order
 
-- Pasting bytes: [https://www.youtube.com/watch?v=EbwhPFDrHUQ](https://www.youtube.com/watch?v=EbwhPFDrHUQ) (VOLUME WARNING) / [https://www.youtube.com/watch?v=UvfDISoyvWk](https://www.youtube.com/watch?v=UvfDISoyvWk)
-- Bliss from victory message: [https://www.youtube.com/watch?v=-YCN-a0NsNk](https://www.youtube.com/watch?v=-YCN-a0NsNk)
-- Lying down on the floor from exhaustion: [https://www.youtube.com/watch?v=QUAItQmq-LU](https://www.youtube.com/watch?v=QUAItQmq-LU)
+- Pasting bytes: [//www.youtube.com/watch?v=EbwhPFDrHUQ](//www.youtube.com/watch?v=EbwhPFDrHUQ) (VOLUME WARNING) / [//www.youtube.com/watch?v=UvfDISoyvWk](//www.youtube.com/watch?v=UvfDISoyvWk)
+- Bliss from victory message: [//www.youtube.com/watch?v=-YCN-a0NsNk](//www.youtube.com/watch?v=-YCN-a0NsNk)
+- Lying down on the floor from exhaustion: [//www.youtube.com/watch?v=QUAItQmq-LU](//www.youtube.com/watch?v=QUAItQmq-LU)
 {: .text-left}
 
 ## Resources
 
-A backup of all resources we were working with was made just before the finishing touches were done, which I've copied [here](resources/zzazz4_2019.7z) if you're interested. No context will be given, though. If you can't open [7z files](https://7-zip.org), [I've unpacked some files for this page](https://github.com/ISSOtm/issotm.github.io/tree/master/_fools2019/pk4/resources).
+A backup of all resources we were working with was made just before the finishing touches were done, which I've copied [here](resources/zzazz4_2019.7z) if you're interested. No context will be given, though. If you can't open [7z files](//7-zip.org), [I've unpacked some files for this page](//github.com/ISSOtm/issotm.github.io/tree/master/content/fools2019/pk4/resources).
 
 
 ## Post-mortem

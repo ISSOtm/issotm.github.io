@@ -7,8 +7,8 @@ path = "quartet"
 tags = [ "gbdev" ]
 +++
 
-[*Quartet*](https://makrill.itch.io/quartet) is a great homebrew Game Boy game, published by Mackerel Interactive in early 2021.
-So why not do like the good old days and [crack it](https://www.pouet.net/prod.php?which=87951)?
+[*Quartet*](//makrill.itch.io/quartet) is a great homebrew Game Boy game, published by Mackerel Interactive in early 2021.
+So why not do like the good old days and [crack it](//www.pouet.net/prod.php?which=87951)?
 
 In this post(-mortem?), I'll explain what went into creating this cracktro.
 I'll keep the most technical details out of the way until the end of this post, so it should still be a good read, even if you don't have a technical background.
@@ -17,11 +17,11 @@ I'll keep the most technical details out of the way until the end of this post, 
 
 ## Context
 
-[Dalton](https://github.com/dalton-tulou) released this game on Jan 8th, 2021.
+[Dalton](//github.com/dalton-tulou) released this game on Jan 8th, 2021.
 It's honestly a pretty good game in its own right, also well polished for all of DMG, SGB and GBC.
 
-By the way, Dalton [was a demoscener back then](https://www.pouet.net/user.php?who=1289), notably on the Game Boy.
-He programmed [a trainer for a previous homebrew release](https://www.pouet.net/prod.php?which=80612), which sparked this idea.
+By the way, Dalton [was a demoscener back then](//www.pouet.net/user.php?who=1289), notably on the Game Boy.
+He programmed [a trainer for a previous homebrew release](//www.pouet.net/prod.php?which=80612), which sparked this idea.
 
 So, we set out to make a cracktro, and it had to be as polished as the base game.
 
@@ -55,7 +55,7 @@ Doc proposed a design fairly quickly:
 
 I send pictures of me holding a GBC for reference, and he reworked the "cube", in his own terms :P
 
-After that, I fired up [Aseprite](https://github.com/aseprite/aseprite) to design the light's animation:
+After that, I fired up [Aseprite](//github.com/aseprite/aseprite) to design the light's animation:
 
 <figure>
 
@@ -85,12 +85,12 @@ Wait, but there's supposed to be light on top of the Game Boy!
 
 ### Terrible LCD to the rescue!
 
-[The Game Boy has a fairly cheap LCD](https://gbdev.io/pandocs/#specifications), in accordance with Gunpei Yokoi's philosophy when designing the console.
+[The Game Boy has a fairly cheap LCD](//gbdev.io/pandocs/Specifications), in accordance with Gunpei Yokoi's philosophy when designing the console.
 Notably, it has a *really bad* response time: pixels take some time to change their luminance.
 This tends to cause some kind of blur, especially when the whole screen moves at once.
 Some games only ran at 30 fps on the Game Boy because it avoided that problem.
 
-We exploit this slow response time by [*blinking* the Game Boy between white and light gray](https://github.com/ISSOtm/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L595-L602), effectively creating a 5<sup>th</sup> color!
+We exploit this slow response time by [*blinking* the Game Boy between white and light gray](//github.com/AYCEdemo/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L595-L602), effectively creating a 5<sup>th</sup> color!
 
 <figure>
 	<video controls width="320px">
@@ -124,7 +124,7 @@ Oh no!
 Well, it *does* have two separate palettes for sprites... but now the Game Boy graphic must be rendered using sprites.
 Ugh.
 
-Game Boy sprites have a fixed size: either 8×8 or 8×16 pixels (toggled by [a global switch](https://gbdev.io/pandocs/#lcdc-2-obj-size)).
+Game Boy sprites have a fixed size: either 8×8 or 8×16 pixels (toggled by [a global switch](//gbdev.io/pandocs/#lcdc-2-obj-size)).
 The Game Boy graphic is 35×57, so we'll need to use a lot of different sprites to make up the graphic.
 Figuring out the optimal arrangement is a process I call "sprite carpeting", and which I do in GIMP using a *lot* of layers.
 
@@ -141,7 +141,7 @@ And finally, I have to manually extract the relevant pixel data, and finally fix
 
 <figure>
 
-![Final tile data for all the sprites](https://raw.githubusercontent.com/ISSOtm/quartet-intro/master/src/res/console_tiles.vert.png)
+![Final tile data for all the sprites](//raw.githubusercontent.com/AYCEdemo/quartet-intro/master/src/res/console_tiles.vert.png)
 
 <figcaption>This doesn't exactly match the carpeting above, since it had to change a bit down the line.</figcaption>
 </figure>
@@ -200,7 +200,7 @@ Comp00terz, I guess?
 However, the ROM that he then built misbehaved *a lot*—as in, it crashed.
 Why?
 
-Our cracktro does not contain the original game's code—instead, we use [RGBLINK's "overlay" feature](https://rgbds.gbdev.io/docs/v0.4.2/rgblink.1#O) to essentially patch the ROM in-place.
+Our cracktro does not contain the original game's code—instead, we use [RGBLINK's "overlay" feature](//rgbds.gbdev.io/docs/v0.4.2/rgblink.1#O) to essentially patch the ROM in-place.
 This does require obtaining a legitimate copy of the game (the "base ROM" / "baserom") in the first place, which was fairly easy—just follow the link at the very top of this page to get one for free!
 
 Except, as it turns out, Dalton had released a new version of the ROM!
@@ -237,7 +237,7 @@ Thing is, the PPU has priority over the CPU for accessing <abbr title="Video RAM
 While the PPU is "locking" VRAM, reads from the CPU return `$FF`, and importantly for us, **all writes are silently ignored**.
 I won't go into too much detail into this, but this, and the way the light animation is performed, severely restrict how much time can be spent writing to VRAM, and thus, how many tiles we can load per frame.
 
-If you're curious, [this is the tile-streaming code](https://github.com/ISSOtm/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L612-L633).
+If you're curious, [this is the tile-streaming code](//github.com/AYCEdemo/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L612-L633).
 
 ## Music time!
 
@@ -249,10 +249,10 @@ As it turned out, *Quartet* stores its music data compressed, and so fetches it 
 This was a blessing for us, since we just needed to do the same.
 There was one catch, though: the pattern data format had been changed.
 
-Music data, on many chiptune systems, has two parts: instrument data, which mostly defines their [*timbre*](https://en.wikipedia.org/wiki/Timbre); and "pattern" data, which is essentially a score, telling when to play a note with which instrument.
+Music data, on many chiptune systems, has two parts: instrument data, which mostly defines their [*timbre*](//en.wikipedia.org/wiki/Timbre); and "pattern" data, which is essentially a score, telling when to play a note with which instrument.
 
 Instrument data was 1:1 with how vanilla Carillon generated it, but the pattern data went through some hoops I couldn't wrap my head around.
-In the end, we decided to [reuse most of *Quartet*'s code](https://github.com/ISSOtm/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L970-L974), but [embark the vanilla player's version of the pattern-reading code](https://github.com/ISSOtm/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L975-L1196).
+In the end, we decided to [reuse most of *Quartet*'s code](//github.com/AYCEdemo/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L970-L974), but [embark the vanilla player's version of the pattern-reading code](//github.com/AYCEdemo/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L975-L1196).
 Figuring out how to reuse *Quartet*'s pattern-reading code could have spared us some ROM space, but definitely not headaches.
 Oh well, the project is open-source, you're welcome to try your hand at this if you're interested :^)
 
@@ -274,7 +274,7 @@ Additionally, on the scanlines where the text may be displayed, there are up to 
 Considering that we can avoid using sprites for spaces, 8 characters per line is workable, but 14 characters total is *really* limiting.
 Fortunately, as I mentioned earlier, it *is* possible to work around the "40 sprites total" limitation!
 
-Since <abbr title="Object Attribute Memory">OAM</abbr>—the region of memory where sprite data lives—has to be updated really often while being subjected to access restrictions similar to but worse than VRAM's, Nintendo was kind enough to provide us with *OAM [<abbr title="Direct Memory Access">DMA</abbr>](https://en.wikipedia.org/wiki/Direct_memory_access)*.
+Since <abbr title="Object Attribute Memory">OAM</abbr>—the region of memory where sprite data lives—has to be updated really often while being subjected to access restrictions similar to but worse than VRAM's, Nintendo was kind enough to provide us with *OAM [<abbr title="Direct Memory Access">DMA</abbr>](//en.wikipedia.org/wiki/Direct_memory_access)*.
 
 OAM DMA copies data *really fast* from roughly anywhere in RAM, directly to OAM.
 Again, sprites typically get updated every game frame, so being able to copy them quickly is quite the blessing.
@@ -323,7 +323,7 @@ And thus:
 ## GBC! Power up!
 
 After that came the CGB colorization, but there's nothing interesting to talk about there.
-The most I can say is that, due to [attribute clash](https://en.wikipedia.org/wiki/Attribute_clash), two pixels at the top-right of the cartridge are gray when they shouldn't.
+The most I can say is that, due to [attribute clash](//en.wikipedia.org/wiki/Attribute_clash), two pixels at the top-right of the cartridge are gray when they shouldn't.
 I don't know whether nobody noticed, or they just shrugged them off.
 They still bother me. >:(
 
@@ -331,12 +331,12 @@ Instead, let's delve into the nightmares that the SGB gave me...
 
 ## SGB primer
 
-The [Super Game Boy](https://en.wikipedia.org/wiki/Super_Game_Boy) is an interesting piece of tech.
+The [Super Game Boy](//en.wikipedia.org/wiki/Super_Game_Boy) is an interesting piece of tech.
 Conceptually, it's a SNES cartridge with a GB cartridge port; plug in a GB cartridge, turn the SNES and your TV on, and you can play GB games on a big screen!
-Some games even support enhancements, typically changing the border ([example](https://youtu.be/HjstlNrwmdg)), and [sometimes more](https://youtu.be/G4uYc3q3SLY?t=152).
+Some games even support enhancements, typically changing the border ([example](//youtu.be/HjstlNrwmdg)), and [sometimes more](//youtu.be/G4uYc3q3SLY?t=152).
 
 How does it actually work, though?
-The SNES cartridge actually more or less contains a Game Boy Pocket (notice the chip labeled `SGB CPU 01` [on the circuit board](https://gbhwdb.gekkio.fi/consoles/sgb/gekkio-2.html))!
+The SNES cartridge actually more or less contains a Game Boy Pocket (notice the chip labeled `SGB CPU 01` [on the circuit board](//gbhwdb.gekkio.fi/consoles/sgb/gekkio-2.html))!
 The `ICD2` chip is responsible for forwarding the SNES' inputs to the Game Boy, and also capturing its LCD output.
 A program, the "SGB BIOS", runs on the SNES and copies the ICD2-supplied graphics to the SNES console.
 
@@ -422,7 +422,7 @@ Problem was, this was the very last thing I had to do before the ROM could be ca
 Believe me, I spent *days* squeezing out enough bytes to patch up as much as possible, but there are still some inconsistencies.
 Oh well, seems nobody has noticed.
 
-**Thanks for reading!** If you enjoy this content, or are interested in GB dev, [boy howdy do we have a community for you!](https://gbdev.io/)
+**Thanks for reading!** If you enjoy this content, or are interested in GB dev, [boy howdy do we have a community for you!](//gbdev.io/)
 
 ## Technical tidbits
 
@@ -480,7 +480,7 @@ Init: ; Jump here to re-perform initialization
 	jp Q_Init
 ```
 
-<figcaption><a href="https://github.com/ISSOtm/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L70-L98">Straight from the source!</a> Note that all symbols RE'd from the base game have <code>Q_</code> prefixed, to avoid name clashes.</figcaption>
+<figcaption><a href="//github.com/AYCEdemo/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L70-L98">Straight from the source!</a> Note that all symbols RE'd from the base game have <code>Q_</code> prefixed, to avoid name clashes.</figcaption>
 </figure>
 
 This is mostly identical to the original init code, except that the OAM DMA copy has been moved up, is not `call`ed but *jumped* to, and `ld sp, $E000` became `ld sp, Retpoline`...
@@ -524,7 +524,7 @@ Well, for one thing, looking at BGB's VRAM viewer may yield some hints.
 
 So, what's going on?
 Well, the character's and the Game Boy's parts of the animation are done with sprites, nothing ground-breaking there.
-The thing that might be the closest to original is that the Game Boy's sprites use streamed tiles; I had to copy them with a [partially-unrolled popslide loop](https://github.com/ISSOtm/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L612-L633) to barely manage copying them in a single VBlank.
+The thing that might be the closest to original is that the Game Boy's sprites use streamed tiles; I had to copy them with a [partially-unrolled popslide loop](//github.com/AYCEdemo/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L612-L633) to barely manage copying them in a single VBlank.
 
 What about the large animation on the window?
 On DMG and SGB, one could suspect well-timed mid-scanline `BGP` writes, but with CGB in the picture, that's ruled out.
@@ -532,7 +532,7 @@ Also it'd be pretty difficult to take the sprites into account.
 
 No, what's happening is much simpler.
 We're (ab)using the window!
-Specifically, [we're overwriting `WX` every (few) scanlines](https://github.com/ISSOtm/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L668-L676), a trick I dubbed "WXzardry".
+Specifically, [we're overwriting `WX` every (few) scanlines](//github.com/AYCEdemo/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L668-L676), a trick I dubbed "WXzardry".
 Since the top of the $9800 tilemap is all white, this allows drawing arbitrarily long white lines up to the right side of the screen.
 
 Okay, that works well for half of the animation, but what about the other half, where the white lines are from the left side of the window frame?
@@ -543,7 +543,7 @@ Palette manipulation to achieve this is out of the question, since both black an
 Plus it'd take a lot of code, which is a no-no for us.
 
 Much more simply, we copy the $9800 tilemap to the $9C00 one, applying changes to make the background white.
-(We copy the tilemap to only store one instance + [some "specs"](https://github.com/ISSOtm/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L942-L962), which is overall much smaller.)
+(We copy the tilemap to only store one instance + [some "specs"](//github.com/AYCEdemo/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L942-L962), which is overall much smaller.)
 
 So, at two points of the animation, we swap which tilemap the BG and window are referencing, and we keep hammering away at `WX` :D
 
@@ -561,11 +561,11 @@ Side notes:
   However, during the entirety of the OAM DMA, we're running a tight loop in HRAM, so we can't just update `WX` anymore.
   (Maybe a custom wait loop could've updated `WX`, but I'm unsure about accessing I/O regs in the middle of OAM DMA, and I kept it simple for ROM size's sake.)
   This causes the window to extend slightly for a couple of scanlines; I had to tweak a couple of `WX` values for it to look good in my opinion, but it still differs slightly from the original concept.<br>
-  Oh, also, the code could've misbehaved from being stalled and thus desyncing with `LY`, but all that it took was [making this jump on `c` instead of `nz`](https://github.com/ISSOtm/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L671), which I had already done out of caution.
+  Oh, also, the code could've misbehaved from being stalled and thus desyncing with `LY`, but all that it took was [making this jump on `c` instead of `nz`](//github.com/AYCEdemo/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/src/patch.asm#L671), which I had already done out of caution.
   The code just performs several quick writes to `WX`, too fast for them to be processed, and then re-syncs normally.
   I guess it paid off!
 - I don't think we're the first to do this.
-  I remember an effect in [Mental Respirator](http://www.pouet.net/prod.php?which=16402) by [Phantasy](http://www.pouet.net/groups.php?which=754), where a fairly large picture slides from the right side of the screen, over a moving pattern.
+  I remember an effect in [Mental Respirator](//www.pouet.net/prod.php?which=16402) by [Phantasy](//www.pouet.net/groups.php?which=754), where a fairly large picture slides from the right side of the screen, over a moving pattern.
   I never looked into how it's actually done, but I think it uses a couple of sprites + WXzardry.
   Hey, Dalton was one of that demo's two programmers.
   What a small world!
@@ -576,7 +576,7 @@ Let's talk about the border again.
 The border is neat, but it doesn't look all that impressive: it has some intricate patterns, but is not a color explosion.
 In fact, I realized pretty quickly that it was essentially 1bpp (= 2 different colors), whereas SGB border tiles are 4bpp.
 
-(If you're wondering, the SNES operates in [Mode 1](http://problemkaputt.de/fullsnes.htm#snespictureprocessingunitppu), and the border is on BG2. The UI is on the 4bpp BG1 + a few sprites, and the GB framebuffer is on the 2bpp BG3.)
+(If you're wondering, the SNES operates in [Mode 1](//problemkaputt.de/fullsnes.htm#snespictureprocessingunitppu), and the border is on BG2. The UI is on the 4bpp BG1 + a few sprites, and the GB framebuffer is on the 2bpp BG3.)
 
 Again, credits to Doc' for making quite good art with little resources!
 
@@ -638,10 +638,10 @@ The problem is that we needed to compress a *lot* of data, sometimes arranged in
 I could have used e.g. Python scripts to output the data in question, but I figured I'd try something different.
 I tried `rgblink -x`.
 
-[RGBLINK's `-x` option](https://rgbds.gbdev.io/docs/v0.4.2/rgblink.1#x) is actually pretty useful for generating binary blobs, [which I took advantage of](https://github.com/ISSOtm/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/Makefile#L76-L78)... well, [actually pretty liberally](https://github.com/ISSOtm/quartet-intro/search?q=.bin.rnc).
+[RGBLINK's `-x` option](//rgbds.gbdev.io/docs/v0.4.2/rgblink.1#x) is actually pretty useful for generating binary blobs, [which I took advantage of](//github.com/AYCEdemo/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/Makefile#L76-L78)... well, [actually pretty liberally](//github.com/AYCEdemo/quartet-intro/search?q=.bin.rnc).
 The major upside of using this is that you can still use the same tools (macros, definitions, etc.), that RGBASM is, I think, reasonably fast, and it doesn't pull any additional dependencies (e.g. Python, or a C compiler).
 
 The downside is that while RGBASM is almost Turing-complete, it's not always the most convenient.
-For example, it's pretty much incapable of reading files; you need to [pass a hex dump via the CLI invocation](https://github.com/ISSOtm/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/Makefile#L82-L88), and RGBASM currently has limitations on string length 😓
+For example, it's pretty much incapable of reading files; you need to [pass a hex dump via the CLI invocation](//github.com/AYCEdemo/quartet-intro/blob/c90fdf9534be5bd1c705db1d06761509ed5b3356/Makefile#L82-L88), and RGBASM currently has limitations on string length 😓
 
 But hey, that's one more tool available in our toolboxes!

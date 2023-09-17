@@ -12,7 +12,7 @@ Is it a CTF? Is it a ROM hack? No, it's both! It's Fools2019!
 
 <!-- more -->
 
-YouTuber and fellow glitch researcher [TheZZAZZGlitch](//youtube.com/user/TheZZAZZGlitch) has had a tradition since 2016 to make special events for April Fools, revolving around small challenges focused on knowledge of the Pokémon series, especially of the games' glitches.
+YouTuber and fellow glitch researcher [TheZZAZZGlitch](//www.youtube.com/user/TheZZAZZGlitch) has had a tradition since 2016 to make special events for April Fools, revolving around small challenges focused on knowledge of the Pokémon series, especially of the games' glitches.
 
 This year built off previous year's idea, but worked differently -- instead of constantly hooking the Game Boy to the Internet and downloading data from there, there are instead several self-contained "kingdoms", which you can traverse freely, only needing to "save" (the process works a little bit differently) when changing kingdoms.
 

@@ -14,7 +14,7 @@ title = "About me"
 You may e-mail me at <code>me@&lt;firstName&gt;.fr</code>, replacing <code>&lt;firstName&gt;</code> with my first name... which is also this website's domain name.
 (Simple anti-spam measure, I hope you understand.)
 
-[I also toot](//social.treehouse.systems/issotm) from time to time.
+[I also toot](//social.treehouse.systems/@issotm) from time to time.
 If you like programmer humor and Game Boy-related tweets, you should find yourself at home :)
 
 ## Stuff I do

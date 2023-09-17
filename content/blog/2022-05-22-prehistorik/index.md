@@ -1,5 +1,6 @@
 +++
 title = "The wonders of Prehistorik Man on the GB"
+authors = [ "ISSOtm <stuff@eldred.fr>" ]
 
 aliases = [ "blog/2022/05/22/prehistorik" ]
 

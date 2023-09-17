@@ -1,5 +1,6 @@
 +++
 title = "State of GBDev - March 2021"
+authors = [ "stuff@eldred.fr (ISSOtm)" ]
 
 aliases = [ "blog/2021/03/08/gbdev-status" ]
 

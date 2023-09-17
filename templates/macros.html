@@ -1,13 +1,13 @@
-{% macro stats_text(enable, page) %}
-	{% if enable %}
-		<p>
-			{% if page.year %}
-				{% set timestamp = page.year ~ "-" ~ page.month ~ "-" ~ page.day %}
-				Published <time datetime="{{ timestamp | date(format="%F") }}" itemprop="datePublished">{{ timestamp | date(format="%a %b %e") }}</time>.
-			{% endif %}
-			Estimated reading time: {{ page.reading_time }} minute{{ page.reading_time | pluralize }}.
-		</p>
-	{% endif %}
+{% macro stats_text(page) %}
+	<p>
+		{% if page.year %}
+			{% set timestamp = page.year ~ "-" ~ page.month ~ "-" ~ page.day %}
+			Published <time datetime="{{ timestamp | date(format="%F") }}" itemprop="datePublished">{{ timestamp | date(format="%a %b %e") }}</time>.
+		{% endif %}
+		Estimated reading time: {{ page.reading_time }} minute{{ page.reading_time | pluralize }}.
+	</p>
+{% endmacro %}
+{% macro stats_meta(page) %}
 	<meta itemprop="wordCount" content="{{ page.word_count }}"/>
 {% endmacro %}
 
@@ -27,8 +27,11 @@
 		<header>
 			<hgroup>
 				<h2 id="{{ page.slug }}" itemprop="headline"><a href="{{ page.permalink }}" class="contrast">{{ page.title }}</a></h2>
-				{{ macros::stats_text(enable=section.extra.stats | default(value=false), page=page) }}
+				{% if section.extra.stats %}
+					{{ self::stats_text(page=page) }}
+				{% endif %}
 			</hgroup>
+			{{ self::stats_meta(page=page) }}
 			{% if page.taxonomies.tags %}
 			<nav>
 				{# This is necessary for Pico's styling to function correctly; it feels like a violation of semantic HTML, so I try to expiate my sins with ARIA. u_u #}

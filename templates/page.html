@@ -32,11 +32,14 @@
 
 {% block main_attrs %} itemscope itemtype="https://schema.org/Article" {% endblock %}
 {% block h1 %}
-  {% set section = get_section(path=page.ancestors | last) %}
-  <hgroup>
-    <h1 itemprop="headline">{{ page.title }}</h1>
-    {{ macros::stats_text(enable=section.extra.stats | default(value=false), page=page) }}
-  </hgroup>
+	{% set section = get_section(path=page.ancestors | last) %}
+	<hgroup>
+		<h1 itemprop="headline">{{ page.title }}</h1>
+		{% if section.extra.stats %}
+			{{ macros::stats_text(page=page) }}
+		{% endif %}
+	</hgroup>
+	{{ macros::stats_meta(page=page) }}
 
   {% if page.taxonomies.tags is defined %}
   <nav>

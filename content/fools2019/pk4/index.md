@@ -90,7 +90,7 @@ Let's skip the boring stuff, because debugging ROP is as much fun as counting so
 
 Okay. After calming down, this is what the function amounts to (content warning: ASM code)
 
-```nasm
+```rgbasm
 ld a, [de]
 inc de
 add a, a

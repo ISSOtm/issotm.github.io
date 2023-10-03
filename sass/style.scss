@@ -135,6 +135,12 @@ pre {
 	}
 }
 
+// Avoid scrolling anchors to the very top of the page: the eye doesn't follow.
+
+:target {
+  scroll-margin-block: 5ex;
+}
+
 // Content styling.
 
 .footnote-definition {

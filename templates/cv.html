@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{{ get_url(path="cv.css") }}" media="not print">
+	<link rel="stylesheet" href="{{ get_url(path="cv_print.css") }}"media="print">
+	<meta name="theme-color" content="#9dc9ef">
+	<link rel="icon" type="image/png" href="{{ get_url(path="favicon/32x32.png") }}" sizes="32x32">
+	<link rel="icon" type="image/png" href="{{ get_url(path="favicon/16x16.png") }}" sizes="16x16">
+	<link rel="apple-touch-icon-precomposed" type="image/png" href="{{ get_url(path="favicon/32x32.png") }}" sizes="32x32">
+	<link rel="apple-touch-icon-precomposed" type="image/png" href="{{ get_url(path="favicon/16x16.png") }}" sizes="16x16">
+	<title>{{ page.title }}</title>
+	{% block seo %}
+	<meta property="og:title" content="{% block og_title %}{% endblock og_title %}">
+	<meta property="og:locale" content="{{ lang }}">
+	<meta name="description" content="{% block description %}{% endblock description %}">
+	<meta property="og:description" content="{% block og_description %}{% endblock og_description %}">
+	{% if current_url is defined %}
+	<link rel="canonical" href="{{ current_url }}">
+	<meta property="og:url" content="{{ current_url }}">
+	{% endif %}
+	<meta property="og:site_name" content="{{ config.title }}">
+	<meta property="og:type" content="article">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="{% block twitter_title %}{% endblock %}">
+	{% endblock seo %}
+	<meta name="google-site-verification" content="ljmYhpaVJNaCEk64aV0NyYzauKGSEUtOS2nsYEx7JD0">
+	<link rel="alternate" type="application/rss+xml" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">
+</head>
+
+<body>
+	<header class="container-fluid">
+		<div class="container">
+			<address id="contact">
+				<a href="mailto:contact@eldred.fr">contact@eldred.fr</a><br>
+				<a href="//eldred.fr">eldred.fr</a><br>
+				<a href="//github.com/ISSOtm">github.com/ISSOtm</a>
+			</address>
+			<p id="me">
+				Toulouse (appt. <abbr title="Île-de-France">IDF</abbr>)<br>
+				{% set this_year = now() | date(format="%Y") | int %}{{ this_year - 1999 }} {{ page.extra.age_qual }}<br>
+				06&nbsp;52&nbsp;34&nbsp;58&nbsp;80
+			</p>
+			<h1 id="name">Eldred <span id="surname">Habert</span></h1>
+		</div>
+
+		<hr>
+	</header>
+
+	<main>
+		{{ page.content | safe }}
+	</main>
+</body>
+
+</html>

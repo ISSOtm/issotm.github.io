@@ -1,0 +1,146 @@
+// Semi-reset.
+// (This is tailored to the Firefox I generate the PDFs from, for the simple reason
+// that I don't want to spend time testing other browsers when most everyone will be downloading
+// the pre-made PDFs anyway.)
+
+// For printing, we want pure black on pure white.
+:root {
+	background-color: #fff;
+	color: #000;
+
+	text-align: justify;
+	hyphens: auto;
+
+	font-family: sans-serif; // "Noto Sans"
+	font-size: 13px;
+	line-height: 1.4;
+}
+h2, h3 {
+	line-height: 1.2;
+}
+
+a, a:visited {
+	color: #800;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+abbr {
+	text-decoration: none;
+}
+
+// Header.
+
+#contact {
+	float: left;
+}
+
+#me {
+	float: right;
+	text-align: right;
+	margin: 0 0 1rem;
+}
+
+#name {
+	text-align: center;
+}
+
+#surname {
+	font-variant-caps: small-caps;
+}
+
+header > hr {
+	clear: both;
+
+	border: none;
+	border-top: 1px solid #888;
+	margin: .5rem 1rem;
+}
+
+// Body.
+
+main {
+	margin-top: 1rem;
+
+	columns: auto 2;
+	column-gap: 3rem;
+	column-rule: 4px dotted #ccc;
+}
+
+section {
+	margin-bottom: 1em;
+}
+
+h2 {
+	margin: 0 0 0 .2rem;
+	font-weight: 300;
+	font-variant-caps: small-caps;
+
+	+ hr {
+		border: none;
+		border-top: 2px solid #333;
+		margin: 0 1rem .5rem .2rem;
+	}
+}
+
+h3 {
+	font-weight: normal;
+	text-decoration: underline dashed;
+}
+
+ul {
+	margin-top: .5rem;
+	padding-left: 30px;
+}
+
+hgroup {
+	display: block flex;
+	justify-content: space-between;
+	// `float: right;` doesn't make the line below possible!
+	align-items: baseline;
+
+	> * {
+		flex: 1 1 auto;
+		margin: 0;
+	}
+
+	> p {
+		text-align: right;
+		color: #555;
+		margin-left: 1em;
+	}
+}
+
+table {
+	border-collapse: collapse;
+}
+
+tr {
+	border-bottom: 1px solid #888;
+}
+
+td {
+	padding: .3rem 1rem;
+}
+td:first-child {
+	padding-left: .5rem;
+}
+td:last-child {
+	padding-right: .5rem;
+}
+
+// Page and column breaks.
+
+// Problem: Firefox doesn't support `break-after` :(
+// So these are replaced with a bunch of <div>s :(
+.nobreak {
+	break-inside: avoid;
+}
+//h2, hr, hgroup, ul, table {
+//	break-inside: avoid;
+//}
+//h2, hr, hgroup {
+//	break-after: avoid;
+//}

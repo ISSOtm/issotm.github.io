@@ -1,0 +1,93 @@
+// Only the bare minimum needed from Pico.
+// TODO: some `layout` modules can still be removed!
+@use "pico/pico" with (
+	$modules: (
+		"forms/basics": false,
+		"forms/checkbox-radio-switch": false,
+		"forms/input-color": false,
+		"forms/input-date": false,
+		"forms/input-file": false,
+		"forms/input-range": false,
+		"forms/input-search": false,
+		"components/accordion": false,
+		"components/card": false,
+		"components/dropdown": false,
+		"components/group": false,
+		"components/loading": false,
+		"components/modal": false,
+		"components/nav": false,
+		"components/progress": false,
+		"components/tooltip": false,
+	)
+);
+
+// Header.
+
+#contact {
+	float: left;
+	margin-right: var(--pico-spacing);
+}
+
+#me {
+	float: right;
+	text-align: right;
+	margin-left: var(--pico-spacing);
+}
+
+#name {
+	text-align: center;
+}
+
+#surname {
+	font-variant-caps: small-caps;
+}
+
+h1 {
+	margin-top: 0;
+}
+
+header > hr {
+	clear: both;
+}
+
+// Body.
+
+body > main {
+	width: 100%;
+	padding-top: 0;
+
+	columns: 20em 2;
+}
+
+h2 {
+	margin: 0 .3rem;
+	font-weight: 300;
+	font-variant-caps: small-caps;
+
+	+ hr {
+		margin-top: 0;
+		border-top: 3px solid var(--pico-h2-color);
+	}
+}
+
+section {
+	margin: 0 auto;
+	padding: 0 calc(var(--pico-spacing) * 2);
+
+	break-inside: avoid-column;
+}
+
+hgroup {
+	display: flex;
+	justify-content: space-between;
+	// `float: right` doesn't make the line below possible..!
+	align-items: baseline;
+
+	> * {
+		flex: 1 1 auto;
+	}
+
+	> p {
+		text-align: right;
+	}
+}

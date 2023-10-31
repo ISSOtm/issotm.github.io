@@ -3,7 +3,7 @@ title = "About me"
 +++
 
 <p itemscope itemtype="https://schema.org/Person">
-	<i>Bonsoir.</i> You may call me <span itemprop="givenName">Eldred</span> <span itemprop="familyName">Habert</span>, 🇫🇷, <span itemprop="gender" value="male">👨‍🎓</span>, <span itemprop="birthDate" content="1998">24 years old</span>; I'm currently working as a developer / engineer.
+	<i>Bonsoir.</i> You may call me <span itemprop="givenName">Eldred</span> <span itemprop="familyName">Habert</span>, 🇫🇷, <span itemprop="gender" value="male">👨‍💻</span>, <span itemprop="birthDate" content="1998">24 years old</span>; I'm currently working as a developer / engineer.
 	I love programming, security, and retro consoles. Online, I usually go by the nickname "ISSOtm".
 </p>
 

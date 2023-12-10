@@ -2,7 +2,7 @@
 title = "BGB tips and tricks"
 +++
 
-[BGB](//bgb.bircd.org) is a great Game Boy / Game Boy Color emulator by beware. It's very useful, but sometimes, it's a bit obtuse; and there are some functionalities which are undocumented. Here's a collection of protips you should definitely know about when using BGB. And use BGB you must!
+[BGB](//bgb.bircd.org) is a great Game Boy / Game Boy Color emulator by beware. It's very useful, but sometimes, it's a bit abstruse; and there are some functionalities which are undocumented. Here's a collection of protips you should definitely know about when using BGB. And use BGB you must!
 
 <!-- more -->
 

@@ -143,7 +143,7 @@ age_qual = "years old"
 
 <table>
 <tr><td>🇫🇷 French</td><td>Native</td></tr>
-<tr><td>🇬🇧 Enlish</td><td>C1 level (955 TOEIC)</td></tr>
+<tr><td>🇬🇧 English</td><td>C1 level (955 TOEIC)</td></tr>
 <tr><td>🇩🇪 German</td><td>B1 level</td></tr>
 <tr><td>🇯🇵 Japanese</td><td>Basics</td></tr>
 </table>

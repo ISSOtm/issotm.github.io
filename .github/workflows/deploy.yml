@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  ZOLA_VER: "0.17.2"
+  ZOLA_VER: "0.18.0"
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -30,14 +30,9 @@ jobs:
         run: | # This should be fast enough not to require caching.
           curl -L 'https://github.com/getzola/zola/releases/download/v${{ env.ZOLA_VER }}/zola-v${{ env.ZOLA_VER }}-x86_64-unknown-linux-gnu.tar.gz' | gunzip | tar xv
           ./zola --version
-      # As of Zola 0.17.2, the version of `grass` used by Zola does not correctly process Sass configuration.
-      # Manually re-processing the Sass nearly halves the size of the CSS!
       - name: Build site
         run: |
-          cargo install grass &
           ./zola build
-          wait %+
-          grass sass/style.scss public/style.css
       - name: Upload site
         uses: actions/upload-pages-artifact@v2
         with:

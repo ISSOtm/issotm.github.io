@@ -3,8 +3,11 @@
 // Settings
 // ––––––––––––––––––––
 
+// Theme color
+$theme-color: "azure" !default; // amber, azure, blue, cyan, fuchsia, green, grey, indigo, jade, lime, orange, pink, pumpkin, purple, red, sand, slate, violet, yellow, zinc
+
 // Prefix for CSS variables
-$css-var-prefix: "pico-" !default;
+$css-var-prefix: "--pico-" !default; // Must start with "--"
 
 // Define the root element used to target <header>, <main>, <footer>
 // with $enable-semantic-container and $enable-responsive-spacings
@@ -37,7 +40,7 @@ $enable-important: true !default;
 
 // Breakpoints, viewports and root font size
 $breakpoints: () !default;
-$breakpoints: // TODO: removed `map.deep-merge((...), $breakpoints)` due to compile error. https://github.com/connorskees/grass/issues/19#issuecomment-1687146134
+$breakpoints: map.deep-merge(
   (
     // Small (landscape phones)
     // Font size: 17px
@@ -83,7 +86,9 @@ $breakpoints: // TODO: removed `map.deep-merge((...), $breakpoints)` due to comp
         viewport: 1450px,
         root-font-size: 131.25%,
       )
-  );
+  ),
+  $breakpoints
+);
 
 // Modules to export
 $modules: () !default;
@@ -135,6 +140,3 @@ $modules: map.merge(
   ),
   $modules
 );
-
-// Shortcut for CSS vars prefix
-$✨: --#{$css-var-prefix};

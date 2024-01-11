@@ -1,6 +1,24 @@
 // Pico, made a bit more lightweight!
 @use "pico/pico" with (
+	$theme-color: "azure",
 	$modules: (
+		"themes/default": true,
+
+		"layout/document": true,
+		"layout/landmarks": true,
+		"layout/container": true,
+		"layout/section": true,
+		"layout/grid": false,
+		"layout/scroller": true,
+
+		"content/link": true,
+		"content/typography": true,
+		"content/embedded": true,
+		"content/button": false,
+		"content/table": true,
+		"content/code": true,
+		"content/miscs": true,
+
 		"forms/basics": false,
 		"forms/checkbox-radio-switch": false,
 		"forms/input-color": false,
@@ -8,18 +26,24 @@
 		"forms/input-file": false,
 		"forms/input-range": false,
 		"forms/input-search": false,
+
 		"components/accordion": false,
+		"components/card": true,
 		"components/dropdown": false,
+		"components/group": false,
 		"components/loading": false,
 		"components/modal": false,
-		"components/progress": false
+		"components/nav": true,
+		"components/progress": false,
+		"components/tooltip": true,
+
+		"utilities/accessibility": true,
+		"utilities/reduce-motion": true
 	)
 );
 
 // TOOD: align colours with Pico stylesheet, or something...
-$sky-color: #9dc9ef;
 $navbar-gradient-height: 2rem;
-$clouds-height: 62px; // Must be consistent with image's height.
 
 /// Navbar.
 

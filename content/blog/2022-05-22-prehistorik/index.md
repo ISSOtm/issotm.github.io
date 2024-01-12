@@ -411,7 +411,11 @@ This may sound simple in concept (though, again, you have to have the idea first
 
 This is very similar to the intro text above, but there's also a bit of funny history attached to this.
 
-<iframe width="560" height="315" src="//www.youtube-nocookie.com/embed/nnkTfiOYEsg?start=767" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<lite-youtube videoid="nnkTfiOYEsg" params="start=767" playlabel="Play Prehistorik Man's credits">
+  <a href="https://youtube.com/watch?v=nnkTfiOYEsg" class="lty-playbtn" title="Play Video">
+    <span class="lyt-visually-hidden">Play a video of <i>Prehistorik Man</i>'s credits</span>
+  </a>
+</lite-youtube>
 
 (*Please excuse the flicker if watching at 60 fps: the game flickers the background between alternating colors to create more nuances of gray, but emulators have trouble replicating the effect.*)
 
@@ -460,3 +464,7 @@ I also wonder if anyone will disassemble this game... (I'll add a link if one is
 - [SuperDisk](//nickfa.ro) for proofreading
 - [beware](//www.bircd.org) for BGB
 - [GBDev community](//gbdev.io), especially [avivace](//avivace.com), for support
+
+<link rel="stylesheet" href="/assets/lite-yt/lite-yt-embed.css" />
+
+<script src="/assets/lite-yt/lite-yt-embed.js" async></script>

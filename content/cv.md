@@ -16,7 +16,7 @@ age_qual = "years old"
 
 ### <small><i>SII</i> for <i>SCLE</i> :</small> Embedded developer
 
-<p><time datetime="2022-11">Oct.&nbsp;2022</time> – Today</p>
+<p><time datetime="2022-11">Oct.&nbsp;2022</time> – <time datetime="2024-03"Mar.&nbsp;2024</time></p>
 </hgroup>
 
 - Ported an old **embedded** system written in **C** from a discontinued platform to Linux

@@ -16,7 +16,7 @@ age_qual = "ans"
 
 ### <small><i>SII</i> pour <i>SCLE</i> :</small> Développeur embarqué
 
-<p><time datetime="2022-11">Oct.&nbsp;2022</time> – Auj.</p>
+<p><time datetime="2022-11">Oct.&nbsp;2022</time> – <time datetime="2024-03">Mars&nbsp;2024</time></p>
 </hgroup>
 
 - Portage d'un vieux système **embarqué** écrit en **C** d'une plateforme discontinuée vers **Linux**

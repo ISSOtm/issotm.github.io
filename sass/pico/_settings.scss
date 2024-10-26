@@ -21,8 +21,8 @@ $enable-semantic-container: false !default;
 $enable-viewport: true !default;
 
 // Enable responsive spacings for <header>, <main>, <footer>, <section>, <article>
-// Fixed spacings if disabled
-$enable-responsive-spacings: true !default;
+// Fixed spacings by default
+$enable-responsive-spacings: false !default;
 
 // Enable responsive typography
 // Fixed root element size (rem) if disabled
@@ -37,6 +37,11 @@ $enable-transitions: true !default;
 
 // Enable overriding with !important
 $enable-important: true !default;
+
+// Optional parent selector
+// If defined, all HTML tags are wrapped with this selector
+// :root is not wrapped
+$parent-selector: "" !default;
 
 // Breakpoints, viewports and root font size
 $breakpoints: () !default;
@@ -103,7 +108,7 @@ $modules: map.merge(
     "layout/container": true,
     "layout/section": true,
     "layout/grid": true,
-    "layout/scroller": true,
+    "layout/overflow-auto": true,
 
     // Content
     "content/link": true,
@@ -112,6 +117,7 @@ $modules: map.merge(
     "content/button": true,
     "content/table": true,
     "content/code": true,
+    "content/figure": true,
     "content/miscs": true,
 
     // Forms

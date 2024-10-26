@@ -1,6 +1,6 @@
 // Pico, made a bit more lightweight!
-@use "pico/pico" with (
-	$theme-color: "azure",
+@use "pico/" with (
+	$theme-color: "blue",
 	$modules: (
 		"themes/default": true,
 

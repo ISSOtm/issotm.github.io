@@ -1,8 +1,8 @@
 @use "sass:map";
 @use "../../colors" as *;
 @use "../../settings" as *;
-@use "../../utils/box-shadow";
-@use "../../utils/functions";
+@use "../../helpers/functions";
+@use "theme-colors";
 
 // Default: Light theme
 @mixin theme {
@@ -57,7 +57,7 @@
   #{$css-var-prefix}contrast-inverse: #{$white};
 
   // Box shadow
-  #{$css-var-prefix}box-shadow: box-shadow.shadow($sand-950);
+  #{$css-var-prefix}box-shadow: functions.shadow($sand-950);
 
   // Typography
   @if map.get($modules, "content/typography") {
@@ -114,12 +114,6 @@
     #{$css-var-prefix}form-element-active-background-color: #{$white};
     #{$css-var-prefix}form-element-active-border-color: var(#{$css-var-prefix}primary-border);
     #{$css-var-prefix}form-element-focus-color: var(#{$css-var-prefix}primary-border);
-    #{$css-var-prefix}form-element-disabled-background-color: var(
-      #{$css-var-prefix}form-element-background-color
-    );
-    #{$css-var-prefix}form-element-disabled-border-color: var(
-      #{$css-var-prefix}form-element-border-color
-    );
     #{$css-var-prefix}form-element-disabled-opacity: 0.5;
     #{$css-var-prefix}form-element-invalid-border-color: #{mix($red-500, $zinc-350)};
     #{$css-var-prefix}form-element-invalid-active-border-color: #{mix($red-500, $zinc-350, 75%)};
@@ -148,8 +142,9 @@
   // Switch (input[type="checkbox"][role="switch"])
   @if map.get($modules, "forms/checkbox-radio-switch") {
     #{$css-var-prefix}switch-background-color: #{$slate-200};
-    #{$css-var-prefix}switch-color: var(#{$css-var-prefix}primary-inverse);
     #{$css-var-prefix}switch-checked-background-color: var(#{$css-var-prefix}primary-background);
+    #{$css-var-prefix}switch-color: #{$white};
+    #{$css-var-prefix}switch-thumb-box-shadow: theme-colors.get("switch-thumb-box-shadow", "light");
   }
 
   // Range (input[type="range"])
@@ -210,8 +205,8 @@
 
   // Form validation icons
   @if map.get($modules, "forms/basics") {
-    #{$css-var-prefix}icon-valid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#{functions.display-rgb(mix($jade-450, $zinc-750))}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-    #{$css-var-prefix}icon-invalid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#{functions.display-rgb(mix($red-500, $zinc-750))}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
+    #{$css-var-prefix}icon-valid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#{functions.display-rgb(mix($jade-450, $zinc-350))}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    #{$css-var-prefix}icon-invalid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#{functions.display-rgb(mix($red-500, $zinc-350, 75%))}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
   }
 
   // Document

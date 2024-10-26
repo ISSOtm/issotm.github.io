@@ -18,13 +18,14 @@
   // Pico
   // ––––––––––––––––––––
 
-  nav,
-  nav ul {
+  #{$parent-selector} nav,
+  #{$parent-selector} nav ul {
     display: flex;
   }
 
-  nav {
+  #{$parent-selector} nav {
     justify-content: space-between;
+    overflow: visible;
 
     ol,
     ul {
@@ -63,6 +64,7 @@
       // Minimal support for buttons and forms elements
       button,
       [role="button"],
+      [type="button"],
       input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"]),
       select {
         height: auto;
@@ -118,7 +120,7 @@
   }
 
   // Vertical Nav
-  aside {
+  #{$parent-selector} aside {
     nav,
     ol,
     ul,
@@ -143,7 +145,7 @@
 
   // Breadcrumb RTL
   [dir="rtl"] {
-    nav {
+    #{$parent-selector} nav {
       &[aria-label="breadcrumb"] {
         & ul li {
           &:not(:last-child) {

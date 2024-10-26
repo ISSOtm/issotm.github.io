@@ -1,17 +1,15 @@
 @use "sass:map";
 @use "../settings" as *;
 
-@if map.get($modules, "layout/scroller") {
+@if map.get($modules, "content/figure") {
   /**
-   * Horizontal scroller (<figure>)
+   * Figure
    */
 
-  // Wrapper to make allow any content to be scrolled horizontally
-  figure {
+  #{$parent-selector} figure {
     display: block;
     margin: 0;
     padding: 0;
-    overflow-x: auto;
 
     figcaption {
       padding: calc(var(#{$css-var-prefix}spacing) * 0.5) 0;

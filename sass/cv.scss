@@ -1,6 +1,6 @@
 // Only the bare minimum needed from Pico.
 // TODO: some `layout` modules can still be removed!
-@use "pico/pico" with (
+@use "pico/" with (
 	$modules: (
 		"forms/basics": false,
 		"forms/checkbox-radio-switch": false,
@@ -60,7 +60,7 @@ body > main {
 }
 
 h2 {
-	margin: 0 .3rem;
+	margin: 0 0.3rem;
 	font-weight: 300;
 	font-variant-caps: small-caps;
 

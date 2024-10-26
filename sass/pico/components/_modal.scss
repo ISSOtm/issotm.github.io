@@ -10,7 +10,7 @@
     #{$css-var-prefix}scrollbar-width: 0px;
   }
 
-  dialog {
+  #{$parent-selector} dialog {
     display: flex;
     z-index: 999;
     position: fixed;
@@ -32,7 +32,11 @@
 
     // Content
     article {
-      $close-selector: if($enable-classes, ".close, a[rel='prev']", "a[rel='prev']");
+      $close-selector: if(
+        $enable-classes,
+        ".close, :is(a, button)[rel=prev]",
+        ":is(a, button)[rel=prev]"
+      );
       width: 100%;
       max-height: calc(100vh - var(#{$css-var-prefix}spacing) * 2);
       margin: var(#{$css-var-prefix}spacing);
@@ -50,12 +54,6 @@
         }
       }
 
-      > header,
-      > footer {
-        padding: calc(var(#{$css-var-prefix}block-spacing-vertical) * 0.5)
-          var(#{$css-var-prefix}block-spacing-horizontal);
-      }
-
       > header {
         > * {
           margin-bottom: 0;
@@ -64,6 +62,7 @@
         #{$close-selector} {
           margin: 0;
           margin-left: var(#{$css-var-prefix}spacing);
+          padding: 0;
           float: right;
         }
       }
@@ -89,10 +88,12 @@
         margin-top: calc(var(#{$css-var-prefix}spacing) * -1);
         margin-bottom: var(#{$css-var-prefix}spacing);
         margin-left: auto;
+        border: none;
         background-image: var(#{$css-var-prefix}icon-close);
         background-position: center;
         background-size: auto 1rem;
         background-repeat: no-repeat;
+        background-color: transparent;
         opacity: 0.5;
 
         @if $enable-transitions {

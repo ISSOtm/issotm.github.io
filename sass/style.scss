@@ -38,11 +38,11 @@
 		"components/tooltip": true,
 
 		"utilities/accessibility": true,
-		"utilities/reduce-motion": true
+		"utilities/reduce-motion": true,
 	)
 );
 
-// TOOD: align colours with Pico stylesheet, or something...
+// TODO: align colours with Pico stylesheet, or something...
 $navbar-gradient-height: 2rem;
 
 /// Navbar.
@@ -50,14 +50,21 @@ $navbar-gradient-height: 2rem;
 // Allow splitting the navbar, for small screens.
 body > nav {
 	&:first-child {
-		background: linear-gradient(to top, var(--pico-background-color), #2d68cc $navbar-gradient-height / 4, #0000 $navbar-gradient-height), repeat-x url("/assets/stars.png"), #000;
+		background:
+			linear-gradient(
+				to top,
+				var(--pico-background-color),
+				#2d68cc $navbar-gradient-height / 4,
+				#0000 $navbar-gradient-height
+			),
+			repeat-x url("/assets/stars.png"),
+			#000;
 		padding-bottom: $navbar-gradient-height / 2;
 	}
 
-	//font-size: 1.2em;
-
 	// Degrade nicely on smaller screens.
-	&, & > ul {
+	&,
+	& > ul {
 		flex-wrap: wrap;
 	}
 }
@@ -68,7 +75,8 @@ nav img {
 
 /// "Brand identity", as they say.
 
-#bottom { // The footer separator, but also used as an anchor.
+// The footer separator, but also used as an anchor.
+#bottom {
 	background: repeat-x bottom / contain url("/assets/clouds.png");
 	height: 3rem;
 	image-rendering: crisp-edges;
@@ -92,15 +100,22 @@ body > footer {
 	background-color: #fff; // "Continue" the footer's background colour.
 }
 body {
-	background-color: var(--pico-background-color); // This would normally be applied to `:root`, but we need to override it above.
+	// This would normally be applied to `:root`, but we need to override it above.
+	background-color: var(--pico-background-color);
 }
 
 // The breadcrumbs.
 
 #breadcrumbs {
-	background: no-repeat right / contain url("/assets/plane.svg"),
-	            no-repeat right / auto 90% linear-gradient(to left, var(--pico-background-color) 4rem, var(--pico-background-color-transparent) 6rem),
-	            repeat-x center right / auto 90% url("/assets/trail.png");
+	background:
+		no-repeat right / contain url("/assets/plane.svg"),
+		no-repeat right / auto 90%
+			linear-gradient(
+				to left,
+				var(--pico-background-color) 4rem,
+				var(--pico-background-color-transparent) 6rem
+			),
+		repeat-x center right / auto 90% url("/assets/trail.png");
 
 	> nav {
 		padding-right: 6rem; // Prevent any text from drawing over the area not covered by the "trail".
@@ -118,14 +133,16 @@ body {
 // An override to the highlighting...
 
 pre {
-	mark { // Highlighted lines.
+	// Highlighted lines.
+	mark {
 		display: block; // Make them take the full width.
 	}
 
 	table {
 		td {
 			padding: 0;
-			&:nth-of-type(1) { // The line number cells.
+			// The line number cells.
+			&:nth-of-type(1) {
 				text-align: center;
 				user-select: none;
 			}
@@ -140,7 +157,8 @@ pre {
 	grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
 	grid-template-rows: masonry; // Expeprimental, but rad. Fallback looks good enough.
 	gap: 0 2em;
-	--pico-block-spacing-vertical: var(--pico-spacing); // Reduce the spacing, this is not really stand-alone.
+	// Reduce the spacing, this is not really stand-alone.
+	--pico-block-spacing-vertical: var(--pico-spacing);
 
 	header {
 		--pico-typography-spacing-vertical: 0; // Don't put additional spacing below the <h*>.
@@ -162,7 +180,7 @@ pre {
 // Avoid scrolling anchors to the very top of the page: the eye doesn't follow.
 
 :target {
-  scroll-margin-block: 5ex;
+	scroll-margin-block: 5ex;
 }
 
 // Content styling.
@@ -172,7 +190,7 @@ pre {
 
 	> p {
 		display: inline;
-		font-size: .9em;
+		font-size: 0.9em;
 		line-height: 1.45em;
 
 		&::before {
@@ -201,7 +219,9 @@ main figure {
 		--pico-typography-spacing-vertical: 0;
 	}
 	> p > * {
-		max-height: 80rem; width: 90%;
-		object-fit: contain; object-position: 20%;
+		max-height: 80rem;
+		width: 90%;
+		object-fit: contain;
+		object-position: 20%;
 	}
 }

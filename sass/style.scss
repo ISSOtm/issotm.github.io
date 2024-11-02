@@ -161,6 +161,7 @@ body {
 		height: 100%;
 		border: 1px solid var(--pico-muted-border-color);
 		border-radius: 6.25%;
+		box-shadow: var(--pico-box-shadow);
 	}
 }
 
@@ -176,6 +177,7 @@ body {
 .isso-comment-footer {
 	font-size: 0.95em;
 	--pico-color: var(--pico-muted-color);
+	color: var(--pico-color);
 	clear: left;
 }
 .isso-comment-header {
@@ -193,17 +195,20 @@ body {
 .isso-note,
 .isso-parent {
 	--pico-color: var(--pico-muted-color);
+	color: var(--pico-color);
 	font-weight: normal;
 	text-shadow: none;
 
 	&:hover {
-		color: var(--pico-contrast-hover);
+		--pico-color: var(--pico-contrast-hover);
+		color: var(--pico-color);
 	}
 }
 
 .isso-author {
 	font-weight: bold;
 	--pico-color: var(--pico-primary);
+	color: var(--pico-color);
 }
 .isso-page-author-suffix {
 	font-weight: bold;
@@ -247,6 +252,7 @@ body {
 	outline: none;
 	box-shadow: none;
 	--pico-color: var(--pico-form-element-color);
+	color: var(--pico-color);
 	transition:
 		background-color var(--pico-transition),
 		border-color var(--pico-transition),

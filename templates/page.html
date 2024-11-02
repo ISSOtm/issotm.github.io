@@ -104,10 +104,11 @@
 	{% endif %}
 
 	{% if not page.extra.section %}
-		<script data-isso="//comments.eldred.fr/" src="//comments.eldred.fr/js/embed.min.js" async></script>
+		<hr>
+		<script data-isso="//comments.eldred.fr/" data-isso-css="false" src="//comments.eldred.fr/js/embed.min.js" async></script>
 
-		<section id="isso-thread">
+		<aside id="isso-thread">
 			<noscript>Javascript needs to be activated to view comments.</noscript>
-		</section>
+		</aside>
 	{% endif %}
 {% endblock content %}

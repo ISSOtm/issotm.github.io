@@ -11,21 +11,21 @@ tags = [ "gbdev" ]
 breadcrumb = "Prehistorik Man"
 +++
 
-Recently, GumpyFunction remarked on *Prehistorik Man*'s parallax effect on the original Game Boy.
-While this game is not one of the console's best known, being somewhat a average title, it's one of, if not the most technically impressive *commercial* releases on the platform.
+Recently, GumpyFunction remarked on _Prehistorik Man_'s parallax effect on the original Game Boy.
+While this game is not one of the console's best known, being somewhat a average title, it's one of, if not the most technically impressive _commercial_ releases on the platform.
 
 <!-- more -->
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Playing through some Prehistorik Man on the <a href="//twitter.com/hashtag/gameboy">#gameboy</a>. Some serious coding wizardry with the pseudo parallax backgrounds. It even shifts perspective as Sam jumps up. Really an incredible feat on the hardware considering the graphics are all tile based! <a href="//t.co/mRHWM6LOlG">pic.twitter.com/mRHWM6LOlG</a></p>&mdash; GumpyFunction (@GumpyFunction) <a href="//twitter.com/GumpyFunction/status/1526013758019346432">May 16, 2022</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Playing through some Prehistorik Man on the <a href="//twitter.com/hashtag/gameboy">#gameboy</a>. Some serious coding wizardry with the pseudo parallax backgrounds. It even shifts perspective as Sam jumps up. Really an incredible feat on the hardware considering the graphics are all tile based! <a href="//t.co/mRHWM6LOlG">pic.twitter.com/mRHWM6LOlG</a></p><cite>&mdash; GumpyFunction (@GumpyFunction) <a href="//twitter.com/GumpyFunction/status/1526013758019346432">May 16, 2022</a></cite><p><ins>EDIT: GumpyFunction has deleted his Twitter account.</ins></p></blockquote>
 
 And this parallax effect is far from the most impressive punch this game packs despite its unassuming looks.
 Let's explore various tricks, and see how the sausages are made!
 
-*Apologies in advance: some of the footage is a bit choppy, as my laptop tanks a bit while recording. Sorry!*
+_Apologies in advance: some of the footage is a bit choppy, as my laptop tanks a bit while recording. Sorry!_
 
 ## Context
 
-Despite the name, this game is actually a port of *Prehistorik 2* on the SNES.
+Despite the name, this game is actually a port of _Prehistorik 2_ on the SNES.
 It was published in 1996 by Kemco in Japan, and Titus everywhere else.
 
 Worth pointing out is its programmer, Elmar Krieger...
@@ -37,8 +37,8 @@ Worth pointing out is its programmer, Elmar Krieger...
 <figcaption>By the way, we'll come back to this title screen.</figcaption>
 </figure>
 
-[A secret message](//tcrf.net/Prehistorik_Man_(Game_Boy)#Secret_Greetings_Message) reveals that Elmar also has worked in the [demoscene](//en.wikipedia.org/wiki/Demoscene).
-This should explain *why* this game is so technically impressive.
+[A secret message](<//tcrf.net/Prehistorik_Man_(Game_Boy)#Secret_Greetings_Message>) reveals that Elmar also has worked in the [demoscene](//en.wikipedia.org/wiki/Demoscene).
+This should explain _why_ this game is so technically impressive.
 
 ### Technical background
 
@@ -66,12 +66,12 @@ The effect here, however, is multi-tiered:
 - Since the pattern repeats horizontally, no special handling is required; however, vertical movement requires not only the pattern to be shifted vertically, but the tilemap must also be updated!
 - As if this was not enough, some of the horizontal "strips" also get thickened as the pattern moves upwards.
 
-All of this helps grounding that background in space; it feels much more than what most 16-bit games were going for, honestly: even *Sonic 1*'s famous Green Hill Zone didn't have any of these vertical effects!
+All of this helps grounding that background in space; it feels much more than what most 16-bit games were going for, honestly: even _Sonic 1_'s famous Green Hill Zone didn't have any of these vertical effects!
 
 Since this is all done directly on the background layer and on whole tiles (for performance[^1bpp]), you may notice that some pixels of the surrounding mountains are white and not "transparent".
 Ah well, it's a small price to pay.
 
-[^window]: The Window is not *exactly* a second background layer. Since it fully overrides the background, there's no transparency; so it's simpler to say there is only one layer.
+[^window]: The Window is not _exactly_ a second background layer. Since it fully overrides the background, there's no transparency; so it's simpler to say there is only one layer.
 
 [^1bpp]: Performance is also likely why the background only uses one color: this allows treating those graphics as 1bpp, processing less data and accessing VRAM less. (Accessing VRAM is a slow and annoying bottleneck most of the time.) This also works out as an aesthetic choice, since [scenery further away tends to fade out](//en.wikipedia.org/wiki/Aerial_perspective).
 
@@ -99,7 +99,7 @@ Let's focus on a part of the Game Boy's rendering system: OBJ[^obj] priority.
 [OBJ priority](//gbdev.io/pandocs/OAM#drawing-priority) is simply a set of rules that determine which OBJ comes out "on top" if two of them overlap.
 
 This is trivial for Game Boy Color software: the OBJ that comes first in OAM (the table in which OBJ metadata is stored) wins.
-But non-enhanced games abide by a different set of rules[^compat]: the *leftmost* OBJ wins!
+But non-enhanced games abide by a different set of rules[^compat]: the _leftmost_ OBJ wins!
 This tends to create ugly overlap:
 
 <video controls loop src="dmg_overlap.mp4"></video>
@@ -123,21 +123,21 @@ The answer lies in the background.
 
 ![](overlap_bg.png)
 
-That's right: the game's solution to this problem is to sidestep it entirely, and render any OBJs overlapping Sam's to the background[^cgb], *in software*!
+That's right: the game's solution to this problem is to sidestep it entirely, and render any OBJs overlapping Sam's to the background[^cgb], _in software_!
 
 This is much more involved than you'd think:
 
 1. The OBJ must be found to overlap Sam's ("simple" position check)
 2. For each of the tiles being overlapped (up to 6):
-   1. A copy of the tile must be created, *unless* it's already an "overlap" tile
+   1. A copy of the tile must be created, _unless_ it's already an "overlap" tile
    2. The OBJ's tile must be shifted around and painted on top (even this is not as easy as it sounds)
    3. The new tile must be written back to the tilemap
 
-This is not all that difficult to do, "just" galaxy 🧠 to even envision, but it's difficult to do *efficiently*—this incurs a lot of accesses to VRAM[^sram], so you can see and hear the game lag with enough overlap (swinging your weapon helps).
+This is not all that difficult to do, "just" galaxy 🧠 to even envision, but it's difficult to do _efficiently_—this incurs a lot of accesses to VRAM[^sram], so you can see and hear the game lag with enough overlap (swinging your weapon helps).
 
 [^obj]: OBJ (or "objects") are often called "sprites", but this term is often misused to talk about whole animation frames, actors, and more; so I avoid using it.
 
-[^compat]: The Game Boy Color's PPU actually implements both sets of rules, and switches back to the "old mode" for non-enhanced games for compatibility's sake. Now *that*'s dedication from Nintendo.
+[^compat]: The Game Boy Color's PPU actually implements both sets of rules, and switches back to the "old mode" for non-enhanced games for compatibility's sake. Now _that_'s dedication from Nintendo.
 
 [^cgb]: You can actually witness this on a Game Boy Color, since the OBJs being "kicked" to the background will turn green instead of red.
 
@@ -167,7 +167,7 @@ And, in this scene, Sam is four OBJs wide, the dino six... and then its tail two
 Any excess OBJs (here, the tail's two) are simply not able to be rendered—that's the second screenshot.
 Since OBJs that come later in OAM are dropped before objects that come earlier, games typically work partially around this by rotating OAM, which changes which OBJs get dropped each frame, leading to the infamous flickering.
 
-*Prehistorik* instead detects when such overflow would happen (a non-trivial task as well), and renders the OBJ itself.
+_Prehistorik_ instead detects when such overflow would happen (a non-trivial task as well), and renders the OBJ itself.
 
 > <q>If the Game Boy can't, then my code will!</q>
 >
@@ -245,7 +245,7 @@ Simple parallax effect, though this one is simply done by changing the horizonta
 <figcaption>How do I put lightly "GBA-LEVEL GRAPHICS ON A GAME BOY?!"? Well, aside from the lack of colors.</figcaption>
 </figure>
 
-There is... *so much* that's going on in this title screen.
+There is... _so much_ that's going on in this title screen.
 Let's dissect the effects, one by one.
 
 ### Parallax
@@ -291,14 +291,14 @@ The OAM view of this screen looks weird.
 </figure>
 
 Despite the game using [8×16 OBJ mode](//gbdev.io/pandocs/LCDC#lcdc2--obj-size), OAM is pretty saturated from the two big clouds at the top and the bottom half of "MAN".
-So, *[where is everybody?](//youtu.be/9tQWLg4E90M?t=365)*
+So, _[where is everybody?](//youtu.be/9tQWLg4E90M?t=365)_
 
 As it turns out, right as the "MAN" has been fully rendered, the game performs an [OAM DMA](//gbdev.io/pandocs/OAM_DMA_Transfer) to load a new set of OBJs.
 And it also turns out that doing so mid-frame is okay!
 It only causes OBJs not to be rendered for its duration[^mid_frame_dma] (of roughly two scanlines), which is why there is a slight gap between the "MAN" and the palm trees.
 This also works out aesthetically speaking!
 
-[^mid_frame_dma]: Actually, it's much more complicated than what I just described, and still being researched. But *Prehistorik Man* steers clear of any weird side effects by triggering the DMA during HBlank, so it's all jolly good!
+[^mid_frame_dma]: Actually, it's much more complicated than what I just described, and still being researched. But _Prehistorik Man_ steers clear of any weird side effects by triggering the DMA during HBlank, so it's all jolly good!
 
 ### Palm trees
 
@@ -316,7 +316,7 @@ But you'd be wrong!
 <figcaption>Despite the visible overlap, the tilemap is clean as can be. How come?</figcaption>
 </figure>
 
-The game employs *another* workaround, more CPU-efficient but also more restrictive.
+The game employs _another_ workaround, more CPU-efficient but also more restrictive.
 The answer lies in the OAM viewer.
 
 <figure>
@@ -333,7 +333,7 @@ Well, I mentioned earlier that "the leftmost OBJ wins".
 But, there can be ties—and I never mentioned the tie breaker!
 That's simply the OAM index: the earlier an OBJ in OAM, the higher its priority.
 
-So what the game is doing here, is ensuring that the two OBJs composing the palm trees *always* overlap Sam's *perfectly*, which then has the palm trees "win out", since they come first in OAM.
+So what the game is doing here, is ensuring that the two OBJs composing the palm trees _always_ overlap Sam's _perfectly_, which then has the palm trees "win out", since they come first in OAM.
 The movement is created by displaying one of 8 pre-shifted combinations of the palm tree trunk.
 
 This only applies to the bottom of the palm trees, but that's fine, since Sam only goes behind their trunks.
@@ -341,7 +341,7 @@ The window is also fine: since it's technically part of the background, it appea
 
 ### Intro text
 
-*Of course*, I've saved the best for last.
+_Of course_, I've saved the best for last.
 
 <figure>
 
@@ -374,7 +374,7 @@ Yeah.
 
 All of this text is achieved through background palette manipulation.
 
-> *"**What!?**"*
+> _"**What!?**"_
 >
 > —You and I, when hearing about this trick the first time
 
@@ -382,7 +382,7 @@ I know, right?
 
 Here's the thing: the Game Boy <abbr title="Picture Processing Unit">PPU</abbr> seems to go out of its way to never cache values read from rendering parameter registers.
 And that includes `BGP`, the background palette register.
-So what the game is doing, is simply *spamming* that register to set the palette to fully black when it wants to draw a letter "tile" (thus overriding whatever is below it: no matter the pixel ID, it will map to black), and then back to normal.
+So what the game is doing, is simply _spamming_ that register to set the palette to fully black when it wants to draw a letter "tile" (thus overriding whatever is below it: no matter the pixel ID, it will map to black), and then back to normal.
 
 This may sound simple in concept (though, again, you have to have the idea first), but poses a few of challenges:
 
@@ -390,6 +390,7 @@ This may sound simple in concept (though, again, you have to have the idea first
 
   This effect requires the CPU to be synchronized quite tightly with the PPU to write to `BGP` at the right time.
   Fortunately, we can "simply" use interrupts for that.
+
 - **How to go fast enough?**
 
   The PPU outputs pixels 4× as fast as the CPU executes instructions[^dots], so if we want our line "thickness" to be 8 pixels, we need to be able to write to `BGP` every 2 cycles.
@@ -405,7 +406,7 @@ This may sound simple in concept (though, again, you have to have the idea first
   The letters are scrolled horizontally by 4 pixels each time, which corresponds to 1 CPU cycle: the game simply delays execution of the "spamming" code by that.
   As for vertical scrolling, it's as simple as changing at which scanline the effect starts being performed.
 
-[^dots]: Kind of. The PPU outputs pixels at 4 MiHz *unless it's being stalled*, and the CPU really executes instructions are 4 MiHz—but all instructions take multiple of 4 such clock cycles, so the simplification is often made that the CPU cycles are at 1 MiHz. Or 2 MiHz in the Color's double-speed mode.
+[^dots]: Kind of. The PPU outputs pixels at 4 MiHz _unless it's being stalled_, and the CPU really executes instructions are 4 MiHz—but all instructions take multiple of 4 such clock cycles, so the simplification is often made that the CPU cycles are at 1 MiHz. Or 2 MiHz in the Color's double-speed mode.
 
 ## Credits
 
@@ -417,20 +418,20 @@ This is very similar to the intro text above, but there's also a bit of funny hi
   </a>
 </lite-youtube>
 
-(*Please excuse the flicker if watching at 60 fps: the game flickers the background between alternating colors to create more nuances of gray, but emulators have trouble replicating the effect.*)
+(_Please excuse the flicker if watching at 60 fps: the game flickers the background between alternating colors to create more nuances of gray, but emulators have trouble replicating the effect._)
 
 The way the flipping effect is achieved is that the game spams the vertical scrolling register (`SCY`) mid-scanline, just like it spammed the background palette register for the intro text.
 Its timing is slightly off, so you may notice some artifacts on the top-left corner of the textbox, and also two columns of subtly glitched text—this is a console revision-dependent bug, as was figured out recently, and the game triggers it by its timing falling on the wrong one of two cycles.
 Gah!
 
-Where history meets irony here has to do with the demo *[Demotronic](//www.pouet.net/prod.php?which=7175)*, which was released in 2002 for the GBC, and claims to be the first ever to perform "vertical raster splits" on Game Boy... which, as we just saw, *Prehistorik Man* did first, and on the B&W console no less!
-(Though, *Demotronic* does it better.)
+Where history meets irony here has to do with the demo _[Demotronic](//www.pouet.net/prod.php?which=7175)_, which was released in 2002 for the GBC, and claims to be the first ever to perform "vertical raster splits" on Game Boy... which, as we just saw, _Prehistorik Man_ did first, and on the B&W console no less!
+(Though, _Demotronic_ does it better.)
 
 I guess it just goes to show how much this game flew under the radar 😛.
 
 ## Music
 
-The music in this game uses what's called *Zombie Mode* to create envelopes in software.
+The music in this game uses what's called _Zombie Mode_ to create envelopes in software.
 (Sorry, no pictures for this section!)
 
 Usually, instrument envelopes use [ADSR](//en.wikipedia.org/wiki/ADSR_envelope): Attack, Decay, Sustain, Release.
@@ -442,7 +443,7 @@ Well, it's not possible by conventional means, anyway.
 However, by "tickling" the amplitude register in "just the right way", it's possible to trick the envelope into updating nonetheless.
 (The details are unfortunately not documented anywhere I'm aware of, and they are quite complicated. 😢)
 
-Unfortunately, the way *Prehistorik Man* uses Zombie Mode does not work on most Game Boy Colors.
+Unfortunately, the way _Prehistorik Man_ uses Zombie Mode does not work on most Game Boy Colors.
 (Yes, there are six different revisions of the GBC, from "CPU CGB" to "CPU CGB E"!)
 
 ## Conclusion

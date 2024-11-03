@@ -278,14 +278,16 @@ body {
 	align-items: end;
 }
 
-// Pico defines a `padding` inside `article`, and a negative `margin-bottom` for `article > footer`, expecting the footer to be the last element.
-// Since we insert *other* elements below the footer, apply Pico's rule to the last child instead.
-// However, this only applies to
-article.isso-comment > footer {
-	margin-bottom: 0;
-}
-article.isso-comment > :last-child {
-	margin-bottom: calc(var(--pico-block-spacing-vertical) * -1);
+article.isso-comment {
+	// Pico defines a `padding` inside `article`, and a negative `margin-bottom` for `article > footer`, expecting the footer to be the last element.
+	// Since we insert *other* elements below the footer, apply Pico's rule to the last child instead.
+	// However, this only applies to the actual comments, not to the preview (which has the `isso-comment` class).
+	& > footer {
+		margin-bottom: 0;
+	}
+	& > :last-child {
+		margin-bottom: calc(var(--pico-block-spacing-vertical) * -1);
+	}
 }
 
 // Comments, by default, have a margin-bottom but no margin-top; so they stick to the parent's footer, but are spaced off from the parent's bottom border.

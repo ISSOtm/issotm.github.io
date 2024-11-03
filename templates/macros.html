@@ -2,7 +2,7 @@
 	<p>
 		{% if page.year %}
 			{% set timestamp = page.year ~ "-" ~ page.month ~ "-" ~ page.day %}
-			Published <time datetime="{{ timestamp | date(format="%F") }}" itemprop="datePublished">{{ timestamp | date(format="%a %b %e") }}</time>.
+			Published <time datetime="{{ timestamp | date(format="%F") }}" itemprop="datePublished">{{ timestamp | date(format="%a %e %b %Y") }}</time>.
 		{% endif %}
 		Estimated reading time: {{ page.reading_time }} minute{{ page.reading_time | pluralize }}.
 	</p>

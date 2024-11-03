@@ -16,7 +16,15 @@ While this game is not one of the console's best known, being somewhat a average
 
 <!-- more -->
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Playing through some Prehistorik Man on the <a href="//twitter.com/hashtag/gameboy">#gameboy</a>. Some serious coding wizardry with the pseudo parallax backgrounds. It even shifts perspective as Sam jumps up. Really an incredible feat on the hardware considering the graphics are all tile based! <a href="//t.co/mRHWM6LOlG">pic.twitter.com/mRHWM6LOlG</a></p><cite>&mdash; GumpyFunction (@GumpyFunction) <a href="//twitter.com/GumpyFunction/status/1526013758019346432">May 16, 2022</a></cite><p><ins>EDIT: GumpyFunction has deleted his Twitter account.</ins></p></blockquote>
+> Playing through some Prehistorik Man on the [#gameboy](//twitter.com/hashtag/gameboy).
+> Some serious coding wizardry with the pseudo parallax backgrounds.
+> It even shifts perspective as Sam jumps up.
+> Really an incredible feat on the hardware considering the graphics are all tile based!
+> [pic.twitter.com/mRHWM6LOlG](//t.co/mRHWM6LOlG)
+>
+> <cite>&mdash; GumpyFunction (@GumpyFunction) <a href="//twitter.com/GumpyFunction/status/1526013758019346432">May 16, 2022</a></cite>
+>
+> <ins>EDIT: GumpyFunction has deleted his Twitter account.</ins>
 
 And this parallax effect is far from the most impressive punch this game packs despite its unassuming looks.
 Let's explore various tricks, and see how the sausages are made!

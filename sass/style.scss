@@ -152,7 +152,7 @@ body {
 .isso-avatar {
 	display: block;
 	float: left;
-	margin: 0.95em 0.95em 0;
+	margin: 0 0.95em 0 0;
 
 	svg {
 		max-width: 3em;
@@ -205,6 +205,10 @@ body {
 	}
 }
 
+.isso-note {
+	float: right;
+}
+
 .isso-author {
 	font-weight: bold;
 	--pico-color: var(--pico-primary);
@@ -229,7 +233,7 @@ body {
 	margin-left: 1em;
 }
 
-.isso-no-votes > * > .isso-comment-footer .isso-votes {
+.isso-no-votes > .isso-comment-footer > .isso-votes {
 	display: none;
 }
 
@@ -246,18 +250,6 @@ body {
 .isso-preview {
 	background: repeating-linear-gradient(-45deg, transparent 0 0.5em, #8882 0.5em 1em)
 		var(--pico-form-element-background-color);
-	// Harmonise with the styling Pico uses for `textarea`. (Except for the background.)
-	border: var(--pico-border-width) solid var(--pico-form-element-border-color);
-	border-radius: var(--pico-border-radius);
-	outline: none;
-	box-shadow: none;
-	--pico-color: var(--pico-form-element-color);
-	color: var(--pico-color);
-	transition:
-		background-color var(--pico-transition),
-		border-color var(--pico-transition),
-		color var(--pico-transition),
-		box-shadow var(--pico-transition);
 
 	// Such a margin makes the space between the bottom of the background and of the text larger than between the tops.
 	.isso-text > :last-child {
@@ -284,6 +276,23 @@ body {
 
 .isso-postbox > fieldset {
 	align-items: end;
+}
+
+// Pico defines a `padding` inside `article`, and a negative `margin-bottom` for `article > footer`, expecting the footer to be the last element.
+// Since we insert *other* elements below the footer, apply Pico's rule to the last child instead.
+// However, this only applies to
+article.isso-comment > footer {
+	margin-bottom: 0;
+}
+article.isso-comment > :last-child {
+	margin-bottom: calc(var(--pico-block-spacing-vertical) * -1);
+}
+
+// Comments, by default, have a margin-bottom but no margin-top; so they stick to the parent's footer, but are spaced off from the parent's bottom border.
+// Swapping the two fixes both.
+.isso-follow-up > .isso-comment {
+	margin-top: var(--pico-block-spacing-vertical);
+	margin-bottom: 0;
 }
 
 /// An override to the highlighting...

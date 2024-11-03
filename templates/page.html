@@ -57,7 +57,7 @@
 {% block header %}
 <div id="breadcrumbs"> {# This carries the background; the <nav> gets margins from `.container`'s centering. #}
 	<nav class="container" aria-label="breadcrumb" data-theme="light">
-		<ul itemscope itemtype="https://schema.org/BreadcrumbList" aria-orientation="horizontal">
+		<ul itemscope itemtype="https://schema.org/BreadcrumbList">
 			{% set elems = [] %}
 			{% for ancestor in page.ancestors %}
 				{% set_global elems = elems | concat(with=get_section(path=ancestor)) %}

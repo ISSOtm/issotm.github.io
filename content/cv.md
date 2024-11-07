@@ -10,13 +10,14 @@ age_qual = "years old"
 <section><div class="nobreak">
 
 ## Professional experience
+
 <hr>
 
 <hgroup>
 
 ### <small><i>SII</i> for <i>SCLE</i> :</small> Embedded developer
 
-<p><time datetime="2022-11">Oct.&nbsp;2022</time> – <time datetime="2024-03"Mar.&nbsp;2024</time></p>
+<p><time datetime="2022-11">Oct.&nbsp;2022</time> – <time datetime="2024-03">Mar.&nbsp;2024</time></p>
 </hgroup>
 
 - Ported an old **embedded** system written in **C** from a discontinued platform to Linux
@@ -42,6 +43,7 @@ age_qual = "years old"
 <section><div class="nobreak">
 
 ## Formation
+
 <hr>
 
 <hgroup>
@@ -51,11 +53,11 @@ age_qual = "years old"
 <p><time datetime="2018-09">Sept. 2018</time> – <time datetime="2021-08">Aug. 2021</time></p>
 </hgroup>
 
-- Security & networks minor, certified *CyberEdu* and *SecNumEdu* by the [ANSSI]
+- Security & networks minor, certified _CyberEdu_ and _SecNumEdu_ by the [ANSSI]
 - CyberAcademy (Cisco certification)
 <!--
 - 2<sup>nd</sup> year project on pentesting; report typeset using <span style="font-family: 'CMU Serif', cmr10, LMRoman10-Regular, 'Latin Modern Math', 'Nimbus Roman No9 L', 'Times New Roman', Times, serif;">L<span style="text-transform: uppercase; font-size: 0.75em; vertical-align: 0.25em; margin-left: -0.36em; margin-right: -0.15em; line-height: 1ex;">a</span>T<span style="text-transform: uppercase; vertical-align: -0.25em; margin-left: -0.1667em; margin-right: -0.125em; line-height: 1ex;">e</span>X</span>, slides made with [reveal.js] (HTML + CSS)
--->
+  -->
 
 </div><div class="nobreak">
 <hgroup>
@@ -87,12 +89,13 @@ age_qual = "years old"
 <p><time>2015</time></p>
 </hgroup>
 
-- A-Levels passed *magna cum laude*
+- A-Levels passed _magna cum laude_
 
 </div></section>
 <section><div class="nobreak">
 
 ## Open-source
+
 <hr>
 
 <hgroup>
@@ -139,6 +142,7 @@ age_qual = "years old"
 <section><div class="nobreak">
 
 ## Languages
+
 <hr>
 
 <table>
@@ -153,6 +157,7 @@ age_qual = "years old"
 <section><div class="nobreak">
 
 ## Hobbies
+
 <hr>
 
 Retrogaming and **development** of **Game Boy** games.

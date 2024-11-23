@@ -14,7 +14,7 @@ age_qual = "ans"
 
 <hgroup>
 
-### <small><i>SII</i> pour <i>SCLE</i> :</small> Développeur embarqué
+### <small><i>SII</i> pour <i>SCLE</i>&nbsp;:</small> Développeur embarqué
 
 <p><time datetime="2022-11">Oct.&nbsp;2022</time> – <time datetime="2024-03">Mars&nbsp;2024</time></p>
 </hgroup>
@@ -28,7 +28,7 @@ age_qual = "ans"
 </div><div class="nobreak">
 <hgroup>
 
-### <small><i>SII</i> pour <i>Airbus Defence & Space</i> :</small> Ingénieur logiciel
+### <small><i>SII</i> pour <i>Airbus Defence & Space</i>&nbsp;:</small> Ingénieur logiciel
 
 <p><time datetime="2021-09">Sept. 2021</time> – <time datetime="2022-10">Oct. 2022</time></p>
 </hgroup>
@@ -46,7 +46,7 @@ age_qual = "ans"
 
 <hgroup>
 
-### <small><i>ISIMA</i> (Clermont-Ferrand) :</small> Diplôme d'ingénieur en informatique
+### <small><i>ISIMA</i> (Clermont-Ferrand)&nbsp;:</small> Diplôme d'ingénieur en informatique
 
 <p><time datetime="2018-09">Sept. 2018</time> – <time datetime="2021-08">Août 2021</time></p>
 </hgroup>
@@ -54,13 +54,13 @@ age_qual = "ans"
 - Filière sécurité et réseaux, labellisée par l'[ANSSI] *CyberEdu* et *SecNumEdu*
 - CyberAcademy (certification Cisco)
 <!--
-- Projet sur l'analyse de vulnérabilités (pentesting) ; rapport rédigé en <span style="font-family: 'CMU Serif', cmr10, LMRoman10-Regular, 'Latin Modern Math', 'Nimbus Roman No9 L', 'Times New Roman', Times, serif;">L<span style="text-transform: uppercase; font-size: 0.75em; vertical-align: 0.25em; margin-left: -0.36em; margin-right: -0.15em; line-height: 1ex;">a</span>T<span style="text-transform: uppercase; vertical-align: -0.25em; margin-left: -0.1667em; margin-right: -0.125em; line-height: 1ex;">e</span>X</span>, présentation réalisée avec [reveal.js] (HTML + CSS)
+- Projet sur l'analyse de vulnérabilités (pentesting)&nbsp;; rapport rédigé en <span style="font-family: 'CMU Serif', cmr10, LMRoman10-Regular, 'Latin Modern Math', 'Nimbus Roman No9 L', 'Times New Roman', Times, serif;">L<span style="text-transform: uppercase; font-size: 0.75em; vertical-align: 0.25em; margin-left: -0.36em; margin-right: -0.15em; line-height: 1ex;">a</span>T<span style="text-transform: uppercase; vertical-align: -0.25em; margin-left: -0.1667em; margin-right: -0.125em; line-height: 1ex;">e</span>X</span>, présentation réalisée avec [reveal.js] (HTML + CSS)
 -->
 
 </div><div class="nobreak">
 <hgroup>
 
-### <small><i>Université Clermont Auvergne</i> :</small> 2<sup>ème</sup> année de Licence Informatique
+### <small><i>Université Clermont Auvergne</i>&nbsp;:</small> 2<sup>ème</sup> année de Licence Informatique
 
 <p><time>2017</time> – <time>2018</time></p>
 </hgroup>
@@ -71,7 +71,7 @@ age_qual = "ans"
 </div><div class="nobreak">
 <hgroup>
 
-### <small><i>Lycée Blaise Pascal</i> (Clermont-Ferrand) :</small> CPGE, filière MP
+### <small><i>Lycée Blaise Pascal</i> (Clermont-Ferrand)&nbsp;:</small> CPGE, filière MP
 
 <p><time>2015</time> – <time>2017</time></p>
 </hgroup>
@@ -82,7 +82,7 @@ age_qual = "ans"
 </div><div class="nobreak">
 <hgroup>
 
-### <small><i>Lycée La Fayette</i> (Brioude) :</small> Cycle secondaire
+### <small><i>Lycée La Fayette</i> (Brioude)</small>
 
 <p><time>2015</time></p>
 </hgroup>
@@ -130,10 +130,10 @@ age_qual = "ans"
 <p><time datetime="2016-12">Déc.&nbsp;2016</time> – <time datetime="2023-09">Sept.&nbsp;2023</time></p>
 </hgroup>
 
-- v1 en HTML brut + Bootstrap CSS; v2 avec [Jekyll] + thème ; v3 avec Jekyll + style custom ; v4 avec [Zola] et [Pico CSS]
-- Objectifs de design :
-  - Légèreté / sobriété (pas plus de <abbr title="Cascading Style Sheets">CSS</abbr> ou <abbr title="JavaScript">JS</abbr> que nécessaire) ⇒ [moins d'1 Mio transféré](//1mb.club)
-  - [HTML sémantique][semHTML] et design *responsive*, notamment pour faciliter l'[accessibilité][a11y]
+- v1 en HTML brut + Bootstrap CSS; v2 avec [Jekyll] + thème&nbsp;; v3 avec Jekyll + style custom ; v4 avec [Zola] et [Pico CSS]
+- Objectifs de design&nbsp;:
+ - Légèreté / sobriété (pas plus de <abbr title="Cascading Style Sheets">CSS</abbr> ou <abbr title="JavaScript">JS</abbr> que nécessaire) ⇒ [moins d'1 Mio transféré](//1mb.club)
+ - [HTML sémantique][semHTML] et design *responsive*, notamment pour faciliter l'[accessibilité][a11y]
 
 </div></section>
 <section><div class="nobreak">

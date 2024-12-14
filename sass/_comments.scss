@@ -1,0 +1,163 @@
+/// First, imports from Isso's stylesheet, with colours replaced.
+
+.isso-comment:not(:first-of-type),
+.isso-follow-up .isso-comment {
+	border-top: 1px solid var(--pico-muted-border-color);
+	margin-bottom: var(--pico-spacing);
+}
+
+.isso-feedlink {
+	float: right;
+	padding-right: 1em;
+	a {
+		font-size: 0.8em;
+		vertical-align: bottom;
+	}
+}
+
+.isso-avatar {
+	display: block;
+	float: left;
+	margin: 0 0.95em 0 0;
+
+	svg {
+		max-width: 3em;
+		max-height: 3em;
+		width: 100%;
+		height: 100%;
+		border: 1px solid var(--pico-muted-border-color);
+		border-radius: 6.25%;
+		box-shadow: var(--pico-box-shadow);
+	}
+}
+
+.isso-text-wrapper {
+	display: block;
+	padding: 0.95em;
+}
+
+.isso-follow-up {
+	padding-left: calc(7% + 1em);
+}
+
+.isso-comment-footer {
+	font-size: 0.95em;
+	--pico-color: var(--pico-muted-color);
+	color: var(--pico-color);
+	clear: left;
+}
+.isso-comment-header {
+	font-size: 0.85em;
+	a {
+		text-decoration: none;
+	}
+	.isso-spacer {
+		padding: 0 0.5em;
+	}
+}
+
+.isso-spacer,
+.isso-permalink,
+.isso-note,
+.isso-parent {
+	--pico-color: var(--pico-muted-color);
+	color: var(--pico-color);
+	font-weight: normal;
+	text-shadow: none;
+
+	&:hover {
+		--pico-color: var(--pico-contrast-hover);
+		color: var(--pico-color);
+	}
+}
+
+.isso-note {
+	float: right;
+}
+
+.isso-author {
+	font-weight: bold;
+	--pico-color: var(--pico-primary);
+	color: var(--pico-color);
+}
+.isso-page-author-suffix {
+	font-weight: bold;
+	// TODO: pick an appropriate color
+}
+
+.isso-feedlink,
+.isso-comment-footer a {
+	font-weight: bold;
+	text-decoration: none;
+	&:hover {
+		color: var(--pico-primary);
+		text-shadow: var(--pico-box-shadow);
+	}
+}
+
+.isso-comment-footer > a + a {
+	margin-left: 1em;
+}
+
+.isso-no-votes > .isso-comment-footer > .isso-votes {
+	display: none;
+}
+
+.isso-preview,
+[name="edit"],
+.isso-preview-mode [name="preview"],
+.isso-preview-mode .isso-textarea {
+	display: none;
+}
+.isso-preview-mode .isso-preview,
+.isso-preview-mode [name="edit"] {
+	display: block;
+}
+.isso-preview {
+	background: repeating-linear-gradient(-45deg, transparent 0 0.5em, #8882 0.5em 1em)
+		var(--pico-form-element-background-color);
+
+	// Such a margin makes the space between the bottom of the background and of the text larger than between the tops.
+	.isso-text > :last-child {
+		margin-bottom: 0;
+	}
+	// ...but the element itself should be spaced from the inputs below.
+	margin-bottom: var(--pico-spacing);
+}
+
+// "target" means the comment that's being linked to, for example:
+// https://example.com/blog/example/#isso-15
+.isso-target {
+	animation: isso-target-fade 5s ease-out;
+}
+@keyframes isso-target-fade {
+	0% {
+		background-color: var(--pico-mark-background-color);
+	}
+}
+
+/// Customisations made to Isso's stylesheet.
+/// (Keep in mind that the JS is patched to generate some slightly different HTML, so that Pico styles it properly by default.)
+
+.isso-postbox > fieldset {
+	align-items: end;
+}
+
+article.isso-comment {
+	// Pico defines a `padding` inside `article`, and a negative `margin-bottom` for `article > footer`, expecting the footer to be the last element.
+	// Since we insert *other* elements below the footer, apply Pico's rule to the last child instead.
+	// However, this only applies to the actual comments, not to the preview (which has the `isso-comment` class).
+	& > footer {
+		margin-bottom: 0;
+	}
+	& > :last-child {
+		margin-bottom: calc(var(--pico-block-spacing-vertical) * -1);
+	}
+}
+
+// Comments, by default, have a margin-bottom but no margin-top; so they stick to the parent's footer, but are spaced off from the parent's bottom border.
+// Swapping the two fixes both.
+.isso-follow-up > .isso-comment {
+	margin-top: var(--pico-block-spacing-vertical);
+	margin-bottom: 0;
+}

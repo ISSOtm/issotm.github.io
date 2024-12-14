@@ -1,0 +1,83 @@
+// TODO: align colours with Pico stylesheet, or something...
+$navbar-gradient-height: 2rem;
+
+/// Navbar.
+
+// Allow splitting the navbar, for small screens.
+body > nav {
+	&:first-child {
+		background:
+			linear-gradient(
+				to top,
+				var(--pico-background-color),
+				#2d68cc $navbar-gradient-height / 4,
+				#0000 $navbar-gradient-height
+			),
+			repeat-x url("/assets/stars.png"),
+			#000;
+		padding-bottom: $navbar-gradient-height / 2;
+	}
+
+	// Degrade nicely on smaller screens.
+	&,
+	& > ul {
+		flex-wrap: wrap;
+	}
+}
+// Limit the height of the icons so they don't scale up ridiculously.
+nav img {
+	height: 2em;
+}
+
+/// "Brand identity", as they say.
+
+// The footer separator, but also used as an anchor.
+#bottom {
+	background: repeat-x bottom / contain url("/assets/clouds.png");
+	height: 3rem;
+	image-rendering: crisp-edges;
+}
+body > footer {
+	padding-top: 0; // Already taken care of by the "separator".
+
+	svg {
+		display: block;
+		max-width: 468px;
+		margin: 0 auto;
+	}
+
+	p {
+		text-align: center;
+	}
+
+	background-color: #fff;
+}
+:root {
+	background-color: #fff; // "Continue" the footer's background colour.
+}
+body {
+	// This would normally be applied to `:root`, but we need to override it above.
+	background-color: var(--pico-background-color);
+}
+
+#breadcrumbs {
+	background:
+		no-repeat right / contain url("/assets/plane.svg"),
+		no-repeat right / auto 90%
+			linear-gradient(
+				to left,
+				var(--pico-background-color) 4rem,
+				var(--pico-background-color-transparent) 6rem
+			),
+		repeat-x center right / auto 90% url("/assets/trail.png");
+
+	> nav {
+		padding-right: 6rem; // Prevent any text from drawing over the area not covered by the "trail".
+	}
+}
+
+#balloon {
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
+}

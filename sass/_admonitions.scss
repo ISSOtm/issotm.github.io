@@ -1,0 +1,58 @@
+@use "sass:map";
+@use "pico/colors/";
+
+$kinds: (
+	note: grey,
+	tip: jade,
+	info: azure,
+	warning: pumpkin,
+	danger: red,
+);
+
+@each $name, $kind in $kinds {
+	.#{$name} {
+		$theme: map.get(colors.$colors, $kind);
+
+		--admonition-border-color: #{map.get($theme, 500)};
+		// Light color scheme (Default)
+		// Can be forced with data-theme="light"
+		[data-theme="light"] &,
+		:root:not([data-theme="dark"]) & {
+			--admonition-background-color: #{map.get($theme, 100)};
+		}
+
+		// Dark color scheme (Auto)
+		// Automatically enabled if user has Dark mode enabled
+		@media only screen and (prefers-color-scheme: dark) {
+			:root:not([data-theme]) & {
+				--admonition-background-color: #{map.get($theme, 800)};
+			}
+		}
+
+		// Dark color scheme (Forced)
+		// Enabled if forced with data-theme="dark"
+		[data-theme="dark"] & {
+			--admonition-background-color: #{map.get($theme, 800)};
+		}
+	}
+}
+
+.admonition {
+	background-color: var(--admonition-background-color);
+	border-left: 5px solid var(--admonition-border-color);
+	border-radius: var(--pico-border-radius);
+	padding: var(--pico-block-spacing-vertical) var(--pico-block-spacing-horizontal);
+
+	> :last-child {
+		margin-bottom: 0;
+	}
+	margin-bottom: var(--pico-typography-spacing-vertical);
+
+	> header {
+		font-variant: small-caps;
+		--pico-font-weight: bold;
+		> p {
+			margin-bottom: 0.3rem; // Override the normal paragraph bottom margin for a tighter one.
+		}
+	}
+}

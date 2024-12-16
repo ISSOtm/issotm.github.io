@@ -4,7 +4,15 @@
 			{% set timestamp = page.year ~ "-" ~ page.month ~ "-" ~ page.day %}
 			Published <time datetime="{{ timestamp | date(format="%F") }}" itemprop="datePublished">{{ timestamp | date(format="%a %e %b %Y") }}</time>.
 		{% endif %}
-		Estimated reading time: {{ page.reading_time }} minute{{ page.reading_time | pluralize }}.
+		{% if page.extra.section %}
+			{% set total = 0 %}
+			{% for page in get_section(path=page.extra.section ~ "/_index.md") | get(key="pages") %}
+				{% set_global total = total + page.reading_time %}
+			{% endfor %}
+			Total estimated reading time: {{ total }} minute{{ total | pluralize }}.
+		{% else %}
+			Estimated reading time: {{ page.reading_time }} minute{{ page.reading_time | pluralize }}.
+		{% endif %}
 	</p>
 {% endmacro %}
 {% macro stats_meta(page) %}

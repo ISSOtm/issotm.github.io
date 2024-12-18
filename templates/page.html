@@ -2,8 +2,6 @@
 {% import "macros.html" as macros %}
 
 {% block preload %}
-	<link rel="preload" href="{{ get_url(path="/assets/plane.svg") }}" as="image" type="image/svg+xml" />
-	<link rel="preload" href="{{ get_url(path="/assets/trail.png") }}" as="image" type="image/png" />
 	{% if page.higher %}
 		<link rel="next" href="{{ page.higher.permalink }}">
 	{% endif %}
@@ -55,24 +53,35 @@
 {% endblock h1 %}
 
 {% block header %}
-<div id="breadcrumbs"> {# This carries the background; the <nav> gets margins from `.container`'s centering. #}
-	<nav class="container" aria-label="breadcrumb" data-theme="light">
-		<ul itemscope itemtype="https://schema.org/BreadcrumbList">
-			{% set elems = [] %}
-			{% for ancestor in page.ancestors %}
-				{% set_global elems = elems | concat(with=get_section(path=ancestor)) %}
-			{% endfor %}
-			{% for elem in elems | concat(with=page) %}
-				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-					{% if not loop.last %} <a itemprop="item" href="{{ elem.permalink }}"> {% endif %}
-						<span itemprop="name">{{ elem.extra.breadcrumb | default(value=elem.title) | safe }}</span>
-					{% if not loop.last %} </a> {% endif %}
-					<meta itemprop="position" content="{{ loop.index }}"/>
-				</li>
-			{% endfor %}
-		</ul>
-	</nav>
-</div>
+	{# Inline `style` so the images can be loaded immediately; `<link rel=preload>` also works, but that's even more text transferred for a single element. #}
+	<div id="breadcrumbs" style='
+		background:
+			no-repeat right / contain url("/assets/plane.svg"),
+			no-repeat right / auto 90%
+				linear-gradient(
+					to left,
+					var(--pico-background-color) 4rem,
+					var(--pico-background-color-transparent) 6rem
+				),
+			repeat-x center right / auto 90% url("/assets/trail.png");'>
+		{# `.container` gives this margins, so it can't carry the background. #}
+		<nav class="container" aria-label="breadcrumb" data-theme="light">
+			<ul itemscope itemtype="https://schema.org/BreadcrumbList">
+				{% set elems = [] %}
+				{% for ancestor in page.ancestors %}
+					{% set_global elems = elems | concat(with=get_section(path=ancestor)) %}
+				{% endfor %}
+				{% for elem in elems | concat(with=page) %}
+					<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+						{% if not loop.last %} <a itemprop="item" href="{{ elem.permalink }}"> {% endif %}
+							<span itemprop="name">{{ elem.extra.breadcrumb | default(value=elem.title) | safe }}</span>
+						{% if not loop.last %} </a> {% endif %}
+						<meta itemprop="position" content="{{ loop.index }}"/>
+					</li>
+				{% endfor %}
+			</ul>
+		</nav>
+	</div>
 {% endblock %}
 
 {% block content %}

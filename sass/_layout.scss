@@ -61,18 +61,12 @@ body {
 }
 
 #breadcrumbs {
-	background:
-		no-repeat right / contain url("/assets/plane.svg"),
-		no-repeat right / auto 90%
-			linear-gradient(
-				to left,
-				var(--pico-background-color) 4rem,
-				var(--pico-background-color-transparent) 6rem
-			),
-		repeat-x center right / auto 90% url("/assets/trail.png");
-
 	> nav {
 		padding-right: 6rem; // Prevent any text from drawing over the area not covered by the "trail".
+		> ul {
+			overflow-x: scroll;
+			text-wrap: nowrap;
+		}
 	}
 }
 

@@ -39,3 +39,46 @@ main figure {
 		object-position: 20%;
 	}
 }
+
+// The section listings.
+.section-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
+	grid-template-rows: masonry; // Expeprimental, but rad. Fallback looks good enough.
+	gap: 0 2em;
+	// Reduce the spacing, this is not really stand-alone.
+	--pico-block-spacing-vertical: var(--pico-spacing);
+
+	header {
+		--pico-typography-spacing-vertical: 0; // Don't put additional spacing below the <h*>.
+	}
+
+	nav li {
+		padding-bottom: 0; // Reduce the spacing after the tag list.
+	}
+}
+
+// Stuff that doesn't make sense to print.
+@media print {
+	.no-print {
+		display: none;
+	}
+}
+
+// Avoid scrolling anchors to the very top of the page: the eye doesn't follow.
+:target {
+	scroll-margin-block: 5ex;
+}
+// Highlight the page's target anchor. (Realistically, that's only headings.)
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	transition: box-shadow var(--pico-transition);
+	border-radius: var(--pico-border-radius);
+	&:target {
+		box-shadow: 0 0 0.1rem 0.125rem var(--pico-secondary-hover-border);
+	}
+}

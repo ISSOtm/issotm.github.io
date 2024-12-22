@@ -1,55 +1,61 @@
-{% extends "section.html" %}
-{% import "macros.html" as macros %}
+{% extends "section.html" %} {% import "macros.html" as macros %} {% block preload %}
+<link
+	media="(max-width: 478px)"
+	href="{{ get_url(path='assets/hero_quarter.png') }}"
+	rel="preload"
+	type="image/png"
+	as="image"
+/>
+<link
+	media="(min-width: 479px) and (max-width: 957px)"
+	href="{{ get_url(path='assets/hero_half.png') }}"
+	rel="preload"
+	type="image/png"
+	as="image"
+/>
+<link
+	media="(min-width: 958px)"
+	href="{{ get_url(path='assets/hero.png') }}"
+	rel="preload"
+	type="image/png"
+	as="image"
+/>
+{% endblock preload %} {% block h1 %} {% endblock %} {% block header %}
+<section class="container">
+	<h1>Welcome to ISSOtm's warehouse!</h1>
 
-{% block preload %}
-  {% set hero = get_image_metadata(path="assets/hero.png") %}
-  {% set min_width = 0 %}
-  {% for ratio in [4,2] %}
-    {% set scaled = resize_image(path="assets/hero.png", width=hero.width / ratio | int, height=hero.height) %}
-    <link rel="preload" media="{% if min_width -%} (min-width: {{ min_width }}) and {% endif -%} (max-width: {{ hero.width / ratio | int }})" href="{{ scaled.url | safe }}" as="image" type="image/png" />
-    {% set_global min_width = hero.width / ratio | int + 1 %}
-  {% endfor %}
-  <link rel="preload" media="(min-width: {{ min_width }}px)" href="{{ get_url(path="/assets/hero.png") }}" as="image" type="image/png" />
-{% endblock preload %}
+	{{ section.content | safe }}
+</section>
 
-{% block h1 %} {% endblock %}
-
-{% block header %}
-  <section class="container">
-    <h1>Welcome to ISSOtm's warehouse!</h1>
-
-    {{ section.content | safe }}
-  </section>
-
-  {# Hero image #}
-  <style>
-  	#hero {
-      height: 30em;
-      box-shadow: var(--pico-background-color) 0 0 2em 2em inset;
-      background: 60% center/cover fixed, #333;
+{# Hero image #}
+<style>
+	#hero {
+		height: 30em;
+		box-shadow: var(--pico-background-color) 0 0 2em 2em inset;
+		background:
+			60% center/cover fixed,
+			#333;
 	}
-    {% set hero = get_image_metadata(path="assets/hero.png") %}
-    {% set min_width = 0 %}
-    {% for ratio in [4,2] %}
-      {% set scaled = resize_image(path="assets/hero.png", width=hero.width / ratio | int, height=hero.height) %}
-      @media {% if min_width %} (min-width: {{ min_width }}) and {% endif %} (max-width: {{ hero.width / ratio | int }}) {
-        #hero {
-          background-image: url("{{ scaled.url | safe }}");
-        }
-      }
-      {% set_global min_width = hero.width / ratio | int + 1 %}
-    {% endfor %}
-    @media (min-width: {{ min_width }}) {
-      #hero {
-        background-image: url('{{ get_url(path="/assets/hero.png") | safe }}');
-      }
-    }
-  </style>
-  <div id="hero"></div>
-{% endblock header %}
 
-{% block content %}
-  <h2 id="projects">Projects</h2>
+	@media (max-width: 478px) {
+		#hero {
+			background-image: url("{{ get_url(path='assets/hero_quarter.png') }}");
+		}
+	}
+	@media (min-width: 479px) and (max-width: 957px) {
+		#hero {
+			background-image: url("{{ get_url(path='assets/hero_half.png') }}");
+		}
+	}
+	@media (min-width: 958px) {
+		#hero {
+			background-image: url("{{ get_url(path='assets/hero.png') }}");
+		}
+	}
+</style>
+<div id="hero"></div>
+{% endblock header %} {% block content %}
+<h2 id="projects">Projects</h2>
 
-  {{ macros::section_list(path="projects", link_text="(Curious to read more?)", link_classes="secondary")}}
-{% endblock content %}
+{{ macros::section_list(path="projects", link_text="(Curious to read more?)",
+link_classes="secondary")}} {% endblock content %}

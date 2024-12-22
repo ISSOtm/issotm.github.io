@@ -2,7 +2,14 @@
 {% import "macros.html" as macros %}
 
 {% block preload %}
-  <link rel="preload" href="{{ get_url(path="/assets/hero.png") }}" as="image" type="image/png" />
+  {% set hero = get_image_metadata(path="assets/hero.png") %}
+  {% set min_width = 0 %}
+  {% for ratio in [4,2] %}
+    {% set scaled = resize_image(path="assets/hero.png", width=hero.width / ratio | int, height=hero.height) %}
+    <link rel="preload" media="{% if min_width -%} (min-width: {{ min_width }}) and {% endif -%} (max-width: {{ hero.width / ratio | int }})" href="{{ scaled.url | safe }}" as="image" type="image/png" />
+    {% set_global min_width = hero.width / ratio | int + 1 %}
+  {% endfor %}
+  <link rel="preload" media="(min-width: {{ min_width }}px)" href="{{ get_url(path="/assets/hero.png") }}" as="image" type="image/png" />
 {% endblock preload %}
 
 {% block h1 %} {% endblock %}
@@ -15,7 +22,30 @@
   </section>
 
   {# Hero image #}
-  <div style="height: 30em; box-shadow: var(--pico-background-color) 0 0 2em 2em inset; background: url('{{ get_url(path="/assets/hero.png") }}') 60% center/cover fixed, #333;"></div>
+  <style>
+  	#hero {
+      height: 30em;
+      box-shadow: var(--pico-background-color) 0 0 2em 2em inset;
+      background: 60% center/cover fixed, #333;
+	}
+    {% set hero = get_image_metadata(path="assets/hero.png") %}
+    {% set min_width = 0 %}
+    {% for ratio in [4,2] %}
+      {% set scaled = resize_image(path="assets/hero.png", width=hero.width / ratio | int, height=hero.height) %}
+      @media {% if min_width %} (min-width: {{ min_width }}) and {% endif %} (max-width: {{ hero.width / ratio | int }}) {
+        #hero {
+          background-image: url("{{ scaled.url | safe }}");
+        }
+      }
+      {% set_global min_width = hero.width / ratio | int + 1 %}
+    {% endfor %}
+    @media (min-width: {{ min_width }}) {
+      #hero {
+        background-image: url('{{ get_url(path="/assets/hero.png") | safe }}');
+      }
+    }
+  </style>
+  <div id="hero"></div>
 {% endblock header %}
 
 {% block content %}

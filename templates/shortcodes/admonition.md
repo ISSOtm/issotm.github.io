@@ -5,7 +5,7 @@
 {% elif kind == "info"    -%}❕
 {% elif kind == "warning" -%}⚠️
 {% elif kind == "danger"  -%}🔥
-{% endif -%} {{ kind | capitalize }}
+{% endif -%} {{ title | default(value=kind) | capitalize }}
 
 </header>
 

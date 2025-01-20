@@ -9,6 +9,7 @@
 	$bg-color: $azure-200;
 	#{$css-var-prefix}background-color: #{$bg-color};
 	#{$css-var-prefix}background-color-transparent: #{rgba($bg-color, 0)};
+	#{$css-var-prefix}background-color-semitransparent: #{rgba($bg-color, 0.9)};
 
 	// Text color
 	#{$css-var-prefix}color: #{$zinc-900};

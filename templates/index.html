@@ -1,4 +1,7 @@
-{% extends "section.html" %} {% import "macros.html" as macros %} {% block preload %}
+{% extends "section.html" %}
+{% import "macros.html" as macros %}
+
+{% block preload %}
 <link
 	media="(max-width: 478px)"
 	href="{{ get_url(path='assets/hero_quarter.png') }}"
@@ -20,42 +23,54 @@
 	type="image/png"
 	as="image"
 />
-{% endblock preload %} {% block h1 %} {% endblock %} {% block header %}
-<section class="container">
-	<h1>Welcome to ISSOtm's warehouse!</h1>
+{% endblock preload %}
+
+{% block h1 %} {% endblock %}
+{% block header %}
+	{# For the hero image #} <style>
+		#hero {
+			height: 40em;
+			box-shadow: var(--pico-background-color) 0 0 2em 2em inset;
+			background:
+				60% center/cover fixed,
+				#333;
+				
+			display: flex;
+			flex-flow: column nowrap;
+			justify-content: center;
+			p {
+				max-width: 50em;
+				margin: 0 auto;
+				padding: var(--pico-spacing);
+				
+				background-color: var(--pico-background-color-semitransparent);
+				box-shadow: 0 0 2em 2.5em var(--pico-background-color-semitransparent);
+				border-radius: 1em;
+			}
+		}
+	
+		@media (max-width: 478px) {
+			#hero {
+				background-image: url("{{ get_url(path='assets/hero_quarter.png') }}");
+			}
+		}
+		@media (min-width: 479px) and (max-width: 957px) {
+			#hero {
+				background-image: url("{{ get_url(path='assets/hero_half.png') }}");
+			}
+		}
+		@media (min-width: 958px) {
+			#hero {
+				background-image: url("{{ get_url(path='assets/hero.png') }}");
+			}
+		}
+	</style>
 
 	{{ section.content | safe }}
-</section>
+{% endblock header %}
 
-{# Hero image #}
-<style>
-	#hero {
-		height: 30em;
-		box-shadow: var(--pico-background-color) 0 0 2em 2em inset;
-		background:
-			60% center/cover fixed,
-			#333;
-	}
-
-	@media (max-width: 478px) {
-		#hero {
-			background-image: url("{{ get_url(path='assets/hero_quarter.png') }}");
-		}
-	}
-	@media (min-width: 479px) and (max-width: 957px) {
-		#hero {
-			background-image: url("{{ get_url(path='assets/hero_half.png') }}");
-		}
-	}
-	@media (min-width: 958px) {
-		#hero {
-			background-image: url("{{ get_url(path='assets/hero.png') }}");
-		}
-	}
-</style>
-<div id="hero"></div>
-{% endblock header %} {% block content %}
-<h2 id="projects">Projects</h2>
-
-{{ macros::section_list(path="projects", link_text="(Curious to read more?)",
-link_classes="secondary")}} {% endblock content %}
+{% block content %}
+	<h2 id="projects">Projects</h2>
+	
+	{{ macros::section_list(path="projects", link_text="(Curious to read more?)", link_classes="secondary")}}
+{% endblock content %}

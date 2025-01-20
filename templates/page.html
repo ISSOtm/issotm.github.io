@@ -71,11 +71,21 @@
 				{% for ancestor in page.ancestors %}
 					{% set_global elems = elems | concat(with=get_section(path=ancestor)) %}
 				{% endfor %}
+				{% set projects = get_section(path="projects/_index.md") %}
 				{% for elem in elems | concat(with=page) %}
 					<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-						{% if not loop.last %} <a itemprop="item" href="{{ elem.permalink }}"> {% endif %}
+						{% if not loop.last %}
+							<a itemprop="item" href="{# Nasty hack to work around bad `redirect_to` handling #}
+								{%- if elem.permalink == projects.permalink -%}
+									{{ get_url(path='@/_index.md#projects') }}
+								{%- else -%}
+									{{ elem.permalink }}
+								{%- endif %}">
+						{% endif %}
 							<span itemprop="name">{{ elem.extra.breadcrumb | default(value=elem.title) | safe }}</span>
-						{% if not loop.last %} </a> {% endif %}
+						{% if not loop.last %}
+							</a>
+						{% endif %}
 						<meta itemprop="position" content="{{ loop.index }}"/>
 					</li>
 				{% endfor %}

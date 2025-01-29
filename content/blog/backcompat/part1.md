@@ -120,7 +120,7 @@ Why didn't _they_ notice?
 Well, it turns out that on other platforms (such as x86, which that user was used to), `$` is not only [permitted in labels][nasm-labels], but common![^dollar_ident]
 
 The user could update their code to no longer rely on the bug, but this would have required significantly increasing its complexity, so they refused.
-Instead, we agreed upon [a compromise](https://github.com/gbdev/rgbds/issues/2700), which would give them a way to stop relying on the bug with only minimal changes.
+Instead, we agreed upon [a compromise](https://github.com/gbdev/rgbds/issues/270), which would give them a way to stop relying on the bug with only minimal changes.
 
 This was not an isolated case, either:
 

@@ -61,3 +61,5 @@ I hope this explains why I tend to get a little jumpy and bitter when my[^our] w
 ## Conclusion
 
 With all of that said, and the last section especially getting a little personal&mdash;guilty as charged, I needed a little venting&mdash;I want to leave on a more positive note, and provide guidance on how to avoid such difficult situations in the first place.
+
+[object file format]: https://rgbds.gbdev.io/docs/rgbds.5

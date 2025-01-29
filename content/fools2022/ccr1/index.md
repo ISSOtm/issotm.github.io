@@ -79,7 +79,7 @@ The end result is that I don't have type information or source mappings, but I c
 
 [^elf]: ELF files are more typically used on Unix PCs. However, since compilation toolchains used for the GBA are the same as those used for those Unix PCs, they already produce ELF files, and it's simpler for mGBA to support this well-documented format than to come up with its own thing. GDB is also used because it works well together with ELF files.
 
-[^relocs]: Whereas a GBA ROM is simply a plain dump of the cartridge's contents, an ELF file contains "sections" of data and informations on what those sections *are*, and where they go. Thus, mGBA parses that info, and ends up arranging the data in the same way it would have by just loading the ROM. However, some of the *other* sections contain symbol info, which, well... 👀
+[^relocs]: Whereas a GBA ROM is simply a plain dump of the cartridge's contents, an ELF file contains "sections" of data and information on what those sections *are*, and where they go. Thus, mGBA parses that info, and ends up arranging the data in the same way it would have by just loading the ROM. However, some of the *other* sections contain symbol info, which, well... 👀
 
 [^which_triplet]: How do I know which triplet I want? I Know™ that the compiler that was used to compile pokeemerald targets the `arm-none-eabi` triplet, so I need a GDB configured for the same. (You can actually find "`arm-none-eabi`" mentioned in the "modern" build instructions.) You can make any GCC tell you which triplet it's compiling for with `-v` ("verbose"), and looking at the `Target:` line.
 

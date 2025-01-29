@@ -9,7 +9,7 @@ tags = [ "gbdev", "back-compat" ]
 breadcrumb = "Context"
 +++
 
-The big deal with RGBDS and its backwards comaptibility is likely obvious to any seasoned member of [GBDev], but maybe you, dear reader, are not one.
+The big deal with RGBDS and its backwards compatibility is likely obvious to any seasoned member of [GBDev], but maybe you, dear reader, are not one.
 
 Let's talk about what backwards compatibility is (in a rather general sense), and why it matters.
 

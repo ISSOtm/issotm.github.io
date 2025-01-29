@@ -119,7 +119,7 @@ This gives us the following two equations to satisfy (I'll start noting `str[n]`
 
 Okay, cool, but we've not really simplified the problem yet.
 I guess we reduced the number of operations—that's a start.
-[*Others have pointed out that this would have been the right moment to use a solver like [Z3](//github.com/Z3Prover/z3/wiki). Welp, TIL!*]
+[*Others have pointed out that this would have been the right moment to use a solver like [Z3](//github.com/Z3Prover/z3/wiki). Whelp, TIL!*]
 But the most important thing is that this allows us to reduce the number of variables; let me explain.
 
 When trying to solve linear equations (which, yes, is what this is), roughly speaking, each equation "pins" one variable down.[^linalg]

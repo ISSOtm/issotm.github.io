@@ -185,7 +185,7 @@ I guess that people don't truly learn to avoid mistakes until they experience th
 
 The solution I believe in, is simply to botch it!
 
-If the reader needs to experience the problems first-hand to avoid bad pratice, then let's let them!
+If the reader needs to experience the problems first-hand to avoid bad practice, then let's let them!
 We wouldn't make one, but *two* games.
 First doing using all sorts of obvious but shoddy practices, so that the reader will understand why they should be avoided.
 And *then*, we'd make another game, this time having learnt the lessons from the first; along the way, the tutorial could also teach more advanced use of the hardware!

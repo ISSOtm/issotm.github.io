@@ -26,13 +26,44 @@ This is, on its face, uncontroversial to fix; however, doing so required[^requir
 
 Every other change merely falls somewhere else on the "benefits vs. discontent" scale.
 
-TODO:
+We try hard, however, to mitigate the pain, with a three-pronged approach:
 
-- Deprecations
-- "Crater" runs
-- Old versions
+- **Deprecations**: We deprecate every feature for at least one version before removing it.
+
+  {% admonition(kind="note", title="exception") %}
+  There has been one exception, the 0.6.0 [trigonometry function changes], which turned out to be a backwards-incompatible change we missed.
+  Again, we're only human 😛
+  {% end %}
+
+  This has mostly succeeding in avoiding surprising breakage, with the exception of the `-h` flag (more on that in a bit); however, some have pointed out that the warnings are still annoyances like errors.
+  I disagree: a warning can be temporarily ignored while progressively fixing up a codebase, but a hard error forces you to fix everything before you can even check out the results.
+
+  As for [`rgbasm -L`, AKA `--preserve-ld`], it turned out that the deprecation mechanism we chose (warn on first trigger, introduce `-l` / `--auto-ldh` to silence it) annoyed people who were trying to support 0.6.0 and 0.5.0 at the same time: before 0.6.0, `-l` would be a hard error, but after it, its _absence_ would produce warnings.
+  In hindsight, I think we should have not provided those flags, and instructed those projects to [use `-Wno-obsolete`] (or [maybe `-w`]?) while they wished to keep supporting 0.6.0.
+
+- **Checking downstream projects**: We integrated several projects using RGBDS into our CI, and thus, attempt to monitor the impact of changes we make.
+  We also submit patches to them when breakage is made, both to evaluate how involved the upgrade process is, and also to attempt to repay the technical debt we create ourselves.
+
+  Note that, in particular, projects that are not brought to our attention (not to mention private projects!)
+  Hence, I get quite 😒 when someone complains that <q>$CHANGE breaks a project of mine that I haven't released!</q>.
+  Since RGBDS is a project made available publicly for free, I don't consider it fair to have to take into account what people keep to themselves.
+  If we _were_ being paid somehow, then the dynamic would be different.
+
+- **Archive of old versions**: Finally, we make sure to keep an archive of every version that has been released thus far _and its documentation_ [readily accessible](https://rgbds.gbdev.io/docs).
+
+  So, even if we are not updating it anymore, a version that your project has worked with, will keep working all the same.
+  All you need to do, is **document which version of RGBDS you are currently using**, for example in your project's README.[^guesstimate]
+
+  Of course, then it means that you wouldn't be getting the latest features without some extra effort; please re-read [the previous part's conclusion](@/blog/backcompat/part3.md#conclusion) for a note about that.
 
 [^required]: If you have already thought of some way the change could have been implemented backwards-compatibly, please hold on to that thought for now, I'll address that further down.
+
+[^guesstimate]: For projects which haven't documented their version, checking the latest version available as of the first commit is usually a good (first) guess.
+
+[trigonometry function changes]: https://github.com/gbdev/rgbds/pull/1060
+[`rgbasm -L`, AKA `--preserve-ld`]: https://rgbds.gbdev.io/docs/v0.6.0/rgbasm.1#L
+[use `-Wno-obsolete`]: https://rgbds.gbdev.io/docs/v0.6.0/rgbasm.1#Wno-obsolete
+[maybe `-w`]: https://rgbds.gbdev.io/docs/v0.6.0/rgbasm.1#w
 
 ## "You could have done better!"
 
@@ -59,6 +90,10 @@ I hope this explains why I tend to get a little jumpy and bitter when my[^our] w
 [contrib]: https://github.com/gbdev/rgbds/tree/master/contrib
 
 ## Conclusion
+
+I would have liked to be able to provide some kind of upgrade tool, or at least documentation on some regexes to run on your code to fix the bulk of the errors.
+Unfortunately, it was too unclear how to structure such instructions, and too difficult to design such a program... so that hasn't come to fruition yet.
+I have hope that perhaps someone will pick that work up?
 
 With all of that said, and the last section especially getting a little personal&mdash;guilty as charged, I needed a little venting&mdash;I want to leave on a more positive note, and provide guidance on how to avoid such difficult situations in the first place.
 

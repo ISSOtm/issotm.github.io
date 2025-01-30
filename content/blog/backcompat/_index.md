@@ -8,4 +8,5 @@ sort_by = "slug"
 stats = true
 prev_text = "Previous part"
 next_text = "Next part"
+date = 2025-01-28
 +++

@@ -1,8 +1,10 @@
-{% macro stats_text(page) %}
+{% macro stats_text(page, section) %}
 	<p>
 		{% if page.year %}
 			{% set timestamp = page.year ~ "-" ~ page.month ~ "-" ~ page.day %}
 			Published <time datetime="{{ timestamp | date(format="%F") }}" itemprop="datePublished">{{ timestamp | date(format="%a %e %b %Y") }}</time>.
+		{% elif section.extra.date %}
+			Published <time datetime="{{ section.extra.date | date(format="%F") }}" itemprop="datePublished">{{ section.extra.date | date(format="%a %e %b %Y") }}</time>.
 		{% endif %}
 		{% if page.extra.section %}
 			{% set total = 0 %}

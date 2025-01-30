@@ -1,7 +1,6 @@
 +++
 title = "Why RGBDS has been breaking backwards compatibility"
 authors = [ "stuff@eldred.fr (ISSOtm)" ]
-date = 2024-12-20
 
 [taxonomies]
 tags = [ "gbdev", "back-compat" ]

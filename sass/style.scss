@@ -47,6 +47,10 @@
 @use "content";
 @use "layout";
 
+:root {
+	hyphens: auto;
+}
+
 // An override to the highlighting...
 pre {
 	// Highlighted lines.

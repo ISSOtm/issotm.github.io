@@ -5,7 +5,7 @@ weight = 0
 
 This is a tutorial aiming at teaching Game Boy programming in assembly, even to beginners.
 
-You can [check it out here](//gbdev.io/gb-asm-tutorial/), or [peek at the source there](//github.com/ISSOtm/gb-asm-tutorial).
+You can [check it out here](//gbdev.io/gb-asm-tutorial/), or [peek at the source there](//github.com/gbdev/gb-asm-tutorial).
 
 <!-- more -->
 

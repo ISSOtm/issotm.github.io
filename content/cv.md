@@ -170,7 +170,7 @@ Climbing and biking.
 </section>
 
 [RGBDS]: //rgbds.gbdev.io
-[rsgbds]: //github.com/ISSOtm/rsgbds
+[rsgbds]: //codeberg.org/ISSOtm/rsgbds
 [Pan Docs]: //gbdev.io/pandocs
 [my personal website]: @/_index.md
 [Jekyll]: //jekyllrb.com

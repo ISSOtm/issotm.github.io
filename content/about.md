@@ -25,7 +25,7 @@ My favourite programming languages are C, C++, and Rust—so, mostly systems pro
 You can find my résumé in English [here 🇬🇧](/cv/en) ([PDF](/cv/en.pdf)), and *en français* [ici 🇫🇷](/cv/fr) ([PDF](/cv/fr.pdf)).
 
 If you're curious about some of the work I've made, the effort I am currently spending the most time into is [RGBDS](//rgbds.gbdev.io) (I also made that website!).
-You can also check out my [GitHub profile](//github.com/ISSOtm) for more of my work!
+You can also check out my [Codeberg profile](//codeberg.org/ISSOtm) for more of my work!
 
 My mother tongue may be French, but I practice English on a daily basis, chatting with active English-speaking communities (mainly [GBDev](//gbdev.io)).
 The quality of the English in this web site should be representative of my written and oral skills.

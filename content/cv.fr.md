@@ -165,7 +165,7 @@ Escalade et vélo.
 </section>
 
 [RGBDS]: //rgbds.gbdev.io
-[rsgbds]: //github.com/ISSOtm/rsgbds
+[rsgbds]: //codeberg.org/ISSOtm/rsgbds
 [Pan Docs]: //gbdev.io/pandocs
 [mon site Web]: @/_index.md
 [Jekyll]: //jekyllrb.com

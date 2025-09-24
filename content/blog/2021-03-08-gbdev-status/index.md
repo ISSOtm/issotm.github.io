@@ -110,7 +110,7 @@ I hope to get to it during April, hopefully getting it done in May.
 
 ### `rsgbgfx`
 
-[`rsgbgfx`](//github.com/ISSOtm/rsgbgfx) is a Rust rewrite 🦀 of one of RGBDS' components, the PNG-to-GB-gfx converter.
+[`rsgbgfx`](//codeberg.org/ISSOtm/rsgbgfx) is a Rust rewrite 🦀 of one of RGBDS' components, the PNG-to-GB-gfx converter.
 The current tool has terribly messy code (sorry again, stag) and needs its interface + processes adapted to the needs that surfaced since then.
 
 I chose Rust because I wanted something that would be like the rest of RGBDS: standalone and lightweight.

@@ -11,7 +11,7 @@ Hi!
 [I'm Eldred](@/about.md).
 I love programming, infosec, old game consoles, and researching them!
 
-I spend a lot of my free time programming, so I have written a nice amount of free software, [on GitHub](//github.com/ISSOtm) and [on SourceHut](//sr.ht/~issotm).
+I spend a lot of my free time programming, so I have written a nice amount of free software, [on Codeberg](//codeberg.org/ISSOtm) and [on SourceHut](//sr.ht/~issotm).
 
 </section>
 

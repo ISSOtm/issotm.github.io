@@ -1,0 +1,31 @@
+name: Build and deploy
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  ZOLA_VER: "0.21.0"
+enable-email-notifications: true
+
+jobs:
+  build_and_deploy:
+    runs-on: codeberg-tiny-lazy
+    steps:
+      - name: Checkout repo
+        uses: https://code.forgejo.org/actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Get Zola
+        run: | # This should be fast enough not to require caching.
+          curl -L 'https://github.com/getzola/zola/releases/download/v${{ env.ZOLA_VER }}/zola-v${{ env.ZOLA_VER }}-x86_64-unknown-linux-gnu.tar.gz' | tar xzv
+          ./zola --version
+      - name: Build and package site
+        run: |
+          ./zola build
+      - name: Upload site
+        uses: https://codeberg.org/git-pages/action@main
+        with:
+          site: https://eldred.fr
+          password: ${{ secrets.GREBEDOC_PASSWD }}
+          path: public/
